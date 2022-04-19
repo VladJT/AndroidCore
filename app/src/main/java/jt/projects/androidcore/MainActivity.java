@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initComponents();
-
-        setListeners();
+        //  setContentView(R.layout.activity_main);
+        setContentView(R.layout.linear_example_layout);
+        //  initComponents();
+        //   setListeners();
     }
 
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     arg2 = Integer.valueOf(editText2.getText().toString());
                     boolean result;
                     if (mySwitch.isChecked()) result = arg1.equals(arg2);
-                    else result = (arg1==arg2);
+                    else result = (arg1 == arg2);
                     if (result) {
                         textView.setText("Равно!");
                     } else {
@@ -87,21 +87,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mySwitch.isChecked())
                     Toast.makeText(v.getContext(), "Checked EQUALS", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(v.getContext(), "Unchecked EQUALS (use =)", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(v.getContext(), "Unchecked EQUALS (use =)", Toast.LENGTH_SHORT).show();
             }
         });
 
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), checkBox.isChecked()+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), checkBox.isChecked() + "", Toast.LENGTH_SHORT).show();
             }
         });
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(calendarView.getContext(), dayOfMonth+"."+month+"."+year, Toast.LENGTH_SHORT).show();
+                Toast.makeText(calendarView.getContext(), dayOfMonth + "." + month + "." + year, Toast.LENGTH_SHORT).show();
             }
         });
 
