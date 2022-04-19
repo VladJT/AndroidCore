@@ -11,10 +11,12 @@
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:ems="8"
+        android:ems="7"
+        android:hint="введите число 1"
         android:inputType="number"
+        android:textSize="20sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,10 +24,12 @@
     <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:ems="8"
+        android:ems="7"
+        android:hint="введите число 2"
         android:inputType="number"
+        android:textSize="20sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/editText1" />
@@ -71,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="проверка Toast"
+        android:text="false"
         android:textColor="@color/purple_700"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,7 @@ package jt.projects.androidcore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 
 /**
  * Основные файлы в проекте:
@@ -29,13 +32,14 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Switch mySwitch;
+    SwitchCompat mySwitch;
     Button button;
     EditText editText1;
     EditText editText2;
     TextView textView;
     CheckBox checkBox;
     CalendarView calendarView;
+    private Toast toast;
 
     private Integer arg1;
     private Integer arg2;
@@ -43,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  setContentView(R.layout.activity_main);
-        setContentView(R.layout.linear_example_layout);
-        //  initComponents();
-        //   setListeners();
+        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.linear_example_layout);
+        initComponents();
+        setListeners();
     }
 
 
@@ -72,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     if (mySwitch.isChecked()) result = arg1.equals(arg2);
                     else result = (arg1 == arg2);
                     if (result) {
-                        textView.setText("Равно!");
+                        textView.setText("Числа равны");
                     } else {
-                        textView.setText("НЕ Равно!");
+                        textView.setText("Числа НЕ равны!");
                     }
                 } catch (Exception e) {
                     textView.setText("Введите число");
@@ -85,24 +89,29 @@ public class MainActivity extends AppCompatActivity {
         mySwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mySwitch.isChecked())
-                    Toast.makeText(v.getContext(), "Checked EQUALS", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(v.getContext(), "Unchecked EQUALS (use =)", Toast.LENGTH_SHORT).show();
+//                if (mySwitch.isChecked())
+//                    Toast.makeText(v.getContext(), "Checked EQUALS", Toast.LENGTH_SHORT).show();
+//                else
+//                    Toast.makeText(v.getContext(), "Unchecked EQUALS (use =)", Toast.LENGTH_SHORT).show();
             }
         });
 
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), checkBox.isChecked() + "", Toast.LENGTH_SHORT).show();
+                checkBox.setText(checkBox.isChecked() + "");
             }
         });
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(calendarView.getContext(), dayOfMonth + "." + month + "." + year, Toast.LENGTH_SHORT).show();
+                if (toast != null) {
+                    toast.cancel();
+                }
+                DecimalFormat dF = new DecimalFormat("00");
+                toast = Toast.makeText(calendarView.getContext(), dF.format(dayOfMonth) + "." + dF.format(month) + "." + year, Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
