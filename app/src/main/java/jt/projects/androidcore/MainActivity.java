@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,16 +33,18 @@ import java.text.DecimalFormat;
  */
 
 public class MainActivity extends AppCompatActivity {
-
     SwitchCompat mySwitch;
     Button button;
     EditText editText1;
     EditText editText2;
     TextView textView;
     CheckBox checkBox;
+    RadioButton radioButtonWhite;
+    RadioButton radioButtonYellow;
+    RadioButton radioButtonBlue;
+
     CalendarView calendarView;
     private Toast toast;
-
     private Integer arg1;
     private Integer arg2;
 
@@ -48,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(R.layout.linear_example_layout);
         initComponents();
         setListeners();
+
+        //    setContentView(R.layout.linear_example_layout);
     }
 
 
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         checkBox = findViewById(R.id.checkBox);
         calendarView = findViewById(R.id.calendarView);
+        radioButtonWhite = findViewById(R.id.radioButtonWhite);
+        radioButtonYellow = findViewById(R.id.radioButtonYellow);
+        radioButtonBlue = findViewById(R.id.radioButtonBlue);
     }
 
 
@@ -112,6 +120,27 @@ public class MainActivity extends AppCompatActivity {
                 DecimalFormat dF = new DecimalFormat("00");
                 toast = Toast.makeText(calendarView.getContext(), dF.format(dayOfMonth) + "." + dF.format(month) + "." + year, Toast.LENGTH_SHORT);
                 toast.show();
+            }
+        });
+
+        radioButtonYellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.main_layout).setBackgroundColor(Color.parseColor("#ffff99"));
+            }
+        });
+
+        radioButtonWhite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.main_layout).setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        radioButtonBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.main_layout).setBackgroundColor(Color.parseColor("#ccccff"));
             }
         });
 
