@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/btn_rounded.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/btn_rounded_pressed.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/btn_selector.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/btn_shadow_selector.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/ic_baseline_done_outline_24.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/my_button.xml" value="0.3995" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/calculator_grid_layout.xml" value="0.536" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/calculator_layout.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_frame_layout.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_linear_layout.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_nested_scroll_view.xml" value="0.218851570964247" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_table_layout.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/linear_example_layout.xml" value="0.3368421052631579" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/linear_example_layout.xml" value="0.264" />

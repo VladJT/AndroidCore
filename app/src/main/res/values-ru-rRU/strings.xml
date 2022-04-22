@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">AndroidCore</string>
     <string name="button">Кнопка 1</string>
+    <string name="use_equals">Equals вместо =</string>
 </resources>

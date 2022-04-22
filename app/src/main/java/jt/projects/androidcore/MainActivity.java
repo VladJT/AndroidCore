@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+       // gb_1();
+        setContentView(R.layout.ex_nested_scroll_view);
+    }
+
+    private void gb_1() {
+
         setContentView(R.layout.activity_main);
         //setContentView(R.layout.linear_example_layout);
         initComponents();

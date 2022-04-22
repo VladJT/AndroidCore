@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">AndroidCore</string>
     <string name="button">Button</string>
+    <string name="use_equals">use Equals except =</string>
+    <string name="b_1" translatable="false">1</string>
+    <string name="b_2" translatable="false">2</string>
+    <string name="b_3" translatable="false">3</string>
+    <string name="b_4" translatable="false">4</string>
+    <string name="b_5" translatable="false">5</string>
+    <string name="b_6" translatable="false">6</string>
+    <string name="b_7" translatable="false">7</string>
+    <string name="b_8" translatable="false">8</string>
+    <string name="b_9" translatable="false">9</string>
+    <string name="b_0" translatable="false">0</string>
+    <string name="b_add" translatable="false">+</string>
+    <string name="b_subtract" translatable="false">-</string>
+    <string name="b_multiply" translatable="false">*</string>
+    <string name="b_divide" translatable="false">/</string>
+    <string name="b_dot" translatable="false">.</string>
+    <string name="b_getResult" translatable="false">=</string>
+    <string name="b_clear" translatable="false">C</string>
 </resources>
