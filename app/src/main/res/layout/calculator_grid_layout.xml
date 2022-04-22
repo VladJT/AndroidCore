@@ -15,19 +15,19 @@
 
     <Button
         android:id="@+id/button_divide"
-        android:layout_margin="@dimen/btn_margins"
-        android:textSize="@dimen/font_size_big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/b_divide" />
+        android:layout_margin="@dimen/btn_margins"
+        android:text="@string/b_divide"
+        android:textSize="@dimen/font_size_big" />
 
     <Button
         android:id="@+id/button_multiply"
-        android:textSize="@dimen/font_size_big"
         android:layout_width="wrap_content"
-        android:layout_margin="@dimen/btn_margins"
         android:layout_height="wrap_content"
-        android:text="@string/b_multiply" />
+        android:layout_margin="@dimen/btn_margins"
+        android:text="@string/b_multiply"
+        android:textSize="@dimen/font_size_big" />
 
     <Button
         android:id="@+id/button_substract"
