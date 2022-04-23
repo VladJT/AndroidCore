@@ -3,4 +3,5 @@
     <string name="app_name">AndroidCore</string>
     <string name="button">Кнопка 1</string>
     <string name="use_equals">Equals вместо =</string>
+    <string name="input_number_string">Введите число</string>
 </resources>
