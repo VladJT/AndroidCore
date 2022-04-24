@@ -3,24 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
-
-    <ImageView
-        android:id="@+id/imgCalcBackgroung"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/calc_bg" />
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textViewResult"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/btn_margins"
-        android:background="#E6FFFFFF"
-        android:hint="@string/result"
-        android:padding="10dp"
+        android:hint="Результат"
         android:textAlignment="textEnd"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintBottom_toTopOf="@+id/editTextInputNumber"
@@ -29,14 +18,10 @@
 
     <EditText
         android:id="@+id/editTextInputNumber"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/btn_margins"
-        android:layout_marginBottom="8dp"
-        android:background="#E6FFFFFF"
         android:hint="@string/input_number_string"
         android:inputType="numberDecimal"
-        android:padding="10dp"
         android:textAlignment="textEnd"
         android:textSize="@dimen/font_size_big"
         android:textStyle="bold"
@@ -49,10 +34,8 @@
         layout="@layout/calculator_grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

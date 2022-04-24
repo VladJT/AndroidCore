@@ -20,4 +20,5 @@
     <string name="b_getResult" translatable="false">=</string>
     <string name="b_clear" translatable="false">C</string>
     <string name="input_number_string">input number</string>
+    <string name="result">result</string>
 </resources>

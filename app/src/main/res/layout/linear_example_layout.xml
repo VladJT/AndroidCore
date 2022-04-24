@@ -154,7 +154,7 @@
             android:layout_margin="12dp"
             android:padding="8dp"
             android:text="COLORED BUTTON STYLED"
-            android:theme="@style/PrimaryColoredButton" />
+            android:theme="@style/MyPrimaryColoredButton" />
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -171,6 +171,6 @@
             android:layout_margin="12dp"
             android:padding="8dp"
             android:text="BORDERLESS BUTTON STYLED"
-            android:theme="@style/FlatButton" />
+            android:theme="@style/MyFlatButton" />
     </LinearLayout>
 </LinearLayout>

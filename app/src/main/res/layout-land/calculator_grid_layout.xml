@@ -2,8 +2,7 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#E6FFFFFF"
-    android:columnCount="4">
+    android:columnCount="6">
 
     <Button
         android:id="@+id/button_clear"
@@ -31,13 +30,28 @@
         android:textSize="@dimen/font_size_big" />
 
     <Button
+        android:id="@+id/button_substract"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/btn_margins"
+        android:text="@string/b_subtract"
+        android:textSize="@dimen/font_size_big" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/btn_margins"
+        android:text="@string/b_add"
+        android:textSize="@dimen/font_size_big" />
+
+    <Button
         android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/btn_margins"
         android:text="⨞"
         android:textSize="@dimen/font_size_big" />
-
 
     <Button
         android:id="@+id/button_1"
@@ -66,14 +80,6 @@
 
 
     <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/btn_margins"
-        android:text="@string/b_add"
-        android:textSize="@dimen/font_size_big" />
-
-    <Button
         android:id="@+id/button_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,14 +101,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/btn_margins"
         android:text="@string/b_6"
-        android:textSize="@dimen/font_size_big" />
-
-    <Button
-        android:id="@+id/button_substract"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/btn_margins"
-        android:text="@string/b_subtract"
         android:textSize="@dimen/font_size_big" />
 
     <Button
@@ -130,24 +128,10 @@
         android:textSize="@dimen/font_size_big" />
 
     <Button
-        android:id="@+id/button_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_rowSpan="2"
-        android:layout_gravity="fill"
-        android:layout_margin="@dimen/btn_margins"
-        android:backgroundTint="#D81B60"
-        android:text="@string/b_getResult"
-        android:textSize="@dimen/font_size_big" />
-
-    <Button
         android:id="@+id/button_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnSpan="2"
-        android:layout_gravity="fill"
         android:layout_margin="@dimen/btn_margins"
-        android:backgroundTint="#3949AB"
         android:text="@string/b_0"
         android:textSize="@dimen/font_size_big" />
 
@@ -159,5 +143,14 @@
         android:text="@string/b_dot"
         android:textSize="@dimen/font_size_big" />
 
+
+    <Button
+        android:id="@+id/button_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/btn_margins"
+        android:backgroundTint="#D81B60"
+        android:text="@string/b_getResult"
+        android:textSize="@dimen/font_size_big" />
 
 </GridLayout>

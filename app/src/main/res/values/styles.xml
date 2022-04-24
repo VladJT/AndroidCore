@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RoundedCornerButton" parent="@style/Widget.AppCompat.Button.Colored">
+    <style name="MyRoundedCornerButton" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="background">@drawable/btn_selector</item>
         <item name="colorButtonNormal">#1a237e</item>
         <item name="colorControlHighlight">#673ab7</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/material_dynamic_primary10</item>
         <item name="colorPrimaryDark">@color/cardview_dark_background</item>
 
     </style>
 
-    <style name="PrimaryColoredButton" parent="Widget.AppCompat.Button.Colored">
+    <style name="MyPrimaryColoredButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/myPeach</item>
         <item name="colorControlHighlight">@color/myRed</item>
     </style>
 
-    <style name="FlatButton" parent="Theme.AppCompat.Light">
+    <style name="MyFlatButton" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/myPeach</item>
         <item name="colorControlHighlight">@color/myRed</item>
     </style>
 
-    <style name="PeachButton">
+    <style name="MyPeachButton">
         <item name="android:layout_margin">@dimen/btn_margins</item>
         <item name="android:elevation">10dp</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:textSize">@dimen/font_size_big</item>
-        <item name="android:theme">@style/PrimaryColoredButton</item>
+        <item name="android:theme">@style/MyPrimaryColoredButton</item>
         <item name="android:translationZ">4dp</item>
     </style>
 

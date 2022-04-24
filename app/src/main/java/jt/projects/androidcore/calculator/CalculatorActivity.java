@@ -32,7 +32,7 @@ public class CalculatorActivity extends AppCompatActivity {
     private Button b9;
     private Button b0;
     private Button bDot;
-    private Button bClear;
+    private Button bDelete;
     private TextView tResult;
     private EditText eInputNumber;
     private CalcData calcData;
@@ -68,7 +68,7 @@ public class CalculatorActivity extends AppCompatActivity {
             }
         };
 
-        bClear = findViewById(R.id.button_clear);
+        Button bClear = findViewById(R.id.button_clear);
         b1 = findViewById(R.id.button_1);
         b2 = findViewById(R.id.button_2);
         b3 = findViewById(R.id.button_3);
@@ -80,6 +80,7 @@ public class CalculatorActivity extends AppCompatActivity {
         b9 = findViewById(R.id.button_9);
         b0 = findViewById(R.id.button_0);
         bDot = findViewById(R.id.button_dot);
+        bDelete = findViewById(R.id.button_delete);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
         b1.setOnClickListener(buttonNumberClickListener);
@@ -94,11 +95,23 @@ public class CalculatorActivity extends AppCompatActivity {
         b0.setOnClickListener(buttonNumberClickListener);
         bDot.setOnClickListener(buttonNumberClickListener);
 
+
+        // кнопка [ C ]
         bClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tResult.setText("");
                 eInputNumber.setText("");
+            }
+        });
+
+        // кнопка [ <| ]
+        bDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = eInputNumber.getText().toString();
+                if (s.length() > 0) s = s.substring(0, s.length() - 1);
+                eInputNumber.setText(s);
             }
         });
     }
