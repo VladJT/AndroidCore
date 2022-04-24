@@ -33,6 +33,10 @@ public class CalculatorActivity extends AppCompatActivity {
     private Button b0;
     private Button bDot;
     private Button bDelete;
+    private Button bAdd;
+    private Button bSubstract;
+    private Button bDivide;
+    private Button bMultiply;
     private TextView tResult;
     private EditText eInputNumber;
     private CalcData calcData;
@@ -44,27 +48,47 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculator_layout);
-
         calcData = new CalcData();
-        initComponents();
+        initViewComponents();
     }
 
-    private void initComponents() {
-        View.OnClickListener buttonNumberClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String st = eInputNumber.getText().toString() + ((Button) v).getText().toString();
-                    double d = Double.valueOf(st);
-                    eInputNumber.setText(st);
-                } catch (NumberFormatException e) {
-                    Log.e(TAG, e.getMessage());
-                    if (toast != null) {
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(v.getContext(), "Некорректное число", Toast.LENGTH_SHORT);
-                    toast.show();
+    private void initViewComponents() {
+        // кнопки [ 0 ] ... [ 9 ]
+        View.OnClickListener buttonNumberClickListener = v -> {
+            try {
+                String oldValue = eInputNumber.getText().toString();
+
+                if (calcData.isNeedClearInputNumberString()) oldValue = "";
+
+                String st = oldValue + ((Button) v).getText().toString();
+                Double.parseDouble(st);// проверка на число
+                eInputNumber.setText(st.replaceAll("^[0]+([1-9])", "$1"));// удаляем нули перед числами
+            } catch (NumberFormatException e) {
+                Log.e(TAG, e.getMessage());
+                if (toast != null) {
+                    toast.cancel();
                 }
+                toast = Toast.makeText(v.getContext(), "Некорректное число", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        };
+
+        // кнопки [ + ], [ - ], [ / ], [ * ]
+        View.OnClickListener buttonOperatorClickListener = v -> {
+            try {
+                String operator = ((Button) v).getText().toString();
+                calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
+                calcData.setOperator(operator);
+
+                tResult.setText(calcData.getResultInfoString());
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                if (toast != null) {
+                    toast.cancel();
+                }
+                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();
             }
         };
 
@@ -80,6 +104,10 @@ public class CalculatorActivity extends AppCompatActivity {
         b9 = findViewById(R.id.button_9);
         b0 = findViewById(R.id.button_0);
         bDot = findViewById(R.id.button_dot);
+        bAdd = findViewById(R.id.button_add);
+        bSubstract = findViewById(R.id.button_substract);
+        bMultiply = findViewById(R.id.button_multiply);
+        bDivide = findViewById(R.id.button_divide);
         bDelete = findViewById(R.id.button_delete);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
@@ -94,28 +122,28 @@ public class CalculatorActivity extends AppCompatActivity {
         b9.setOnClickListener(buttonNumberClickListener);
         b0.setOnClickListener(buttonNumberClickListener);
         bDot.setOnClickListener(buttonNumberClickListener);
+        bAdd.setOnClickListener(buttonOperatorClickListener);
+        bSubstract.setOnClickListener(buttonOperatorClickListener);
+        bDivide.setOnClickListener(buttonOperatorClickListener);
+        bMultiply.setOnClickListener(buttonOperatorClickListener);
 
 
         // кнопка [ C ]
-        bClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tResult.setText("");
-                eInputNumber.setText("");
-            }
+        bClear.setOnClickListener(v -> {
+            tResult.setText("");
+            eInputNumber.setText("");
+            calcData.clear();
         });
 
         // кнопка [ <| ]
-        bDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = eInputNumber.getText().toString();
-                if (s.length() > 0) s = s.substring(0, s.length() - 1);
-                eInputNumber.setText(s);
-            }
+        bDelete.setOnClickListener(v -> {
+            String s = eInputNumber.getText().toString();
+            if (s.length() > 0) s = s.substring(0, s.length() - 1);
+            if (s.length() == 0) s = "0";
+            eInputNumber.setText(s);
         });
-    }
 
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
