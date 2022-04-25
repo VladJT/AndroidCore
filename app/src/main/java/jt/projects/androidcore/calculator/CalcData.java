@@ -9,7 +9,6 @@ class CalcData implements Parcelable {
     private Double result;
     private Double number;
     private String operator;
-    private String inputNumberString;
     private String resultInfoString;
     private boolean operatorPressed;
 
@@ -22,17 +21,19 @@ class CalcData implements Parcelable {
         result = null;
         number = null;
         operator = "";
-        inputNumberString = "";
         resultInfoString = "";
         operatorPressed = false;
     }
 
-    public boolean isNeedClearInputNumberString() {
+    public boolean isOperatorPressed() {
         return operatorPressed;
     }
 
+    public void setOperatorPressed(boolean operatorPressed) {
+        this.operatorPressed = operatorPressed;
+    }
+
     public void setNumber(Double number) {
-        operatorPressed = false;
         if (result == null) {
             result = number;
         } else {
@@ -45,32 +46,41 @@ class CalcData implements Parcelable {
     }
 
     public Double getResult() {
+
+
         return result;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
-        if (operator.equals("+")) {
-            if (result == null) result = 0.0;
-            if (number != null) {
-                result += number;
+    public void setOperator(String newOperator) {
+        if (result == null) result = 0.0;
+
+        resultInfoString = result+"";
+        if (!operator.equals("") || !operatorPressed) {
+
+            if (operator.equals("+")) {
+                if (number != null) {
+                    result += number;
+                }
             }
+
+            if (operator.equals("-")) {
+                if (number != null) {
+                    result -= number;
+                }
+            }
+
         }
 
-        if (operator.equals("-")) {
-            if (result == null) result = 0.0;
-            if (number != null) {
-                result -= number;
-            }
+        resultInfoString += operator;
+        if (number != null) {
+            resultInfoString += number + "=";
         }
-
-        resultInfoString = result + operator;
+        this.operator = newOperator;
         operatorPressed = true;
     }
 
     protected CalcData(Parcel in) {
         resultInfoString = in.readString();
-        inputNumberString = in.readString();
         operator = in.readString();
         result = in.readDouble();
         number = in.readDouble();
@@ -96,25 +106,22 @@ class CalcData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(resultInfoString);
-        dest.writeString(inputNumberString);
         dest.writeString(operator);
         dest.writeDouble(result);
         dest.writeDouble(number);
     }
 
 
-    public void setInputNumberString(String inputNumberString) {
-        this.inputNumberString = inputNumberString;
-    }
-
     public String getInputNumberString() {
-        return inputNumberString;
+        return String.valueOf(result).replaceAll("\\.[0]+$", "");
     }
 
     public String getResultInfoString() {
-        //return result + operator + (number == null ? "" : number + "=");
         return resultInfoString;
     }
 
+    public void countOperation() {
+        setOperator(this.operator);
+    }
 }
 

@@ -37,6 +37,7 @@ public class CalculatorActivity extends AppCompatActivity {
     private Button bSubstract;
     private Button bDivide;
     private Button bMultiply;
+    private Button bResult;
     private TextView tResult;
     private EditText eInputNumber;
     private CalcData calcData;
@@ -57,12 +58,13 @@ public class CalculatorActivity extends AppCompatActivity {
         View.OnClickListener buttonNumberClickListener = v -> {
             try {
                 String oldValue = eInputNumber.getText().toString();
+                if (calcData.isOperatorPressed()) oldValue = "";
 
-                if (calcData.isNeedClearInputNumberString()) oldValue = "";
+                String stNewValue = oldValue + ((Button) v).getText().toString();
+                Double.parseDouble(stNewValue);// проверка на число
+                eInputNumber.setText(stNewValue.replaceAll("^[0]+([1-9])", "$1"));// удаляем нули перед числами
 
-                String st = oldValue + ((Button) v).getText().toString();
-                Double.parseDouble(st);// проверка на число
-                eInputNumber.setText(st.replaceAll("^[0]+([1-9])", "$1"));// удаляем нули перед числами
+                calcData.setOperatorPressed(false);
             } catch (NumberFormatException e) {
                 Log.e(TAG, e.getMessage());
                 if (toast != null) {
@@ -79,9 +81,8 @@ public class CalculatorActivity extends AppCompatActivity {
                 String operator = ((Button) v).getText().toString();
                 calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
-
                 tResult.setText(calcData.getResultInfoString());
-
+                eInputNumber.setText(calcData.getInputNumberString());
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
                 if (toast != null) {
@@ -109,6 +110,7 @@ public class CalculatorActivity extends AppCompatActivity {
         bMultiply = findViewById(R.id.button_multiply);
         bDivide = findViewById(R.id.button_divide);
         bDelete = findViewById(R.id.button_delete);
+        bResult = findViewById(R.id.button_result);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
         b1.setOnClickListener(buttonNumberClickListener);
@@ -127,11 +129,10 @@ public class CalculatorActivity extends AppCompatActivity {
         bDivide.setOnClickListener(buttonOperatorClickListener);
         bMultiply.setOnClickListener(buttonOperatorClickListener);
 
-
         // кнопка [ C ]
         bClear.setOnClickListener(v -> {
             tResult.setText("");
-            eInputNumber.setText("");
+            eInputNumber.setText("0");
             calcData.clear();
         });
 
@@ -143,12 +144,31 @@ public class CalculatorActivity extends AppCompatActivity {
             eInputNumber.setText(s);
         });
 
+        // кнопка [ = ]
+        bResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
+                    calcData.countOperation();
+                    tResult.setText(calcData.getResultInfoString());
+                    eInputNumber.setText(calcData.getInputNumberString());
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    if (toast != null) {
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        calcData.setInputNumberString(eInputNumber.getText().toString());
+        //    calcData.setInputNumberString(eInputNumber.getText().toString());
         outState.putParcelable(CALC_DATA_KEY, calcData);
     }
 
@@ -156,6 +176,6 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         calcData = savedInstanceState.getParcelable(CALC_DATA_KEY);
-        eInputNumber.setText(calcData.getInputNumberString());
+        //      eInputNumber.setText(calcData.getInputNumberString());
     }
 }
