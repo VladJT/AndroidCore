@@ -1,6 +1,6 @@
 package jt.projects.androidcore.calculator;
 
-class FormatValues {
+class StringFormatter {
     public static String getNumberWithoutZerosAtStart(String d) {
         return d.replaceAll("^([-]*)[0]+([1-9])", "$1$2");// удаляем нули перед числами
     }

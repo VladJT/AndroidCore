@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/btn_margins"
+        android:backgroundTint="#3949AB"
         android:text="⨞"
         android:textSize="@dimen/font_size_big" />
 
@@ -141,13 +142,18 @@
         android:textSize="@dimen/font_size_big" />
 
     <Button
+        android:id="@+id/button_negative_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/btn_margins"
+        android:text="@string/b_negative_positive"
+        android:textSize="@dimen/font_size_big" />
+
+    <Button
         android:id="@+id/button_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnSpan="2"
-        android:layout_gravity="fill"
         android:layout_margin="@dimen/btn_margins"
-        android:backgroundTint="#3949AB"
         android:text="@string/b_0"
         android:textSize="@dimen/font_size_big" />
 

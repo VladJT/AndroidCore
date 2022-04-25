@@ -17,10 +17,30 @@ import jt.projects.androidcore.R;
 public class CalculatorActivity extends AppCompatActivity {
     private final static String CALC_DATA_KEY = "calculator_data";
     private static final String TAG = "CalculatorActivity";
+
     private TextView tResult;
     private EditText eInputNumber;
     private CalcData calcData;
     private Toast toast;
+    private Button b1;
+    private Button b2;
+    private Button b3;
+    private Button b4;
+    private Button b5;
+    private Button b6;
+    private Button b7;
+    private Button b8;
+    private Button b9;
+    private Button b0;
+    private Button bDot;
+    private Button bAdd;
+    private Button bSubstract;
+    private Button bMultiply;
+    private Button bDivide;
+    private Button bClear;
+    private Button bNegativePositive;
+    Button bDelete;
+    Button bResult;
 
 
     @Override
@@ -32,80 +52,32 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     private void initViewComponents() {
-        // кнопки [ 0 ] ... [ 9 ]
-        View.OnClickListener buttonNumberClickListener = v -> {
-            try {
-                String oldValue = eInputNumber.getText().toString();
-                if (calcData.isOperatorPressed()) oldValue = "";
-                String stNewValue = oldValue + ((Button) v).getText().toString();
-                if (stNewValue.equals(".")) stNewValue = "0.";
-                Double.parseDouble(stNewValue);// проверка на число
-                eInputNumber.setText(FormatValues.getNumberWithoutZerosAtStart(stNewValue));// удаляем нули перед числами
-                calcData.setOperatorPressed(false);
-            } catch (NumberFormatException e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), "Некорректное число", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        };
-
-        // кнопки [ + ], [ - ], [ / ], [ * ]
-        View.OnClickListener buttonOperatorClickListener = v -> {
-            try {
-                String operator = ((Button) v).getText().toString();
-                calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
-                calcData.setOperator(operator);
-                String infoText = FormatValues.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
-                tResult.setText(infoText);
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        };
-
-        Button bClear = findViewById(R.id.button_clear);
-        Button b1 = findViewById(R.id.button_1);
-        Button b2 = findViewById(R.id.button_2);
-        Button b3 = findViewById(R.id.button_3);
-        Button b4 = findViewById(R.id.button_4);
-        Button b5 = findViewById(R.id.button_5);
-        Button b6 = findViewById(R.id.button_6);
-        Button b7 = findViewById(R.id.button_7);
-        Button b8 = findViewById(R.id.button_8);
-        Button b9 = findViewById(R.id.button_9);
-        Button b0 = findViewById(R.id.button_0);
-        Button bDot = findViewById(R.id.button_dot);
-        Button bAdd = findViewById(R.id.button_add);
-        Button bSubstract = findViewById(R.id.button_substract);
-        Button bMultiply = findViewById(R.id.button_multiply);
-        Button bDivide = findViewById(R.id.button_divide);
-        Button bDelete = findViewById(R.id.button_delete);
-        Button bResult = findViewById(R.id.button_result);
+        bClear = findViewById(R.id.button_clear);
+        b1 = findViewById(R.id.button_1);
+        b2 = findViewById(R.id.button_2);
+        b3 = findViewById(R.id.button_3);
+        b4 = findViewById(R.id.button_4);
+        b5 = findViewById(R.id.button_5);
+        b6 = findViewById(R.id.button_6);
+        b7 = findViewById(R.id.button_7);
+        b8 = findViewById(R.id.button_8);
+        b9 = findViewById(R.id.button_9);
+        b0 = findViewById(R.id.button_0);
+        bDot = findViewById(R.id.button_dot);
+        bAdd = findViewById(R.id.button_add);
+        bSubstract = findViewById(R.id.button_substract);
+        bMultiply = findViewById(R.id.button_multiply);
+        bDivide = findViewById(R.id.button_divide);
+        bDelete = findViewById(R.id.button_delete);
+        bResult = findViewById(R.id.button_result);
+        bNegativePositive = findViewById(R.id.button_negative_positive);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
+
         // set listeners
-        b1.setOnClickListener(buttonNumberClickListener);
-        b2.setOnClickListener(buttonNumberClickListener);
-        b3.setOnClickListener(buttonNumberClickListener);
-        b4.setOnClickListener(buttonNumberClickListener);
-        b5.setOnClickListener(buttonNumberClickListener);
-        b6.setOnClickListener(buttonNumberClickListener);
-        b7.setOnClickListener(buttonNumberClickListener);
-        b8.setOnClickListener(buttonNumberClickListener);
-        b9.setOnClickListener(buttonNumberClickListener);
-        b0.setOnClickListener(buttonNumberClickListener);
-        bDot.setOnClickListener(buttonNumberClickListener);
-        bAdd.setOnClickListener(buttonOperatorClickListener);
-        bSubstract.setOnClickListener(buttonOperatorClickListener);
-        bDivide.setOnClickListener(buttonOperatorClickListener);
-        bMultiply.setOnClickListener(buttonOperatorClickListener);
+        initNumberButtonsListeners();
+        initOperatorButtonsListeners();
+        initButtonResultListener();
 
         // кнопка [ C ]
         bClear.setOnClickListener(v -> {
@@ -122,13 +94,32 @@ public class CalculatorActivity extends AppCompatActivity {
             eInputNumber.setText(s);
         });
 
+        // кнопка [ +/- ]
+        bNegativePositive.setOnClickListener(v -> {
+            try {
+                String inputString = eInputNumber.getText().toString();
+                if (inputString.length() > 0 && !inputString.equals("0")) {
+                    eInputNumber.setText(inputString.startsWith("-") ? inputString.substring(1) : ("-" + inputString));
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                if (toast != null) {
+                    toast.cancel();
+                }
+                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+    }
+
+    private void initButtonResultListener() {
         // кнопка [ = ]
         bResult.setOnClickListener(v -> {
             try {
                 calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
                 String resultString = "";
                 if (calcData.getNumber1() != null)
-                    resultString += FormatValues.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString());
+                    resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString());
                 if (!calcData.getOperator().equals("")) {
                     resultString += calcData.getOperator();
                     if (calcData.getNumber2() != null) {
@@ -136,9 +127,9 @@ public class CalculatorActivity extends AppCompatActivity {
                         if (calcData.getResult().toString().equals("Infinity")) {// деление на ноль
                             resultString = "Деление на ноль запрещено";
                         } else {
-                            resultString += FormatValues.getNumberWithoutZerosAtEnd(calcData.getNumber2().toString()) + "=";
+                            resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber2().toString()) + "=";
                             calcData.setNumber1(calcData.getResult());
-                            eInputNumber.setText(FormatValues.getNumberWithoutZerosAtEnd(calcData.getResult().toString()));
+                            eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtEnd(calcData.getResult().toString()));
                         }
                     }
                 }
@@ -152,6 +143,63 @@ public class CalculatorActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    private void initOperatorButtonsListeners() {
+        // кнопки [ + ], [ - ], [ / ], [ * ]
+        View.OnClickListener buttonOperatorClickListener = v -> {
+            try {
+                String operator = ((Button) v).getText().toString();
+                calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
+                calcData.setOperator(operator);
+                String infoText = StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
+                tResult.setText(infoText);
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                if (toast != null) {
+                    toast.cancel();
+                }
+                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        };
+        bAdd.setOnClickListener(buttonOperatorClickListener);
+        bSubstract.setOnClickListener(buttonOperatorClickListener);
+        bDivide.setOnClickListener(buttonOperatorClickListener);
+        bMultiply.setOnClickListener(buttonOperatorClickListener);
+    }
+
+    private void initNumberButtonsListeners() {
+        // кнопки [ 0 ] ... [ 9 ], [ . ]
+        View.OnClickListener buttonNumberClickListener = v -> {
+            try {
+                String oldValue = eInputNumber.getText().toString();
+                if (calcData.isOperatorPressed()) oldValue = "";
+                String stNewValue = oldValue + ((Button) v).getText().toString();
+                if (stNewValue.equals(".")) stNewValue = "0.";
+                Double.parseDouble(stNewValue);// проверка на число
+                eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtStart(stNewValue));// удаляем нули перед числами
+                calcData.setOperatorPressed(false);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, e.getMessage());
+                if (toast != null) {
+                    toast.cancel();
+                }
+                toast = Toast.makeText(v.getContext(), "Некорректное число", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        };
+        b1.setOnClickListener(buttonNumberClickListener);
+        b2.setOnClickListener(buttonNumberClickListener);
+        b3.setOnClickListener(buttonNumberClickListener);
+        b4.setOnClickListener(buttonNumberClickListener);
+        b5.setOnClickListener(buttonNumberClickListener);
+        b6.setOnClickListener(buttonNumberClickListener);
+        b7.setOnClickListener(buttonNumberClickListener);
+        b8.setOnClickListener(buttonNumberClickListener);
+        b9.setOnClickListener(buttonNumberClickListener);
+        b0.setOnClickListener(buttonNumberClickListener);
+        bDot.setOnClickListener(buttonNumberClickListener);
     }
 
     @Override
