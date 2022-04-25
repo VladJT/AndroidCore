@@ -1,27 +1,29 @@
 package jt.projects.androidcore.calculator;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 
 class CalcData implements Parcelable {
 
+    private Double number1;
+    private Double number2;
     private Double result;
-    private Double number;
     private String operator;
-    private String resultInfoString;
     private boolean operatorPressed;
-
 
     public CalcData() {
         this.clear();
     }
 
     public void clear() {
+        number1 = null;
+        number2 = null;
         result = null;
-        number = null;
         operator = "";
-        resultInfoString = "";
         operatorPressed = false;
     }
 
@@ -34,59 +36,51 @@ class CalcData implements Parcelable {
     }
 
     public void setNumber(Double number) {
-        if (result == null) {
-            result = number;
+        if (number1 == null) {
+            number1 = number;
         } else {
-            this.number = number;
+            number2 = number;
         }
     }
 
-    public Double getNumber() {
-        return number;
-    }
-
     public Double getResult() {
-
-
         return result;
     }
 
     public void setOperator(String newOperator) {
-        if (result == null) result = 0.0;
-
-        resultInfoString = result+"";
-        if (!operator.equals("") || !operatorPressed) {
-
-            if (operator.equals("+")) {
-                if (number != null) {
-                    result += number;
-                }
-            }
-
-            if (operator.equals("-")) {
-                if (number != null) {
-                    result -= number;
-                }
-            }
-
-        }
-
-        resultInfoString += operator;
-        if (number != null) {
-            resultInfoString += number + "=";
-        }
-        this.operator = newOperator;
+        if (number1 == null) number1 = 0.0;
+        operator = newOperator;
         operatorPressed = true;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setNumber1(Double number1) {
+        this.number1 = number1;
+    }
+
+    public Double getNumber1() {
+        return number1;
+    }
+
+    public Double getNumber2() {
+        return number2;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     protected CalcData(Parcel in) {
-        resultInfoString = in.readString();
         operator = in.readString();
+        number1 = in.readDouble();
+        number2 = in.readDouble();
         result = in.readDouble();
-        number = in.readDouble();
+        operatorPressed = in.readBoolean();
     }
 
     public static final Creator<CalcData> CREATOR = new Creator<CalcData>() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public CalcData createFromParcel(Parcel in) {
             return new CalcData(in);
@@ -103,25 +97,35 @@ class CalcData implements Parcelable {
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(resultInfoString);
         dest.writeString(operator);
+        dest.writeDouble(number1);
+        dest.writeDouble(number2);
         dest.writeDouble(result);
-        dest.writeDouble(number);
+        dest.writeBoolean(operatorPressed);
     }
 
-
-    public String getInputNumberString() {
-        return String.valueOf(result).replaceAll("\\.[0]+$", "");
+    public void countResult() {
+        if (!operator.equals("")) {
+            if (number2 != null) {
+                switch (operator) {
+                    case "+":
+                        result = number1 + number2;
+                        break;
+                    case "-":
+                        result = number1 - number2;
+                        break;
+                    case "/":
+                        result = number1 / number2;
+                        break;
+                    case "*":
+                        result = number1 * number2;
+                        break;
+                }
+            }
+        }
     }
 
-    public String getResultInfoString() {
-        return resultInfoString;
-    }
-
-    public void countOperation() {
-        setOperator(this.operator);
-    }
 }
-
