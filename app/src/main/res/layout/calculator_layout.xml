@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imgCalcBackgroung"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg" />
+        android:src="@drawable/calc_bg_5" />
 
     <TextView
         android:id="@+id/textViewResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/btn_margins"
-        android:background="#E6FFFFFF"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#99FFFFFF"
         android:hint="@string/result"
         android:padding="10dp"
         android:textAlignment="textEnd"
@@ -31,13 +31,13 @@
         android:id="@+id/editTextInputNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/btn_margins"
-        android:layout_marginBottom="8dp"
-        android:background="#E6FFFFFF"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="4dp"
+        android:background="#99FFFFFF"
         android:hint="@string/input_number_string"
-        android:text="0"
         android:inputType="numberDecimal"
         android:padding="10dp"
+        android:text="0"
         android:textAlignment="textEnd"
         android:textSize="@dimen/font_size_giant"
         android:textStyle="bold"
@@ -50,7 +50,7 @@
         layout="@layout/calculator_grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
