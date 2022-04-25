@@ -90,6 +90,7 @@ public class CalculatorActivity extends AppCompatActivity {
         Button bResult = findViewById(R.id.button_result);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
+        // set listeners
         b1.setOnClickListener(buttonNumberClickListener);
         b2.setOnClickListener(buttonNumberClickListener);
         b3.setOnClickListener(buttonNumberClickListener);
