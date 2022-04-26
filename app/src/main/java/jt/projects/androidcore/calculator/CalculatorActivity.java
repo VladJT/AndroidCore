@@ -100,6 +100,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 String inputString = eInputNumber.getText().toString();
                 if (inputString.length() > 0 && !inputString.equals("0")) {
                     eInputNumber.setText(inputString.startsWith("-") ? inputString.substring(1) : ("-" + inputString));
+                    calcData.setOperatorPressed(false);
                 }
             } catch (Exception e) {
                 showLogMessage(v, e.getMessage());
