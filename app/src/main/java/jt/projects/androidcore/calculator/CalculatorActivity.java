@@ -102,14 +102,18 @@ public class CalculatorActivity extends AppCompatActivity {
                     eInputNumber.setText(inputString.startsWith("-") ? inputString.substring(1) : ("-" + inputString));
                 }
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
+                showLogMessage(v, e.getMessage());
             }
         });
+    }
+
+    private void showLogMessage(View v, String message) {
+        Log.e(TAG, message);
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private void initButtonResultListener() {
@@ -135,12 +139,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 }
                 tResult.setText(resultString);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
+                showLogMessage(v, e.getMessage());
             }
         });
     }
@@ -155,12 +154,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 String infoText = StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
                 tResult.setText(infoText);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
+                showLogMessage(v, e.getMessage());
             }
         };
         bAdd.setOnClickListener(buttonOperatorClickListener);
@@ -181,12 +175,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtStart(stNewValue));// удаляем нули перед числами
                 calcData.setOperatorPressed(false);
             } catch (NumberFormatException e) {
-                Log.e(TAG, e.getMessage());
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(v.getContext(), "Некорректное число", Toast.LENGTH_SHORT);
-                toast.show();
+                showLogMessage(v, "Некорректное число");
             }
         };
         b1.setOnClickListener(buttonNumberClickListener);
@@ -205,7 +194,7 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        //    calcData.setInputNumberString(eInputNumber.getText().toString());
+        calcData.setResultInfoText(tResult.getText().toString());
         outState.putParcelable(CALC_DATA_KEY, calcData);
     }
 
@@ -213,6 +202,6 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         calcData = savedInstanceState.getParcelable(CALC_DATA_KEY);
-        //      eInputNumber.setText(calcData.getInputNumberString());
+        tResult.setText(calcData.getResultInfoText());
     }
 }

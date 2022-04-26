@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 
 class CalcData implements Parcelable {
 
+    private String resultInfoText;
     private Double number1;
     private Double number2;
     private Double result;
@@ -25,6 +26,14 @@ class CalcData implements Parcelable {
         result = null;
         operator = "";
         operatorPressed = false;
+    }
+
+    public void setResultInfoText(String resultInfoText) {
+        this.resultInfoText = resultInfoText;
+    }
+
+    public String getResultInfoText() {
+        return resultInfoText;
     }
 
     public boolean isOperatorPressed() {
@@ -77,6 +86,7 @@ class CalcData implements Parcelable {
         number2 = in.readDouble();
         result = in.readDouble();
         operatorPressed = in.readBoolean();
+        resultInfoText = in.readString();
     }
 
     public static final Creator<CalcData> CREATOR = new Creator<CalcData>() {
@@ -105,6 +115,7 @@ class CalcData implements Parcelable {
         dest.writeDouble(number2);
         dest.writeDouble(result);
         dest.writeBoolean(operatorPressed);
+        dest.writeString(resultInfoText);
     }
 
     public void countResult() {

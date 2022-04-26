@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/calc_bg_5" />
+        android:src="@drawable/calc_bg_2" />
 
     <TextView
         android:id="@+id/textViewResult"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#99FFFFFF"
+        android:background="#DDFFFFFF"
         android:hint="@string/result"
         android:padding="10dp"
         android:textAlignment="textEnd"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="4dp"
-        android:background="#99FFFFFF"
+        android:background="#DDFFFFFF"
         android:hint="@string/input_number_string"
         android:inputType="numberDecimal"
         android:padding="10dp"
@@ -50,7 +50,7 @@
         layout="@layout/calculator_grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

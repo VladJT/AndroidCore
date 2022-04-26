@@ -2,10 +2,9 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
     android:columnCount="4">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/button_clear"
         style="@style/MyCalcButton"
         android:text="@string/b_clear" />
@@ -20,18 +19,18 @@
         style="@style/MyCalcButton"
         android:text="@string/b_multiply" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/button_delete"
         style="@style/MyCalcButton"
         android:text="⨞" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/button_1"
         style="@style/MyCalcButton"
         android:text="@string/b_1" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/button_2"
         style="@style/MyCalcButton"
         android:text="@string/b_2" />
