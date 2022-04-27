@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:columnCount="4">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_clear"
         style="@style/MyCalcButton"
         android:text="@string/b_clear" />

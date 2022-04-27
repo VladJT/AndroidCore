@@ -11,4 +11,6 @@
     <color name="myWhite">#FFF</color>
     <color name="myPeach">#f8a055</color>
     <color name="myRed">#ff5f70</color>
+    <color name="white_opaque">#FFFFFFFF</color>
+    <color name="pitch_black">#FF000000</color>
 </resources>

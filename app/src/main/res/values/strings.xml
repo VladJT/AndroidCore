@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">AndroidCore</string>
-    <string name="button">Button</string>
-    <string name="use_equals">use Equals except =</string>
+    <string name="app_name">GBAndroidCore</string>
     <string name="b_1" translatable="false">1</string>
     <string name="b_2" translatable="false">2</string>
     <string name="b_3" translatable="false">3</string>
@@ -21,5 +19,7 @@
     <string name="b_clear" translatable="false">C</string>
     <string name="input_number_string">input number</string>
     <string name="result">result</string>
+    <string name="calcDarkTheme">Dark theme</string>
+    <string name="calcLightTheme">Light theme</string>
     <string name="b_negative_positive" translatable="false">+/-</string>
 </resources>

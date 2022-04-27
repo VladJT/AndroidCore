@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndroidCore</string>
-    <string name="button">Кнопка 1</string>
-    <string name="use_equals">Equals вместо =</string>
     <string name="input_number_string">Введите число</string>
     <string name="result">Результат</string>
+    <string name="calcDarkTheme">Темная</string>
+    <string name="calcLightTheme">Светлая</string>
 </resources>

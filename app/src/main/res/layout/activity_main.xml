@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="serif"
-        android:text="@string/use_equals"
+        android:text="use_equals"
         android:textColor="#304FFE"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintStart_toStartOf="parent"

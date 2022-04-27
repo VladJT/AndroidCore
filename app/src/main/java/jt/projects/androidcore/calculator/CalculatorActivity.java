@@ -1,12 +1,18 @@
 package jt.projects.androidcore.calculator;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,13 +45,21 @@ public class CalculatorActivity extends AppCompatActivity {
     private Button bDivide;
     private Button bClear;
     private Button bNegativePositive;
-    Button bDelete;
-    Button bResult;
+    private Button bDelete;
+    private Button bResult;
+    private Button bDarkheme;
+    private Button bLightheme;
+
+
+    private int defaultTheme = R.style.CalcLightTheme;
+    private static final String NameSharedPreference = "GB_THEME";  // Имя настроек
+    private static final String appTheme = "APP_THEME";    // Имя параметра в настройках
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getAppTheme());
         setContentView(R.layout.calculator_layout);
         calcData = new CalcData();
         initViewComponents();
@@ -73,21 +87,29 @@ public class CalculatorActivity extends AppCompatActivity {
         bNegativePositive = findViewById(R.id.button_negative_positive);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
+        bLightheme = findViewById(R.id.button_light_theme);
+        bDarkheme = findViewById(R.id.button_dark_theme);
 
         // set listeners
         initNumberButtonsListeners();
+
         initOperatorButtonsListeners();
+
         initButtonResultListener();
 
         // кнопка [ C ]
-        bClear.setOnClickListener(v -> {
+        bClear.setOnClickListener(v ->
+
+        {
             tResult.setText("");
             eInputNumber.setText("0");
             calcData.clear();
         });
 
         // кнопка [ <| ]
-        bDelete.setOnClickListener(v -> {
+        bDelete.setOnClickListener(v ->
+
+        {
             String s = eInputNumber.getText().toString();
             if (s.length() > 0) s = s.substring(0, s.length() - 1);
             if (s.length() == 0 || s.equals("-")) s = "0";
@@ -95,7 +117,9 @@ public class CalculatorActivity extends AppCompatActivity {
         });
 
         // кнопка [ +/- ]
-        bNegativePositive.setOnClickListener(v -> {
+        bNegativePositive.setOnClickListener(v ->
+
+        {
             try {
                 String inputString = eInputNumber.getText().toString();
                 if (inputString.length() > 0 && !inputString.equals("0")) {
@@ -103,17 +127,51 @@ public class CalculatorActivity extends AppCompatActivity {
                     calcData.setOperatorPressed(false);
                 }
             } catch (Exception e) {
-                showLogMessage(v, e.getMessage());
+                showLogMessage(v.getContext(), e.getMessage());
+            }
+        });
+
+        // change theme
+        bLightheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppTheme(R.style.CalcLightTheme);
+                recreate();
+            }
+        });
+
+        bDarkheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAppTheme(R.style.CalcDarkTheme);
+                recreate();
             }
         });
     }
 
-    private void showLogMessage(View v, String message) {
+    private int getAppTheme() {
+        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
+                MODE_PRIVATE);
+        showLogMessage(this.getApplicationContext(),"Тема: "+sharedPref.getInt(appTheme, defaultTheme));
+        return sharedPref.getInt(appTheme, defaultTheme);
+    }
+
+
+    private void setAppTheme(int codeStyle) {
+        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
+                MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(appTheme, codeStyle);
+        editor.apply();
+    }
+
+
+    private void showLogMessage(Context c, String message) {
         Log.e(TAG, message);
         if (toast != null) {
             toast.cancel();
         }
-        toast = Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT);
+        toast = Toast.makeText(c, message, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -140,7 +198,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 }
                 tResult.setText(resultString);
             } catch (Exception e) {
-                showLogMessage(v, e.getMessage());
+                showLogMessage(v.getContext(), e.getMessage());
             }
         });
     }
@@ -155,7 +213,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 String infoText = StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
                 tResult.setText(infoText);
             } catch (Exception e) {
-                showLogMessage(v, e.getMessage());
+                showLogMessage(v.getContext(), e.getMessage());
             }
         };
         bAdd.setOnClickListener(buttonOperatorClickListener);
@@ -176,7 +234,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtStart(stNewValue));// удаляем нули перед числами
                 calcData.setOperatorPressed(false);
             } catch (NumberFormatException e) {
-                showLogMessage(v, "Некорректное число");
+                showLogMessage(v.getContext(), "Некорректное число");
             }
         };
         b1.setOnClickListener(buttonNumberClickListener);

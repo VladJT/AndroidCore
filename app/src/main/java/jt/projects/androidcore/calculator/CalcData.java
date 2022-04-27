@@ -110,12 +110,17 @@ class CalcData implements Parcelable {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(operator);
-        dest.writeDouble(number1);
-        dest.writeDouble(number2);
-        dest.writeDouble(result);
-        dest.writeBoolean(operatorPressed);
-        dest.writeString(resultInfoText);
+        try {
+            dest.writeString(operator);
+            dest.writeDouble(number1);
+            dest.writeDouble(number2);
+            dest.writeDouble(result);
+            dest.writeBoolean(operatorPressed);
+            dest.writeString(resultInfoText);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void countResult() {
