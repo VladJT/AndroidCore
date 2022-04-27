@@ -8,8 +8,6 @@
         <item name="colorPrimary">@color/myBlue</item>
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
         <item name="colorSecondary">@color/myWhite</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
 
@@ -20,18 +18,6 @@
         <item name="colorPrimary">@color/myBlue</item>
         <item name="colorSecondary">@color/pitch_black</item>
         <!--  <item name="android:textStyle">italic</item> -->
-
-        <!-- ???. -->
-        <item name="android:colorBackground">@color/myBlue</item>
-
-        <item name="colorPrimaryDark">#b0003a</item>
-        <item name="colorAccent">#ff6090</item>
-
-
-        <item name="colorSecondaryVariant">#b0003a</item>
-        <item name="colorOnSecondary">#ff6090</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
 
@@ -73,6 +59,16 @@
         <item name="android:textSize">@dimen/font_size_buttons</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+
+    <style name="JT.CalcButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/btn_margins</item>
+        <item name="android:fontFamily">@font/jokerman</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">@dimen/font_size_buttons</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="JT.SmallShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:columnCount="4">
@@ -9,23 +10,23 @@
         style="@style/MyCalcButton"
         android:text="@string/b_clear" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_divide"
         style="@style/MyCalcButton"
         android:text="@string/b_divide" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_multiply"
         style="@style/MyCalcButton"
         android:text="@string/b_multiply" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_delete"
         style="@style/MyCalcButton"
         android:text="⨞" />
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_1"
         style="@style/MyCalcButton"
         android:text="@string/b_1" />
@@ -81,12 +82,15 @@
         style="@style/MyCalcButton"
         android:text="@string/b_9" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_result"
-        style="@style/MyCalcButton"
+        style="@style/JT.CalcButton"
         android:layout_rowSpan="2"
         android:layout_gravity="fill"
-
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="8dp"
+        app:rippleColor="#FFB23F"
+        app:strokeColor="?attr/colorSecondary"
         android:text="@string/b_getResult" />
 
     <Button

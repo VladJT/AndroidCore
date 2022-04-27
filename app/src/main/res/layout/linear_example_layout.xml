@@ -11,6 +11,15 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <com.google.android.material.button.MaterialButton
+            android:text="submit"
+            app:backgroundTint="@android:color/transparent"
+            app:cornerRadius="8dp"
+            app:strokeColor="?attr/colorSecondary"
+            app:strokeWidth="1dp"
+
+            style="@style/JT.CalcButton" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
