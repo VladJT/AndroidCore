@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#2F000000"
     android:columnCount="7">
 
     <Button
@@ -37,7 +37,6 @@
         android:layout_gravity="fill"
         android:text="⨞" />
 
-
     <Button
         android:id="@+id/button_1"
         style="@style/MyCalcButton"
@@ -71,7 +70,6 @@
         style="@style/MyCalcButton"
         android:text="@string/b_6" />
 
-
     <Button
         android:id="@+id/button_7"
         style="@style/MyCalcButton"
@@ -92,7 +90,6 @@
         style="@style/MyCalcButton"
         android:text="@string/b_0" />
 
-
     <Button
         android:id="@+id/button_negative_positive"
         style="@style/MyCalcButton"
@@ -103,11 +100,14 @@
         style="@style/MyCalcButton"
         android:text="@string/b_dot" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_result"
-        style="@style/MyCalcButton"
+        style="@style/JT.CalcButton"
         android:layout_columnSpan="2"
         android:layout_gravity="fill"
-        android:text="@string/b_getResult" />
-
+        android:text="@string/b_getResult"
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="8dp"
+        app:rippleColor="#FFB23F"
+        app:strokeColor="?attr/colorSecondary" />
 </GridLayout>

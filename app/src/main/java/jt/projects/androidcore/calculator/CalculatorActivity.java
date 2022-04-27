@@ -23,6 +23,9 @@ import jt.projects.androidcore.R;
 public class CalculatorActivity extends AppCompatActivity {
     private final static String CALC_DATA_KEY = "calculator_data";
     private static final String TAG = "CalculatorActivity";
+    private static final String NameSharedPreference = "GB_THEME";  // Имя настроек
+    private static final String appTheme = "APP_THEME";    // Имя параметра в настройках
+    private int defaultTheme = R.style.CalcDarkTheme;
 
     private TextView tResult;
     private EditText eInputNumber;
@@ -49,11 +52,6 @@ public class CalculatorActivity extends AppCompatActivity {
     private Button bResult;
     private Button bDarkheme;
     private Button bLightheme;
-
-
-    private int defaultTheme = R.style.CalcLightTheme;
-    private static final String NameSharedPreference = "GB_THEME";  // Имя настроек
-    private static final String appTheme = "APP_THEME";    // Имя параметра в настройках
 
 
     @Override
@@ -99,7 +97,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
         // кнопка [ C ]
         bClear.setOnClickListener(v ->
-
         {
             tResult.setText("");
             eInputNumber.setText("0");
@@ -108,7 +105,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
         // кнопка [ <| ]
         bDelete.setOnClickListener(v ->
-
         {
             String s = eInputNumber.getText().toString();
             if (s.length() > 0) s = s.substring(0, s.length() - 1);
@@ -118,7 +114,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
         // кнопка [ +/- ]
         bNegativePositive.setOnClickListener(v ->
-
         {
             try {
                 String inputString = eInputNumber.getText().toString();
@@ -172,7 +167,10 @@ public class CalculatorActivity extends AppCompatActivity {
                         calcData.countResult();
                         if (calcData.getResult().toString().equals("Infinity")) {// деление на ноль
                             resultString = "Деление на ноль запрещено";
+                            eInputNumber.setError("Деление на ноль запрещено");
+
                         } else {
+                            eInputNumber.setError(null);
                             resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber2().toString()) + "=";
                             calcData.setNumber1(calcData.getResult());
                             eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtEnd(calcData.getResult().toString()));
@@ -236,10 +234,8 @@ public class CalculatorActivity extends AppCompatActivity {
     private int getAppTheme() {
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
                 MODE_PRIVATE);
-        // showLogMessage(this.getApplicationContext(),"Тема: "+sharedPref.getInt(appTheme, defaultTheme));
         return sharedPref.getInt(appTheme, defaultTheme);
     }
-
 
     private void setAppTheme(int codeStyle) {
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroidCore</string>
+    <string name="app_name">GBAndroidCore</string>
     <string name="input_number_string">Введите число</string>
     <string name="result">Результат</string>
     <string name="calcDarkTheme">Темная</string>

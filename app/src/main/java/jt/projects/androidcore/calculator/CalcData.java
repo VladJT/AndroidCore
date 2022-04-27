@@ -26,6 +26,7 @@ class CalcData implements Parcelable {
         result = null;
         operator = "";
         operatorPressed = false;
+        resultInfoText = "";
     }
 
     public void setResultInfoText(String resultInfoText) {

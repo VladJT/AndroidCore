@@ -6,6 +6,6 @@
     <dimen name="font_size_small">20sp</dimen>
 
     <!--> Buttons <-->
-    <dimen name="btn_margins">4dp</dimen>
-    <dimen name="font_size_buttons">40sp</dimen>
+    <dimen name="btn_margins">2dp</dimen>
+    <dimen name="font_size_buttons">36sp</dimen>
 </resources>
