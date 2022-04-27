@@ -4,8 +4,8 @@
 
     <!-- Base DARK theme. -->
     <style name="CalcDarkTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:background">#171A32</item>
-        <item name="colorPrimary">#3E06BA</item>
+        <item name="android:background">#01579B</item>
+        <item name="colorPrimary">@color/myBlue</item>
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
         <item name="colorSecondary">@color/myWhite</item>
         <!-- Status bar color. -->
@@ -16,18 +16,18 @@
     <!-- NEW LIGHT theme. -->
     <style name="CalcLightTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
-        <item name="android:background">#DDD6D6</item>
-        <item name="colorPrimary">#9DA0A1</item>
-        <item name="colorSecondary">#8C0A70</item>
-
+        <item name="android:background">#ECE7E7</item>
+        <item name="colorPrimary">@color/purple_700</item>
+        <item name="colorSecondary">@color/pitch_black</item>
+        <!--  <item name="android:textStyle">italic</item> -->
 
         <!-- ???. -->
-        <item name="android:windowBackground">@color/white_opaque</item>
+        <item name="android:windowBackground">@color/myPeach</item>
         <item name="android:colorBackground">@color/myBlue</item>
 
         <item name="colorPrimaryDark">#b0003a</item>
         <item name="colorAccent">#ff6090</item>
-        <item name="android:textStyle">italic</item>
+
 
 
         <item name="colorSecondaryVariant">#b0003a</item>
@@ -82,6 +82,9 @@
         <item name="cornerFamilyBottomRight">cut</item>
         <item name="cornerSizeTopLeft">20dp</item>
         <item name="cornerSizeBottomRight">15dp</item>
+        <item name="android:layout_margin">@dimen/btn_margins</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <!--<item name="cornerFamily">cut</item>-->
         <!--<item name="cornerSize">8dp</item>-->
     </style>
