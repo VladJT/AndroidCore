@@ -99,6 +99,7 @@ public class CalculatorActivity extends AppCompatActivity {
         bClear.setOnClickListener(v ->
         {
             tResult.setText("");
+            eInputNumber.setError(null);
             eInputNumber.setText("0");
             calcData.clear();
         });
@@ -165,7 +166,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     resultString += calcData.getOperator();
                     if (calcData.getNumber2() != null) {
                         calcData.countResult();
-                        if (calcData.getResult().toString().equals("Infinity")) {// деление на ноль
+                        if (calcData.getResult().toString().equals("Infinity") || calcData.getResult().toString().equals("NaN")) {// деление на ноль
                             resultString = "Деление на ноль запрещено";
                             eInputNumber.setError("Деление на ноль запрещено");
 
