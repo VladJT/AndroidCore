@@ -4,7 +4,7 @@
 
     <!-- Base DARK theme. -->
     <style name="CalcDarkTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:background">#01579B</item>
+        <item name="android:windowBackground">#01579B</item>
         <item name="colorPrimary">@color/myBlue</item>
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
         <item name="colorSecondary">@color/myWhite</item>
@@ -14,20 +14,18 @@
 
 
     <!-- NEW LIGHT theme. -->
-    <style name="CalcLightTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="CalcLightTheme" parent="Theme.AppCompat.Light">
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
-        <item name="android:background">#ECE7E7</item>
-        <item name="colorPrimary">@color/purple_700</item>
+        <item name="android:windowBackground">#E6EFF6</item>
+        <item name="colorPrimary">@color/myBlue</item>
         <item name="colorSecondary">@color/pitch_black</item>
         <!--  <item name="android:textStyle">italic</item> -->
 
         <!-- ???. -->
-        <item name="android:windowBackground">@color/myPeach</item>
         <item name="android:colorBackground">@color/myBlue</item>
 
         <item name="colorPrimaryDark">#b0003a</item>
         <item name="colorAccent">#ff6090</item>
-
 
 
         <item name="colorSecondaryVariant">#b0003a</item>
@@ -88,4 +86,11 @@
         <!--<item name="cornerFamily">cut</item>-->
         <!--<item name="cornerSize">8dp</item>-->
     </style>
+
+    <style name="JT.RoundedTextView" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+
 </resources>

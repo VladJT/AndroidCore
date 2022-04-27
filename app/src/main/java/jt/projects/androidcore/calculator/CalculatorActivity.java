@@ -149,23 +149,6 @@ public class CalculatorActivity extends AppCompatActivity {
         });
     }
 
-    private int getAppTheme() {
-        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
-                MODE_PRIVATE);
-        showLogMessage(this.getApplicationContext(),"Тема: "+sharedPref.getInt(appTheme, defaultTheme));
-        return sharedPref.getInt(appTheme, defaultTheme);
-    }
-
-
-    private void setAppTheme(int codeStyle) {
-        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
-                MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(appTheme, codeStyle);
-        editor.apply();
-    }
-
-
     private void showLogMessage(Context c, String message) {
         Log.e(TAG, message);
         if (toast != null) {
@@ -248,6 +231,22 @@ public class CalculatorActivity extends AppCompatActivity {
         b9.setOnClickListener(buttonNumberClickListener);
         b0.setOnClickListener(buttonNumberClickListener);
         bDot.setOnClickListener(buttonNumberClickListener);
+    }
+
+    private int getAppTheme() {
+        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
+                MODE_PRIVATE);
+        // showLogMessage(this.getApplicationContext(),"Тема: "+sharedPref.getInt(appTheme, defaultTheme));
+        return sharedPref.getInt(appTheme, defaultTheme);
+    }
+
+
+    private void setAppTheme(int codeStyle) {
+        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
+                MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(appTheme, codeStyle);
+        editor.apply();
     }
 
     @Override

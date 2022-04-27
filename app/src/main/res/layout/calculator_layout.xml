@@ -30,12 +30,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewResult"
+        style="@style/JT.RoundedTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:text="@string/result"
         android:textAlignment="textEnd"
         android:textColor="?attr/colorSecondary"
-        android:text="@string/result"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
