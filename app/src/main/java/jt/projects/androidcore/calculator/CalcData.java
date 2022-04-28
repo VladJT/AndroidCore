@@ -82,14 +82,15 @@ class CalcData implements Parcelable {
     }
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.Q)
     protected CalcData(Parcel in) {
-        operator = in.readString();
-        number1 = BigDecimal.valueOf(in.readDouble());
-        number2 = BigDecimal.valueOf(in.readDouble());
-        result = BigDecimal.valueOf(in.readDouble());
-        operatorPressed = in.readBoolean();
-        resultInfoText = in.readString();
+//        operator = in.readString();
+//        number1 = BigDecimal.valueOf(in.readDouble());
+//        number2 = BigDecimal.valueOf(in.readDouble());
+//        result = BigDecimal.valueOf(in.readDouble());
+//        operatorPressed = in.readBoolean();
+//        resultInfoText = in.readString();
     }
 
     public static final Creator<CalcData> CREATOR = new Creator<CalcData>() {
@@ -114,12 +115,12 @@ class CalcData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         try {
-            dest.writeString(operator);
-            dest.writeValue(number1);
-            dest.writeValue(number2);
-            dest.writeValue(result);
-            dest.writeBoolean(operatorPressed);
-            dest.writeString(resultInfoText);
+//            dest.writeString(operator);
+//            dest.writeValue(number1);
+//            dest.writeValue(number2);
+//            dest.writeValue(result);
+//            dest.writeBoolean(operatorPressed);
+//            dest.writeString(resultInfoText);
         }
         catch (Exception e){
             e.printStackTrace();
