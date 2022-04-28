@@ -189,6 +189,7 @@ public class CalculatorActivity extends AppCompatActivity {
         // кнопки [ + ], [ - ], [ / ], [ * ]
         View.OnClickListener buttonOperatorClickListener = v -> {
             try {
+                eInputNumber.setError(null);
                 String operator = ((Button) v).getText().toString();
                 calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
@@ -208,6 +209,7 @@ public class CalculatorActivity extends AppCompatActivity {
         // кнопки [ 0 ] ... [ 9 ], [ . ]
         View.OnClickListener buttonNumberClickListener = v -> {
             try {
+                eInputNumber.setError(null);
                 String oldValue = eInputNumber.getText().toString();
                 if (calcData.isOperatorPressed()) oldValue = "";
                 String stNewValue = oldValue + ((Button) v).getText().toString();
