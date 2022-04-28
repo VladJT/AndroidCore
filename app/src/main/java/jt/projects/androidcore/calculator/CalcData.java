@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 
 class CalcData implements Parcelable {
 
+    public static final String DIVIDE_BY_ZERO_ERROR = "divide by zero";
+
     private String resultInfoText;
     private BigDecimal number1;
     private BigDecimal number2;
@@ -82,7 +84,6 @@ class CalcData implements Parcelable {
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.Q)
     protected CalcData(Parcel in) {
 //        operator = in.readString();
@@ -121,31 +122,44 @@ class CalcData implements Parcelable {
 //            dest.writeValue(result);
 //            dest.writeBoolean(operatorPressed);
 //            dest.writeString(resultInfoText);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void countResult() {
-        if (!operator.equals("")) {
-            if (number2 != null) {
-                switch (operator) {
-                    case "+":
-                        result = number1.add(number2);
-                        break;
-                    case "-":
-                        result = number1.subtract(number2);
-                        break;
-                    case "/":
-                        result = number1.divide(number2);
-                        break;
-                    case "*":
-                        result = number1.multiply(number2);
-                        break;
+    public String countResult() {
+        try {
+            if (!operator.equals("")) {
+                if (number2 != null) {
+                    switch (operator) {
+                        case "+":
+                            result = number1.add(number2);
+                            break;
+                        case "-":
+                            result = number1.subtract(number2);
+                            break;
+                        case "/":
+                            result = number1.divide(number2);
+                            break;
+                        case "*":
+                            result = number1.multiply(number2);
+                            break;
+                    }
+                }
+            }
+            return result.toString();
+        } catch (ArithmeticException e) { // для случаев типа 1 / 3, с которыми не справляется BigDecimal
+            if (operator.equals("/")) {
+                if (number2.equals(BigDecimal.ZERO)) {
+                    return DIVIDE_BY_ZERO_ERROR;
+                } else {
+                    double rez = number1.doubleValue() / number2.doubleValue();
+                    result = BigDecimal.valueOf(rez);
+                    return String.valueOf(rez);
                 }
             }
         }
+        return "--error--";
     }
 
 }

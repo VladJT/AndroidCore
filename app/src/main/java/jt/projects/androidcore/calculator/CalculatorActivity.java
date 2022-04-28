@@ -2,17 +2,13 @@ package jt.projects.androidcore.calculator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -160,27 +156,26 @@ public class CalculatorActivity extends AppCompatActivity {
         // кнопка [ = ]
         bResult.setOnClickListener(v -> {
             try {
+                String infoString = "";
                 calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
-                String resultString = "";
-                if (calcData.getNumber1() != null)
-                    resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString());
+                if (calcData.getNumber1() != null) {
+                    infoString += calcData.getNumber1().toString();
+                }
                 if (!calcData.getOperator().equals("")) {
-                    resultString += calcData.getOperator();
+                    infoString += calcData.getOperator();
                     if (calcData.getNumber2() != null) {
-                        calcData.countResult();
-                        if (calcData.getResult().toString().equals("Infinity") || calcData.getResult().toString().equals("NaN")) {// деление на ноль
-                            resultString = "Деление на ноль запрещено";
+                        String result = calcData.countResult();
+                        if (result.equals(CalcData.DIVIDE_BY_ZERO_ERROR)) {
                             eInputNumber.setError("Деление на ноль запрещено");
-
                         } else {
                             eInputNumber.setError(null);
-                            resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber2().toString()) + "=";
+                            infoString += calcData.getNumber2() + "=";
                             calcData.setNumber1(calcData.getResult());
-                            eInputNumber.setText(StringFormatter.getNumberWithoutZerosAtEnd(calcData.getResult().toString()));
+                            eInputNumber.setText(calcData.getResult().toString());
                         }
                     }
                 }
-                tResult.setText(resultString);
+                tResult.setText(infoString);
             } catch (Exception e) {
                 showLogMessage(v.getContext(), e.getMessage());
             }
@@ -195,7 +190,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 String operator = ((Button) v).getText().toString();
                 calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
-                String infoText = StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
+                String infoText = calcData.getNumber1().toString() + operator;
                 tResult.setText(infoText);
             } catch (Exception e) {
                 showLogMessage(v.getContext(), e.getMessage());
