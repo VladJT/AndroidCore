@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.math.BigDecimal;
+
 import jt.projects.androidcore.R;
 
 public class CalculatorActivity extends AppCompatActivity {
@@ -158,7 +160,7 @@ public class CalculatorActivity extends AppCompatActivity {
         // кнопка [ = ]
         bResult.setOnClickListener(v -> {
             try {
-                calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
+                calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 String resultString = "";
                 if (calcData.getNumber1() != null)
                     resultString += StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString());
@@ -191,7 +193,7 @@ public class CalculatorActivity extends AppCompatActivity {
             try {
                 eInputNumber.setError(null);
                 String operator = ((Button) v).getText().toString();
-                calcData.setNumber(Double.valueOf(eInputNumber.getText().toString()));
+                calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
                 String infoText = StringFormatter.getNumberWithoutZerosAtEnd(calcData.getNumber1().toString()) + operator;
                 tResult.setText(infoText);

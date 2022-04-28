@@ -6,13 +6,15 @@ import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import java.math.BigDecimal;
+
 
 class CalcData implements Parcelable {
 
     private String resultInfoText;
-    private Double number1;
-    private Double number2;
-    private Double result;
+    private BigDecimal number1;
+    private BigDecimal number2;
+    private BigDecimal result;
     private String operator;
     private boolean operatorPressed;
 
@@ -45,7 +47,7 @@ class CalcData implements Parcelable {
         this.operatorPressed = operatorPressed;
     }
 
-    public void setNumber(Double number) {
+    public void setNumber(BigDecimal number) {
         if (number1 == null) {
             number1 = number;
         } else {
@@ -53,12 +55,12 @@ class CalcData implements Parcelable {
         }
     }
 
-    public Double getResult() {
+    public BigDecimal getResult() {
         return result;
     }
 
     public void setOperator(String newOperator) {
-        if (number1 == null) number1 = 0.0;
+        if (number1 == null) number1 = BigDecimal.ZERO;
         operator = newOperator;
         operatorPressed = true;
     }
@@ -67,15 +69,15 @@ class CalcData implements Parcelable {
         return operator;
     }
 
-    public void setNumber1(Double number1) {
+    public void setNumber1(BigDecimal number1) {
         this.number1 = number1;
     }
 
-    public Double getNumber1() {
+    public BigDecimal getNumber1() {
         return number1;
     }
 
-    public Double getNumber2() {
+    public BigDecimal getNumber2() {
         return number2;
     }
 
@@ -83,9 +85,9 @@ class CalcData implements Parcelable {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     protected CalcData(Parcel in) {
         operator = in.readString();
-        number1 = in.readDouble();
-        number2 = in.readDouble();
-        result = in.readDouble();
+        number1 = BigDecimal.valueOf(in.readDouble());
+        number2 = BigDecimal.valueOf(in.readDouble());
+        result = BigDecimal.valueOf(in.readDouble());
         operatorPressed = in.readBoolean();
         resultInfoText = in.readString();
     }
@@ -113,9 +115,9 @@ class CalcData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         try {
             dest.writeString(operator);
-            dest.writeDouble(number1);
-            dest.writeDouble(number2);
-            dest.writeDouble(result);
+            dest.writeValue(number1);
+            dest.writeValue(number2);
+            dest.writeValue(result);
             dest.writeBoolean(operatorPressed);
             dest.writeString(resultInfoText);
         }
@@ -129,16 +131,16 @@ class CalcData implements Parcelable {
             if (number2 != null) {
                 switch (operator) {
                     case "+":
-                        result = number1 + number2;
+                        result = number1.add(number2);
                         break;
                     case "-":
-                        result = number1 - number2;
+                        result = number1.subtract(number2);
                         break;
                     case "/":
-                        result = number1 / number2;
+                        result = number1.divide(number2);
                         break;
                     case "*":
-                        result = number1 * number2;
+                        result = number1.multiply(number2);
                         break;
                 }
             }
