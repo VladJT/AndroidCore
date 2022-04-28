@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/robot"
         android:supportsRtl="true"
-        android:theme="@style/CalcDarkTheme">
+        android:theme="@style/Theme.AndroidCore">
         <activity
             android:name=".calculator.CalculatorActivity"
             android:exported="true">

@@ -2,18 +2,25 @@ package jt.projects.androidcore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 /**
@@ -49,16 +56,56 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-       // gb_1();
-        setContentView(R.layout.ex_nested_scroll_view);
+        gb_1();
+        // 2
+        //  setContentView(R.layout.ex_nested_scroll_view);
+        // 3
+        setContentView(R.layout.linear_example_layout);
+//        loadImageFromAsset(findViewById(R.id.imageViewTest), "pictures/nature.jpg");
+
+        initList();
     }
 
-    private void gb_1() {
+    private void initList() {
+        LinearLayout layoutList = findViewById(R.id.LinearLayoutTest);
+        String[] versions = getResources().getStringArray(R.array.version_names);
 
-        setContentView(R.layout.activity_main);
-        //setContentView(R.layout.linear_example_layout);
-        initComponents();
-        setListeners();
+        LayoutInflater ltInflater = getLayoutInflater();
+        TypedArray imgs =
+                getResources().obtainTypedArray(R.array.version_logos);
+        for (int i = 0; i < versions.length; i++) {
+            String version = versions[i];
+// Достаём элемент из android_item.xml
+            View item = ltInflater.inflate(R.layout.versions, layoutList,
+                    false);
+// Находим в этом элементе TextView
+            TextView tv = item.findViewById(R.id.text1);
+            tv.setText(version);
+// Получить из ресурсов массив указателей на изображения
+// Выбрать по индексу подходящее изображение
+            AppCompatImageView imgLogo = item.findViewById(R.id.imgTest1);
+            imgLogo.setImageResource(imgs.getResourceId(i, -1));
+            layoutList.addView(item);
+        }
+    }
+
+
+    public void loadImageFromAsset(ImageView image, String fileName) {
+        try {
+            InputStream ims = getAssets().open(fileName);
+            // загружаем как Drawable
+            Drawable d = Drawable.createFromStream(ims, null);
+            // выводим картинку в ImageView
+            image.setImageDrawable(d);
+        } catch (Exception ex) {
+            return;
+        }
+    }
+
+
+    private void gb_1() {
+        //  setContentView(R.layout.activity_main);
+        //   setListeners();
     }
 
 

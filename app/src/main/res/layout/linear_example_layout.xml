@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:theme="@style/Theme.AndroidCore">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,20 +13,26 @@
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
+            style="@style/JT.CalcButton"
             android:text="submit"
             app:backgroundTint="@android:color/transparent"
             app:cornerRadius="8dp"
             app:strokeColor="?attr/colorSecondary"
-            app:strokeWidth="1dp"
 
-            style="@style/JT.CalcButton" />
+            app:strokeWidth="1dp" />
+
+        <ImageView
+            android:id="@+id/imageViewTest"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/blue_print" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:fontFamily="sans-serif-black"
-            android:text="text"
+            android:text="@string/orientation"
             android:textColor="#01144A"
             android:textSize="16sp" />
 
@@ -34,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:fontFamily="sans-serif-black"
-            android:text="textPersonName"
+            android:text="@string/version"
             android:textColor="#01144A"
             android:textSize="16sp" />
 
@@ -75,111 +82,24 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/LinearLayoutTest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText"
+
+
+        <include
+            layout="@layout/versions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Любой текст"
-            android:inputType="textAutoComplete"
-            android:textSize="16sp" />
+           />
 
-        <EditText
-            android:id="@+id/editTextPersonName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите имя"
-            android:inputType="textPersonName"
-            android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите телефон"
-            android:inputType="phone"
-            android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/editTextNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите число"
-            android:inputType="numberDecimal"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editTextPwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите пароль"
-            android:inputType="textPassword"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите e-mail"
-            android:inputType="textEmailAddress"
-            android:textSize="16sp" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/ic_baseline_done_outline_24" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NORMAL BUTTON" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:background="@color/material_dynamic_neutral50"
-            android:text="BACKGROUND COLOR BUTTON"
-            android:textColor="@android:color/white" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="8dp"
-            android:text="COLORED BUTTON" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="8dp"
-            android:text="COLORED BUTTON STYLED"
-            android:theme="@style/MyPrimaryColoredButton" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="8dp"
-            android:text="BORDERLESS BUTTON" />
-
-        <Button
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="8dp"
-            android:text="BORDERLESS BUTTON STYLED"
-            android:theme="@style/MyFlatButton" />
     </LinearLayout>
+
 </LinearLayout>

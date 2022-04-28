@@ -22,4 +22,6 @@
     <string name="calcDarkTheme">Dark theme</string>
     <string name="calcLightTheme">Light theme</string>
     <string name="b_negative_positive" translatable="false">+/-</string>
+    <string name="orientation" translatable="false">portrait</string>
+    <string name="version"  translatable="false">31</string>
 </resources>

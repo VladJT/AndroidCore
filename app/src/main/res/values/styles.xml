@@ -30,32 +30,7 @@
     </style>
 
     <!-- Buttons theme. -->
-    <style name="MyRoundedCornerButton" parent="@style/Widget.AppCompat.Button.Colored">
-        <item name="background">@drawable/btn_selector</item>
-        <item name="colorButtonNormal">#1a237e</item>
-        <item name="colorControlHighlight">#673ab7</item>
-    </style>
-
-    <style name="MyPrimaryColoredButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/myPeach</item>
-        <item name="colorControlHighlight">@color/myRed</item>
-    </style>
-
-    <style name="MyFlatButton" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/myPeach</item>
-        <item name="colorControlHighlight">@color/myRed</item>
-    </style>
-
-    <style name="MyPeachButton">
-        <item name="android:layout_margin">@dimen/btn_margins</item>
-        <item name="android:elevation">10dp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:textSize">@dimen/font_size_big</item>
-        <item name="android:theme">@style/MyPrimaryColoredButton</item>
-        <item name="android:translationZ">4dp</item>
-    </style>
-
-    <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">
+     <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/btn_margins</item>
