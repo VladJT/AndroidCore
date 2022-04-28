@@ -24,7 +24,6 @@ public class CalculatorActivity extends AppCompatActivity {
     private static final String NameSharedPreference = "GB_THEME";  // Имя настроек
     private static final String appTheme = "APP_THEME";    // Имя параметра в настройках
     private int defaultTheme = R.style.CalcDarkTheme;
-
     private TextView tResult;
     private EditText eInputNumber;
     private CalcData calcData;
