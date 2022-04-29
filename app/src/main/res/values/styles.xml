@@ -6,6 +6,7 @@
     <style name="CalcDarkTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowBackground">#01579B</item>
         <item name="colorPrimary">@color/myBlue</item>
+        <item name="colorOnPrimary">@color/myWhite</item>
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
         <item name="colorSecondary">@color/myWhite</item>
     </style>
@@ -58,6 +59,7 @@
         <item name="android:layout_margin">@dimen/btn_margins</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
         <!--<item name="cornerFamily">cut</item>-->
         <!--<item name="cornerSize">8dp</item>-->
     </style>

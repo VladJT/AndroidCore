@@ -42,14 +42,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:textColorHint="?attr/colorSecondary"
-        app:boxStrokeColor="?attr/colorSecondary"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="4dp"
         android:hint="@string/result"
+        android:textColorHint="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorSecondary"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/include2"
         app:layout_constraintEnd_toEndOf="parent"
