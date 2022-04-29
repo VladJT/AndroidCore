@@ -10,4 +10,8 @@
         <item>@drawable/android_oreo</item>
         <item>@drawable/android_pie</item>
     </integer-array>
+    <string-array name="calc_themes">
+        <item>@string/calcDarkTheme</item>
+        <item>@string/calcLightTheme</item>
+    </string-array>
 </resources>
