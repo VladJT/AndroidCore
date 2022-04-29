@@ -63,7 +63,7 @@ public class CalculatorActivity extends AppCompatActivity {
         calcData = new CalcData();
         initViewComponents();
 
-        testNewActivity();
+        //     testNewActivity();
     }
 
     private void testNewActivity() {

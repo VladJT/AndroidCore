@@ -23,60 +23,59 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_delete"
         style="@style/MyCalcButton"
-        android:text="⨞" />
+        android:text="@string/b_delete" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_1"
         style="@style/MyCalcButton"
         android:text="@string/b_1" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_2"
         style="@style/MyCalcButton"
         android:text="@string/b_2" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_3"
         style="@style/MyCalcButton"
         android:text="@string/b_3" />
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add"
         style="@style/MyCalcButton"
         android:text="@string/b_add" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_4"
         style="@style/MyCalcButton"
         android:text="@string/b_4" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_5"
         style="@style/MyCalcButton"
         android:text="@string/b_5" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_6"
         style="@style/MyCalcButton"
         android:text="@string/b_6" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_substract"
         style="@style/MyCalcButton"
         android:text="@string/b_subtract" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_7"
         style="@style/MyCalcButton"
         android:text="@string/b_7" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_8"
         style="@style/MyCalcButton"
         android:text="@string/b_8" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_9"
         style="@style/MyCalcButton"
         android:text="@string/b_9" />
@@ -92,17 +91,17 @@
         app:rippleColor="#FFB23F"
         app:strokeColor="?attr/colorSecondary" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_negative_positive"
         style="@style/MyCalcButton"
         android:text="@string/b_negative_positive" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_0"
         style="@style/MyCalcButton"
         android:text="@string/b_0" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dot"
         style="@style/MyCalcButton"
         android:text="@string/b_dot" />
