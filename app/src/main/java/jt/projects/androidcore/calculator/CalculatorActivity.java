@@ -1,6 +1,7 @@
 package jt.projects.androidcore.calculator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,19 +15,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.math.BigDecimal;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.examples.StylesActivity;
 
 public class CalculatorActivity extends AppCompatActivity {
     private final static String CALC_DATA_KEY = "calculator_data";
     private static final String TAG = "CalculatorActivity";
     private static final String NameSharedPreference = "GB_THEME";  // Имя настроек
     private static final String appTheme = "APP_THEME";    // Имя параметра в настройках
-    private int defaultTheme = R.style.CalcDarkTheme;
 
     private TextView tResult;
-    private EditText eInputNumber;
+    private TextInputEditText eInputNumber;
     private CalcData calcData;
     private Toast toast;
     private Button b1;
@@ -59,6 +62,13 @@ public class CalculatorActivity extends AppCompatActivity {
         setContentView(R.layout.calculator_layout);
         calcData = new CalcData();
         initViewComponents();
+
+        testNewActivity();
+    }
+
+    private void testNewActivity() {
+        Intent intent = new Intent(CalculatorActivity.this, StylesActivity.class);
+        startActivity(intent);
     }
 
     private void initViewComponents() {
@@ -234,6 +244,7 @@ public class CalculatorActivity extends AppCompatActivity {
     private int getAppTheme() {
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
                 MODE_PRIVATE);
+        int defaultTheme = R.style.CalcDarkTheme;
         return sharedPref.getInt(appTheme, defaultTheme);
     }
 

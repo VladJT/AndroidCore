@@ -30,7 +30,7 @@
     </style>
 
     <!-- Buttons theme. -->
-     <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/btn_margins</item>
@@ -66,6 +66,5 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
-
 
 </resources>

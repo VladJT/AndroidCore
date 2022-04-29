@@ -21,8 +21,6 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_light_theme"
         style="@style/JT.SmallShapeAppearance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/calcLightTheme"
         app:layout_constraintStart_toEndOf="@+id/button_dark_theme"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

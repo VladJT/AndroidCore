@@ -31,8 +31,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginRight="20dp"
-        android:paddingBottom="4dp"
         android:gravity="center|right"
+        android:paddingBottom="4dp"
         android:text="@string/result"
         android:textAlignment="gravity"
         android:textColor="?attr/colorSecondary"
@@ -40,8 +40,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="@+id/include2"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayout"
- />
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -56,7 +55,7 @@
         app:layout_constraintBottom_toTopOf="@+id/include2"
         app:layout_constraintEnd_toEndOf="@+id/include2">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
