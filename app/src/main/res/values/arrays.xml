@@ -13,5 +13,6 @@
     <string-array name="calc_themes">
         <item>@string/calcDarkTheme</item>
         <item>@string/calcLightTheme</item>
+        <item>@string/calcRedTheme</item>
     </string-array>
 </resources>

@@ -8,7 +8,8 @@
         <item name="android:windowBackground">#01579B</item><!-- фон -->
         <item name="colorPrimary">@color/myBlue</item><!-- фон appBar & кнопок -->
         <item name="colorOnPrimary">@color/myWhite</item><!-- цвет текста основной -->
-        <item name="colorSecondary">@color/text_input_box_stroke</item><!-- цвет текста в edittext,radio...-->
+        <item name="colorSecondary">@color/text_input_box_stroke
+        </item><!-- цвет текста в edittext,radio...-->
         <item name="android:textColorPrimary">@color/myRed</item>
     </style>
 
@@ -25,9 +26,17 @@
     </style>
 
 
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+    <style name="CalcRedTheme" parent="CalcDarkTheme">
+        <item name="colorPrimary">#e91e63</item>
+        <item name="colorPrimaryDark">#b0003a</item>
+        <item name="colorAccent">#ff6090</item>
+        <item name="colorOnPrimary">@color/myRed</item>
     </style>
+
+
+    <!-- <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+     </style>-->
 
     <!-- Buttons theme. -->
     <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">

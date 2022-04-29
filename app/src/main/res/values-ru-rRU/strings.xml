@@ -5,4 +5,8 @@
     <string name="result">Результат</string>
     <string name="calcDarkTheme">Темная</string>
     <string name="calcLightTheme">Светлая</string>
+    <string name="theme">Тема...</string>
+    <string name="Ok">Ок</string>
+    <string name="Cancel">Отмена</string>
+    <string name="calcRedTheme">Красная</string>
 </resources>

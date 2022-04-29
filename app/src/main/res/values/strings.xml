@@ -23,6 +23,10 @@
     <string name="calcLightTheme">Light theme</string>
     <string name="b_negative_positive" translatable="false">+/-</string>
     <string name="orientation" translatable="false">portrait</string>
-    <string name="version"  translatable="false">31</string>
-    <string name="b_delete">⨞</string>
+    <string name="version" translatable="false">31</string>
+    <string name="b_delete" translatable="false">⨞</string>
+    <string name="theme">Theme...</string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="calcRedTheme">Red theme</string>
 </resources>

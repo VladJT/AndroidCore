@@ -12,28 +12,28 @@
           android:scaleType="centerCrop" />
           -->
 
-    <RadioGroup
-        android:id="@+id/radioButtonsTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_dark_theme">
+    <!--  <RadioGroup
+         android:id="@+id/radioButtonsTheme"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/button_dark_theme">
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonDark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:text="@string/calcDarkTheme" />
+         <com.google.android.material.radiobutton.MaterialRadioButton
+             android:id="@+id/radioButtonDark"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="0dp"
+             android:text="@string/calcDarkTheme" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonLight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:text="@string/calcLightTheme" />
-    </RadioGroup>
-
+         <com.google.android.material.radiobutton.MaterialRadioButton
+             android:id="@+id/radioButtonLight"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="0dp"
+             android:text="@string/calcLightTheme" />
+     </RadioGroup>
+     -->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dark_theme"
@@ -47,6 +47,13 @@
         style="@style/JT.SmallShapeAppearance"
         android:text="@string/calcLightTheme"
         app:layout_constraintStart_toEndOf="@+id/button_dark_theme"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_theme_dialog"
+        style="@style/JT.SmallShapeAppearance"
+        android:text="@string/theme"
+        app:layout_constraintStart_toEndOf="@+id/button_light_theme"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView

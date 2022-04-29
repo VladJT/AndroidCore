@@ -1,9 +1,7 @@
 package jt.projects.androidcore.calculator;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,28 +12,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.IconCompat;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.examples.StylesActivity;
 
 public class CalculatorActivity extends BaseActivity {
-    private static final String TAG = "CalculatorActivity"; // log
     private final static String CALC_DATA_KEY = "calculator_data"; //  CalcData - Parcelable
 
     private TextView tResult;
     private TextInputEditText eInputNumber;
+    private TextInputLayout tInputNumberLayout;
     private CalcData calcData;
-    private Toast toast;
     private Button b1;
     private Button b2;
     private Button b3;
@@ -57,6 +51,7 @@ public class CalculatorActivity extends BaseActivity {
     private Button bResult;
     private Button bDarkheme;
     private Button bLightheme;
+    private Button bThemeDialog;
 
 
     @Override
@@ -64,7 +59,7 @@ public class CalculatorActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         calcData = new CalcData();
         initViewComponents();
-        initThemeChooser();
+        //initThemeChooser();
 
         //     testNewActivity();
     }
@@ -96,8 +91,10 @@ public class CalculatorActivity extends BaseActivity {
         bNegativePositive = findViewById(R.id.button_negative_positive);
         tResult = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
+        tInputNumberLayout = findViewById(R.id.textInputLayout);
         bLightheme = findViewById(R.id.button_light_theme);
         bDarkheme = findViewById(R.id.button_dark_theme);
+        bThemeDialog = findViewById(R.id.button_theme_dialog);
 
         // set listeners
         initNumberButtonsListeners();
@@ -141,36 +138,27 @@ public class CalculatorActivity extends BaseActivity {
         bDarkheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showThemeDialog();
-                //   setAppTheme(themesWithRbuttons.get(0));
-                //   recreate();
+                setAppTheme(themesMap.get(0));
+                recreate();
             }
         });
 
         bLightheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAppTheme(themesWithRbuttons.get(1));
+                setAppTheme(themesMap.get(1));
                 recreate();
+            }
+        });
+
+        bThemeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showThemeDialog();
             }
         });
     }
 
-    void showThemeDialog() {
-        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
-        int itemSelected = 0;
-        new AlertDialog.Builder(this)
-                .setTitle("Выберите тему")
-                .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int selectedIndex) {
-
-                    }
-                })
-                .setPositiveButton("Ok", null)
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
 
     private void initButtonResultListener() {
         // кнопка [ = ]
@@ -187,6 +175,7 @@ public class CalculatorActivity extends BaseActivity {
                         String result = calcData.countResult();
                         if (result.equals(CalcData.DIVIDE_BY_ZERO_ERROR)) {
                             eInputNumber.setError("Деление на ноль запрещено");
+                        //    tInputNumberLayout.setError("Деление на ноль запрещено");
                         } else {
                             eInputNumber.setError(null);
                             infoString += calcData.getNumber2() + "=";
@@ -251,34 +240,25 @@ public class CalculatorActivity extends BaseActivity {
         bDot.setOnClickListener(buttonNumberClickListener);
     }
 
-    private void initThemeChooser() {
-        initRadioButton(findViewById(R.id.radioButtonDark), themesWithRbuttons.get(0));
-        initRadioButton(findViewById(R.id.radioButtonLight), themesWithRbuttons.get(1));
-        RadioGroup rg = findViewById(R.id.radioButtonsTheme);
-        int checkedRbIndex = 0;
-        for (Map.Entry k : themesWithRbuttons.entrySet()) {
-            if (Integer.valueOf(k.getValue().toString()) == getAppTheme()) {
-                checkedRbIndex = Integer.valueOf(k.getKey().toString());
-            }
-        }
-        ((MaterialRadioButton) rg.getChildAt(checkedRbIndex)).setChecked(true);
-    }
-
-    private void initRadioButton(View button, final int codeStyle) {
-        button.setOnClickListener(v -> {
-            setAppTheme(codeStyle);
-            recreate();
-        });
-    }
-
-    private void showLogMessage(Context c, String message) {
-        Log.e(TAG, message);
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(c, message, Toast.LENGTH_SHORT);
-        toast.show();
-    }
+//    private void initThemeChooser() {
+//        initRadioButton(findViewById(R.id.radioButtonDark), themesMap.get(0));
+//        initRadioButton(findViewById(R.id.radioButtonLight), themesMap.get(1));
+//        RadioGroup rg = findViewById(R.id.radioButtonsTheme);
+//        int checkedRbIndex = 0;
+//        for (Map.Entry k : themesMap.entrySet()) {
+//            if (Integer.valueOf(k.getValue().toString()) == getAppTheme()) {
+//                checkedRbIndex = Integer.valueOf(k.getKey().toString());
+//            }
+//        }
+//        ((MaterialRadioButton) rg.getChildAt(checkedRbIndex)).setChecked(true);
+//    }
+//
+//    private void initRadioButton(View button, final int codeStyle) {
+//        button.setOnClickListener(v -> {
+//            setAppTheme(codeStyle);
+//            recreate();
+//        });
+//    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
