@@ -23,12 +23,14 @@
             android:id="@+id/radioButtonDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="0dp"
             android:text="@string/calcDarkTheme" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="0dp"
             android:text="@string/calcLightTheme" />
     </RadioGroup>
 

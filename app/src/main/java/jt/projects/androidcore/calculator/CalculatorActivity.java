@@ -138,16 +138,16 @@ public class CalculatorActivity extends BaseActivity {
             }
         });
 
-        // change theme
-        bLightheme.setOnClickListener(new View.OnClickListener() {
+        bDarkheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAppTheme(themesWithRbuttons.get(0));
-                recreate();
+                showThemeDialog();
+                //   setAppTheme(themesWithRbuttons.get(0));
+                //   recreate();
             }
         });
 
-        bDarkheme.setOnClickListener(new View.OnClickListener() {
+        bLightheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAppTheme(themesWithRbuttons.get(1));
@@ -157,19 +157,19 @@ public class CalculatorActivity extends BaseActivity {
     }
 
     void showThemeDialog() {
-//        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
-//        int itemSelected = 0;
-//        new AlertDialog.Builder(this)
-//                .setTitle("Выберите тему")
-//                .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int selectedIndex) {
-//
-//                    }
-//                })
-//                .setPositiveButton("Ok", null)
-//                .setNegativeButton("Cancel", null)
-//                .show();
+        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
+        int itemSelected = 0;
+        new AlertDialog.Builder(this)
+                .setTitle("Выберите тему")
+                .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int selectedIndex) {
+
+                    }
+                })
+                .setPositiveButton("Ok", null)
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void initButtonResultListener() {
