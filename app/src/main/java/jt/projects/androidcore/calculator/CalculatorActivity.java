@@ -175,7 +175,7 @@ public class CalculatorActivity extends BaseActivity {
                         String result = calcData.countResult();
                         if (result.equals(CalcData.DIVIDE_BY_ZERO_ERROR)) {
                             eInputNumber.setError("Деление на ноль запрещено");
-                        //    tInputNumberLayout.setError("Деление на ноль запрещено");
+                            //    tInputNumberLayout.setError("Деление на ноль запрещено");
                         } else {
                             eInputNumber.setError(null);
                             infoString += calcData.getNumber2() + "=";

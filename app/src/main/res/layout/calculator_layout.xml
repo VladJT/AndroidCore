@@ -35,7 +35,6 @@
      </RadioGroup>
      -->
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dark_theme"
         style="@style/JT.SmallShapeAppearance"
@@ -59,57 +58,38 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewResult"
-        style="@style/JT.RoundedTextView"
+        style="@style/JT.TextViewInfoNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:text="@string/result"
-        android:textAlignment="textEnd"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="@dimen/font_size_medium"
+        android:layout_marginHorizontal="@dimen/text_horizontal_margin"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        style="@style/JT.EditTextInputNumberLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="4dp"
-        android:hint="@string/result"
-        android:textColorHint="?attr/colorSecondary"
-        app:boxStrokeColor="?attr/colorSecondary"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/include2"
+        android:layout_marginBottom="@dimen/std_margins"
+        app:layout_constraintBottom_toTopOf="@+id/includeButtonGrid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputNumber"
+            style="@style/JT.EditTextInputNumber"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/input_number_string"
-            android:inputType="numberDecimal"
-            android:paddingVertical="10dp"
-            android:text="0"
-            android:textAlignment="textEnd"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="@dimen/font_size_giant"
-            android:textStyle="bold" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <include
-        android:id="@+id/include2"
+        android:id="@+id/includeButtonGrid"
         layout="@layout/calculator_grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/std_margins"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

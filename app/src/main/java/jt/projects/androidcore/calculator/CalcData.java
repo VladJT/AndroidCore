@@ -139,7 +139,7 @@ class CalcData implements Parcelable {
                             result = number1.subtract(number2);
                             break;
                         case "/":
-                            result = number1.divide(number2);
+                            result = number1.divide(number2, 10, BigDecimal.ROUND_DOWN).stripTrailingZeros();
                             break;
                         case "*":
                             result = number1.multiply(number2);
@@ -148,18 +148,8 @@ class CalcData implements Parcelable {
                 }
             }
             return result.toString();
-        } catch (ArithmeticException e) { // для случаев типа 1 / 3, с которыми не справляется BigDecimal
-            if (operator.equals("/")) {
-                if (number2.equals(BigDecimal.ZERO)) {
-                    return DIVIDE_BY_ZERO_ERROR;
-                } else {
-                    double rez = number1.doubleValue() / number2.doubleValue();
-                    result = BigDecimal.valueOf(rez);
-                    return String.valueOf(rez);
-                }
-            }
+        } catch (ArithmeticException e) {
+            return e.getMessage();
         }
-        return "--error--";
     }
-
 }

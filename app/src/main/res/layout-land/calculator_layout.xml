@@ -5,72 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dark_theme"
         style="@style/JT.SmallShapeAppearance"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="311dp"
         android:text="@string/calcDarkTheme"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_light_theme" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_light_theme"
         style="@style/JT.SmallShapeAppearance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/calcLightTheme"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_dark_theme" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_theme_dialog"
+        style="@style/JT.SmallShapeAppearance"
+        android:text="@string/theme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_light_theme" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewResult"
-        style="@style/JT.RoundedTextView"
+        style="@style/JT.TextViewInfoNumber"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="@dimen/text_horizontal_margin"
         android:gravity="center|right"
-        android:paddingBottom="4dp"
-        android:text="@string/result"
+        android:paddingBottom="@dimen/std_margins"
         android:textAlignment="gravity"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="@dimen/font_size_big"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/include2"
+        app:layout_constraintStart_toStartOf="@+id/includeButtonGrid"
         app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        style="@style/JT.EditTextInputNumberLayout"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="0dp"
-        android:hint="@string/result"
-        android:textColorHint="?attr/colorSecondary"
-        app:boxStrokeColor="?attr/colorSecondary"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/include2"
-        app:layout_constraintEnd_toEndOf="@+id/include2">
+        app:layout_constraintBottom_toTopOf="@+id/includeButtonGrid"
+        app:layout_constraintEnd_toEndOf="@+id/includeButtonGrid">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputNumber"
+            style="@style/JT.EditTextInputNumber"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/input_number_string"
-            android:inputType="numberDecimal"
-            android:paddingVertical="0dp"
-            android:text="0"
-            android:textAlignment="textEnd"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="@dimen/font_size_big"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <include
-        android:id="@+id/include2"
+        android:id="@+id/includeButtonGrid"
         layout="@layout/calculator_grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -6,6 +6,6 @@ class StringFormatter {
     }
 
     public static String getNumberWithoutZerosAtEnd(String d) {
-        return d.replaceAll("\\.[0]+$", "");
+        return d.replaceAll("(\\.[1-9]*)[0]+$", "$1");
     }
 }
