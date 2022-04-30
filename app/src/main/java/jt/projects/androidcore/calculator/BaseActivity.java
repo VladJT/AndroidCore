@@ -47,6 +47,15 @@ public class BaseActivity extends AppCompatActivity {
         return sharedPref.getInt(appTheme, defaultTheme);
     }
 
+    public int getCurrentAppThemeIndex() {
+        for (Map.Entry<Integer, Integer> k : themesMap.entrySet()) {
+            if (k.getValue() == getAppTheme()) {
+                return k.getKey();
+            }
+        }
+        return 0;
+    }
+
     protected void setAppTheme(int codeStyle) {
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference,
                 MODE_PRIVATE);
@@ -55,27 +64,27 @@ public class BaseActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    void showThemeDialog() {
-        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
-        final int[] itemSelected = {0};
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Выберите тему");
-
-        alertDialog.setSingleChoiceItems(singleChoiceItems, itemSelected[0], new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int selectedIndex) {
-                itemSelected[0] = selectedIndex;
-            }
-        });
-        alertDialog.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                setAppTheme(themesMap.get(itemSelected[0]));
-                recreate();
-            }
-        });
-        alertDialog.setNegativeButton(getString(R.string.Cancel), null);
-        alertDialog.create().show();
-    }
+//    void showThemeChooseAlertDialog() {
+//        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
+//        final int[] itemSelected = {0};
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+//        alertDialog.setTitle("Выберите тему");
+//
+//        alertDialog.setSingleChoiceItems(singleChoiceItems, itemSelected[0], new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int selectedIndex) {
+//                itemSelected[0] = selectedIndex;
+//            }
+//        });
+//        alertDialog.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//                setAppTheme(themesMap.get(itemSelected[0]));
+//                recreate();
+//            }
+//        });
+//        alertDialog.setNegativeButton(getString(R.string.Cancel), null);
+//        alertDialog.create().show();
+//    }
 
 
     protected void showLogMessage(Context c, String message) {

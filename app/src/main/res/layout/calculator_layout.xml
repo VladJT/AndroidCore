@@ -39,6 +39,7 @@
         android:id="@+id/button_dark_theme"
         style="@style/JT.SmallShapeAppearance"
         android:text="@string/calcDarkTheme"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +47,7 @@
         android:id="@+id/button_light_theme"
         style="@style/JT.SmallShapeAppearance"
         android:text="@string/calcLightTheme"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/button_dark_theme"
         app:layout_constraintTop_toTopOf="parent" />
 

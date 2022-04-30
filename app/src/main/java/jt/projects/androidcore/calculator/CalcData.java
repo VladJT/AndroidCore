@@ -139,7 +139,7 @@ class CalcData implements Parcelable {
                             result = number1.subtract(number2);
                             break;
                         case "/":
-                            result = number1.divide(number2, 10, BigDecimal.ROUND_DOWN).stripTrailingZeros();
+                            result = number1.divide(number2, 10, BigDecimal.ROUND_DOWN);
                             break;
                         case "*":
                             result = number1.multiply(number2);
@@ -147,6 +147,7 @@ class CalcData implements Parcelable {
                     }
                 }
             }
+            result = result.stripTrailingZeros();
             return result.toString();
         } catch (ArithmeticException e) {
             return e.getMessage();

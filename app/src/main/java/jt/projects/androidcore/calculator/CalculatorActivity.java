@@ -1,25 +1,19 @@
 package jt.projects.androidcore.calculator;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.examples.StylesActivity;
@@ -27,7 +21,7 @@ import jt.projects.androidcore.examples.StylesActivity;
 public class CalculatorActivity extends BaseActivity {
     private final static String CALC_DATA_KEY = "calculator_data"; //  CalcData - Parcelable
 
-    private TextView tResult;
+    private TextView tInfoText;
     private TextInputEditText eInputNumber;
     private TextInputLayout tInputNumberLayout;
     private CalcData calcData;
@@ -90,7 +84,7 @@ public class CalculatorActivity extends BaseActivity {
         bDelete = findViewById(R.id.button_delete);
         bResult = findViewById(R.id.button_result);
         bNegativePositive = findViewById(R.id.button_negative_positive);
-        tResult = findViewById(R.id.textViewResult);
+        tInfoText = findViewById(R.id.textViewResult);
         eInputNumber = findViewById(R.id.editTextInputNumber);
         tInputNumberLayout = findViewById(R.id.textInputLayout);
         bLightheme = findViewById(R.id.button_light_theme);
@@ -107,7 +101,7 @@ public class CalculatorActivity extends BaseActivity {
         // кнопка [ C ]
         bClear.setOnClickListener(v ->
         {
-            tResult.setText("");
+            tInfoText.setText("");
             eInputNumber.setError(null);
             eInputNumber.setText("0");
             calcData.clear();
@@ -188,7 +182,7 @@ public class CalculatorActivity extends BaseActivity {
                         }
                     }
                 }
-                tResult.setText(infoString);
+                tInfoText.setText(infoString);
             } catch (Exception e) {
                 showLogMessage(v.getContext(), e.getMessage());
             }
@@ -204,7 +198,7 @@ public class CalculatorActivity extends BaseActivity {
                 calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
                 String infoText = calcData.getNumber1().toString() + operator;
-                tResult.setText(infoText);
+                tInfoText.setText(infoText);
             } catch (Exception e) {
                 showLogMessage(v.getContext(), e.getMessage());
             }
@@ -267,7 +261,7 @@ public class CalculatorActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        calcData.setResultInfoText(tResult.getText().toString());
+        calcData.setResultInfoText(tInfoText.getText().toString());
         outState.putParcelable(CALC_DATA_KEY, calcData);
     }
 
@@ -275,6 +269,6 @@ public class CalculatorActivity extends BaseActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         calcData = savedInstanceState.getParcelable(CALC_DATA_KEY);
-        tResult.setText(calcData.getResultInfoText());
+        tInfoText.setText(calcData.getResultInfoText());
     }
 }

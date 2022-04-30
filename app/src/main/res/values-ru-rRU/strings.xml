@@ -9,4 +9,5 @@
     <string name="Ok">Ок</string>
     <string name="Cancel">Отмена</string>
     <string name="calcRedTheme">Красная</string>
+    <string name="ChooseTheme">Выберите тему</string>
 </resources>
