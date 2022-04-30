@@ -56,6 +56,10 @@
         <item name="android:fontFamily">@font/jokerman</item>
         <item name="android:textSize">@dimen/font_size_buttons</item>
         <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="rippleColor">#FFB23F</item>
+        <item name="strokeColor">?attr/colorSecondary</item>
     </style>
 
     <style name="JT.SmallShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">

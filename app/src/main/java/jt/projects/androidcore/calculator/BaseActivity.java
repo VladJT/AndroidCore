@@ -1,5 +1,6 @@
 package jt.projects.androidcore.calculator;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -59,6 +60,7 @@ public class BaseActivity extends AppCompatActivity {
         final int[] itemSelected = {0};
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Выберите тему");
+
         alertDialog.setSingleChoiceItems(singleChoiceItems, itemSelected[0], new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int selectedIndex) {
@@ -74,6 +76,7 @@ public class BaseActivity extends AppCompatActivity {
         alertDialog.setNegativeButton(getString(R.string.Cancel), null);
         alertDialog.create().show();
     }
+
 
     protected void showLogMessage(Context c, String message) {
         Log.e(TAG, message);

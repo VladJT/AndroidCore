@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -154,7 +155,10 @@ public class CalculatorActivity extends BaseActivity {
         bThemeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showThemeDialog();
+                FragmentManager manager = getSupportFragmentManager();
+                ThemeDialog myDialogFragment = new ThemeDialog();
+                myDialogFragment.show(manager, "Theme Dialog");
+                //showThemeDialog();
             }
         });
     }

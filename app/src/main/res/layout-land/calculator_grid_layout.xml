@@ -105,9 +105,5 @@
         style="@style/JT.CalcButton"
         android:layout_columnSpan="2"
         android:layout_gravity="fill"
-        android:text="@string/b_getResult"
-        app:backgroundTint="@android:color/transparent"
-        app:cornerRadius="8dp"
-        app:rippleColor="#FFB23F"
-        app:strokeColor="?attr/colorSecondary" />
+        android:text="@string/b_getResult" />
 </GridLayout>
