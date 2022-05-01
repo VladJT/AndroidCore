@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 
 
 class CalcData implements Parcelable {
-
     public static final String DIVIDE_BY_ZERO_ERROR = "divide by zero";
 
     private String resultInfoText;

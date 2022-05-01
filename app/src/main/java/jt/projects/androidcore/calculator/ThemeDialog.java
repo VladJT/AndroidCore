@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment;
 import jt.projects.androidcore.R;
 
 public class ThemeDialog extends DialogFragment {
-
     private CalculatorActivity mainActivity;
     private boolean clickedOk = false;
 

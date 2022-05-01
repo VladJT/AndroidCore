@@ -157,7 +157,6 @@ public class CalculatorActivity extends BaseActivity {
         });
     }
 
-
     private void initButtonResultListener() {
         // кнопка [ = ]
         bResult.setOnClickListener(v -> {

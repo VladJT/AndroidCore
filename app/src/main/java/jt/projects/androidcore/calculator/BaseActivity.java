@@ -64,6 +64,7 @@ public class BaseActivity extends AppCompatActivity {
         editor.apply();
     }
 
+
 //    void showThemeChooseAlertDialog() {
 //        String[] singleChoiceItems = getResources().getStringArray(R.array.calc_themes);
 //        final int[] itemSelected = {0};
