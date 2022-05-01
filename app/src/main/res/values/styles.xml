@@ -27,16 +27,14 @@
 
 
     <style name="CalcRedTheme" parent="CalcDarkTheme">
+        <item name="android:windowBackground">@color/myRed</item><!-- фон -->
         <item name="colorPrimary">#e91e63</item>
         <item name="colorPrimaryDark">#b0003a</item>
         <item name="colorAccent">#ff6090</item>
-        <item name="colorOnPrimary">@color/myRed</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorOnPrimary">@color/pitch_black</item>
     </style>
 
-
-    <!-- <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
-     </style>-->
 
     <!-- Buttons theme. -->
     <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">
@@ -90,17 +88,15 @@
 
     <style name="JT.EditTextInputNumber" parent="ThemeOverlay.Material3.TextInputEditText">
         <item name="android:inputType">numberDecimal</item>
-        <item name="android:paddingVertical">10dp</item>
         <item name="android:textAlignment">textEnd</item>
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:textSize">@dimen/font_size_giant</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/b_0</item>
-        <item name="android:hint"> @string/input_number_string</item>
+        <item name="android:hint">@string/input_number_string</item>
     </style>
 
     <style name="JT.EditTextInputNumberLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="android:layout_marginHorizontal">@dimen/text_horizontal_margin</item>
         <item name="android:textColorHint">?attr/colorSecondary</item>
         <item name="boxStrokeColor">?attr/colorSecondary</item>
         <item name="errorEnabled">true</item>
