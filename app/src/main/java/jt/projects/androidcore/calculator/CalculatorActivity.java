@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.math.BigDecimal;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.examples.SettingsActivity;
 import jt.projects.androidcore.examples.StylesActivity;
 
 public class CalculatorActivity extends BaseActivity {
@@ -56,7 +57,7 @@ public class CalculatorActivity extends BaseActivity {
         initViewComponents();
         //initThemeChooser();
 
-        //     testNewActivity();
+        testNewActivity();
     }
 
     private void testNewActivity() {

@@ -13,6 +13,9 @@
             android:name=".examples.StylesActivity"
             android:exported="false"></activity>
         <activity
+            android:name=".examples.SettingsActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".calculator.CalculatorActivity"
             android:exported="true">
             <intent-filter>
