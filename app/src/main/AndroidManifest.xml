@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore">
         <activity
-            android:name=".examples.StylesActivity"
+            android:name=".examples.intents.StylesActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".examples.SettingsActivity"
+            android:name=".examples.intents.SettingsActivity"
             android:exported="false"></activity>
         <activity
             android:name=".calculator.CalculatorActivity"

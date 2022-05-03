@@ -27,7 +27,15 @@
         android:id="@+id/buttonExStylesNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Далее ..."
+        android:text="Аккаунт ..."
+        android:textSize="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExStylesBrowser"
+        android:textColor="#1748C6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Браузер..."
         android:textSize="20dp"/>
 
     <TextView

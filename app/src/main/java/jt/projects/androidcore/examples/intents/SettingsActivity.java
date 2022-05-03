@@ -1,4 +1,4 @@
-package jt.projects.androidcore.examples;
+package jt.projects.androidcore.examples.intents;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,10 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.Locale;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.examples.intents.Account;
 
 public class SettingsActivity extends AppCompatActivity {
     private EditText editName;
@@ -41,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         editEmail.setText(account.getEmail());
 
 
+        // settings
         Button b = findViewById(R.id.btnExSettingsReturn);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

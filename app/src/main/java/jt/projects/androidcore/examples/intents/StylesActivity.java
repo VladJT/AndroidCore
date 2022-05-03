@@ -1,11 +1,11 @@
-package jt.projects.androidcore.examples;
+package jt.projects.androidcore.examples.intents;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +49,7 @@ public class StylesActivity extends AppCompatActivity {
             }
         });
 
+        // account settings
         t = findViewById(R.id.editTextExStyles);
         findViewById(R.id.buttonExStylesNext).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,22 @@ public class StylesActivity extends AppCompatActivity {
                 account.setName(t.getText().toString());
                 runSettings.putExtra("USER_NAME", account);
                 startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
+            }
+        });
+
+
+        // browser
+        findViewById(R.id.buttonExStylesBrowser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri address = Uri.parse("https://geekbrains.ru");
+                Intent linkInet = new Intent(Intent.ACTION_VIEW, address);
+//                ActivityInfo activityInfo = linkInet.resolveActivityInfo(getPackageManager(), linkInet.getFlags());
+//                if (activityInfo != null) {
+//                    startActivity(linkInet);
+//                }
+
+                startActivity(linkInet);
             }
         });
     }

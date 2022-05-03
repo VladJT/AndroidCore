@@ -1,4 +1,4 @@
-package jt.projects.androidcore.examples;
+package jt.projects.androidcore.examples.intents;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -16,8 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.math.BigDecimal;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.examples.SettingsActivity;
-import jt.projects.androidcore.examples.StylesActivity;
+import jt.projects.androidcore.examples.intents.StylesActivity;
 
 public class CalculatorActivity extends BaseActivity {
     private final static String CALC_DATA_KEY = "calculator_data"; //  CalcData - Parcelable
