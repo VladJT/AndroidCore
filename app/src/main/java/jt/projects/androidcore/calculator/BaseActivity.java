@@ -28,12 +28,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initThemes();
-        setTheme(getAppTheme());
-        setContentView(R.layout.calculator_layout);
+        initThemesMap();
     }
 
-    private void initThemes() {
+    private void initThemesMap() {
         themesMap = new HashMap<>();
         themesMap.put(0, R.style.CalcDarkTheme);
         themesMap.put(1, R.style.CalcLightTheme);

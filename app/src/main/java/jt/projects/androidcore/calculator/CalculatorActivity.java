@@ -53,10 +53,28 @@ public class CalculatorActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         calcData = new CalcData();
+        initIntentParams();
+        setTheme(getAppTheme());
+        setContentView(R.layout.calculator_layout);
+
         initViewComponents();
         //initThemeChooser();
 
-        testNewActivity();
+        //    testNewActivity();
+    }
+
+    private void initIntentParams() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String params = bundle.getString("THEME"); // получить данные из Intent;
+            showLogMessage(getApplicationContext(), "Настойки входящей темы = "+params);
+            Integer p = Integer.valueOf(params);
+            if(themesMap.containsKey(p)){
+                setAppTheme(themesMap.get(p));
+            }
+
+        } else showLogMessage(getApplicationContext(), "Настойки входящей темы = null");
     }
 
     private void testNewActivity() {
