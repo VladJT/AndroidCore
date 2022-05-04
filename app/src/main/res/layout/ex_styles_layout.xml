@@ -38,6 +38,20 @@
         android:text="Браузер..."
         android:textSize="20dp"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExStylesSendMessageToContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отправить сообщение"
+        android:textSize="14dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonExStylesGetContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Получить контакт"
+        android:textSize="14dp"/>
+
     <TextView
         android:id="@+id/textViewExStyles"
         android:layout_width="match_parent"

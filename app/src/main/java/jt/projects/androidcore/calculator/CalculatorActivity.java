@@ -60,7 +60,12 @@ public class CalculatorActivity extends BaseActivity {
         initViewComponents();
         //initThemeChooser();
 
-        //    testNewActivity();
+        testNewActivity();
+    }
+
+    private void testNewActivity() {
+        Intent intent = new Intent(CalculatorActivity.this, StylesActivity.class);
+        startActivity(intent);
     }
 
     private void initIntentParams() {
@@ -75,11 +80,6 @@ public class CalculatorActivity extends BaseActivity {
             }
 
         } else showLogMessage(getApplicationContext(), "Настойки входящей темы = null");
-    }
-
-    private void testNewActivity() {
-        Intent intent = new Intent(CalculatorActivity.this, StylesActivity.class);
-        startActivity(intent);
     }
 
     private void initViewComponents() {
