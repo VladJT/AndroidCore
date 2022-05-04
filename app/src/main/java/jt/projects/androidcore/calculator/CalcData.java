@@ -148,7 +148,7 @@ class CalcData implements Parcelable {
                 }
             }
             result = result.stripTrailingZeros();
-            return result.toString();
+            return result.toPlainString();
         } catch (ArithmeticException e) {
             return e.getMessage();
         }

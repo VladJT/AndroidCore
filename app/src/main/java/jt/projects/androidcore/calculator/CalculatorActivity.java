@@ -58,9 +58,8 @@ public class CalculatorActivity extends BaseActivity {
         setContentView(R.layout.calculator_layout);
 
         initViewComponents();
-        //initThemeChooser();
 
-        testNewActivity();
+//        testNewActivity();
     }
 
     private void testNewActivity() {
@@ -183,7 +182,7 @@ public class CalculatorActivity extends BaseActivity {
                 String infoString = "";
                 calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 if (calcData.getNumber1() != null) {
-                    infoString += calcData.getNumber1().toString();
+                    infoString += calcData.getNumber1().toPlainString();
                 }
                 if (!calcData.getOperator().equals("")) {
                     infoString += calcData.getOperator();
@@ -194,9 +193,9 @@ public class CalculatorActivity extends BaseActivity {
                             //    tInputNumberLayout.setError("Деление на ноль запрещено");
                         } else {
                             eInputNumber.setError(null);
-                            infoString += calcData.getNumber2() + "=";
+                            infoString += calcData.getNumber2().toPlainString() + "=";
                             calcData.setNumber1(calcData.getResult());
-                            eInputNumber.setText(calcData.getResult().toString());
+                            eInputNumber.setText(result);
                         }
                     }
                 }
@@ -215,7 +214,7 @@ public class CalculatorActivity extends BaseActivity {
                 String operator = ((Button) v).getText().toString();
                 calcData.setNumber(new BigDecimal(eInputNumber.getText().toString()));
                 calcData.setOperator(operator);
-                String infoText = calcData.getNumber1().toString() + operator;
+                String infoText = calcData.getNumber1().toPlainString() + operator;
                 tInfoText.setText(infoText);
             } catch (Exception e) {
                 showLogMessage(v.getContext(), e.getMessage());
@@ -256,25 +255,7 @@ public class CalculatorActivity extends BaseActivity {
         bDot.setOnClickListener(buttonNumberClickListener);
     }
 
-//    private void initThemeChooser() {
-//        initRadioButton(findViewById(R.id.radioButtonDark), themesMap.get(0));
-//        initRadioButton(findViewById(R.id.radioButtonLight), themesMap.get(1));
-//        RadioGroup rg = findViewById(R.id.radioButtonsTheme);
-//        int checkedRbIndex = 0;
-//        for (Map.Entry k : themesMap.entrySet()) {
-//            if (Integer.valueOf(k.getValue().toString()) == getAppTheme()) {
-//                checkedRbIndex = Integer.valueOf(k.getKey().toString());
-//            }
-//        }
-//        ((MaterialRadioButton) rg.getChildAt(checkedRbIndex)).setChecked(true);
-//    }
-//
-//    private void initRadioButton(View button, final int codeStyle) {
-//        button.setOnClickListener(v -> {
-//            setAppTheme(codeStyle);
-//            recreate();
-//        });
-//    }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
