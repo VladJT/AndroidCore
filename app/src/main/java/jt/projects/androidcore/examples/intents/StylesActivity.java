@@ -1,5 +1,6 @@
 package jt.projects.androidcore.examples.intents;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -12,6 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +59,16 @@ public class StylesActivity extends AppCompatActivity {
             }
         });
 
+        ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        account = data.getParcelableExtra("USER_NAME");
+                        t.setText(account.getName() + " " + account.getSurName() + " " + account.getAge() + " " + account.getEmail());
+                    }
+                });
+
         // account settings
         t = findViewById(R.id.editTextExStyles);
         findViewById(R.id.buttonExStylesNext).setOnClickListener(new View.OnClickListener() {
@@ -66,7 +81,8 @@ public class StylesActivity extends AppCompatActivity {
                 //по таким же правилам. Нам нужна пара ключ-значение.
                 account.setName(t.getText().toString());
                 runSettings.putExtra("USER_NAME", account);
-                startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
+               // startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
+                launchSomeActivity.launch(runSettings);
             }
         });
 
@@ -122,10 +138,10 @@ public class StylesActivity extends AppCompatActivity {
                 return;
             }
 
-            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SETTING_ACTIVITY) {
-                account = data.getParcelableExtra("USER_NAME");
-                t.setText(account.getName() + " " + account.getSurName() + " " + account.getAge() + " " + account.getEmail());
-            }
+//            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SETTING_ACTIVITY) {
+//                account = data.getParcelableExtra("USER_NAME");
+//                t.setText(account.getName() + " " + account.getSurName() + " " + account.getAge() + " " + account.getEmail());
+//            }
 
             if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ACTIVITY_GET_CONTACT) {
                 if (data != null) {
