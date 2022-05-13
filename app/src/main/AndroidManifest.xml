@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore">
         <activity
-            android:name=".examples.intents.StylesActivity"
+            android:name=".examples.intents.IntentExActivity"
             android:exported="false"></activity>
         <activity
             android:name=".examples.intents.SettingsActivity"

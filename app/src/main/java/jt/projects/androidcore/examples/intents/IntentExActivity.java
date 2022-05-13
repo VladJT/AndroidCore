@@ -2,7 +2,6 @@ package jt.projects.androidcore.examples.intents;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,8 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
@@ -24,7 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import jt.projects.androidcore.R;
 
-public class StylesActivity extends AppCompatActivity {
+public class IntentExActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SETTING_ACTIVITY = 99;
     private static final int REQUEST_CODE_ACTIVITY_GET_CONTACT = 98;
     private static final String TAG = "StylesActivity";
@@ -36,7 +33,7 @@ public class StylesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex_styles_layout);
+        setContentView(R.layout.ex_intents_layout);
         account = new Account();
 
         info = findViewById(R.id.textViewExStyles);
@@ -54,7 +51,7 @@ public class StylesActivity extends AppCompatActivity {
         findViewById(R.id.buttonExStylesClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(StylesActivity.this, "Клик", Toast.LENGTH_SHORT).show();
+                Toast.makeText(IntentExActivity.this, "Клик", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -76,7 +73,7 @@ public class StylesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Чтобы стартовать активити, надо подготовить интент
                 // В данном случае это будет явный интент, поскольку здесь передаётся класс активити
-                Intent runSettings = new Intent(StylesActivity.this, SettingsActivity.class);
+                Intent runSettings = new Intent(IntentExActivity.this, SettingsActivity.class);
                 // Поскольку экстра-параметры — это по факту Bundle класс (см. третий урок), то и устанавливаются они
                 //по таким же правилам. Нам нужна пара ключ-значение.
                 account.setName(t.getText().toString());

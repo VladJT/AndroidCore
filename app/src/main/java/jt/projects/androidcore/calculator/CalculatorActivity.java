@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.math.BigDecimal;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.examples.intents.StylesActivity;
+import jt.projects.androidcore.examples.intents.IntentExActivity;
 
 public class CalculatorActivity extends BaseActivity {
     private final static String CALC_DATA_KEY = "calculator_data"; //  CalcData - Parcelable
@@ -63,18 +63,28 @@ public class CalculatorActivity extends BaseActivity {
     }
 
     private void testNewActivity() {
-        Intent intent = new Intent(CalculatorActivity.this, StylesActivity.class);
+        Intent intent = new Intent(CalculatorActivity.this, IntentExActivity.class);
         startActivity(intent);
     }
 
+
+    // пример запуска извне
+    // ...
+    //    try{
+    //          Uri uri = Uri.parse("example://intent");
+    //          Intent calcIntent = new Intent(Intent.ACTION_VIEW, uri);
+    //          calcIntent.putExtra("THEME", "0");
+    //          startActivity(calcIntent);
+    //     }
+    //     ...
     private void initIntentParams() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             String params = bundle.getString("THEME"); // получить данные из Intent;
-            showLogMessage(getApplicationContext(), "Настойки входящей темы = "+params);
+            showLogMessage(getApplicationContext(), "Настойки входящей темы = " + params);
             Integer p = Integer.valueOf(params);
-            if(themesMap.containsKey(p)){
+            if (themesMap.containsKey(p)) {
                 setAppTheme(themesMap.get(p));
             }
 
@@ -254,7 +264,6 @@ public class CalculatorActivity extends BaseActivity {
         b0.setOnClickListener(buttonNumberClickListener);
         bDot.setOnClickListener(buttonNumberClickListener);
     }
-
 
 
     @Override
