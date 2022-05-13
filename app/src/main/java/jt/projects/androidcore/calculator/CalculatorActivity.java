@@ -67,7 +67,6 @@ public class CalculatorActivity extends BaseActivity {
         startActivity(intent);
     }
 
-
     // пример запуска извне
     // ...
     //    try{

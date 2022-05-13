@@ -32,7 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         // получить данные из Intent
         Account account = getIntent().getExtras().getParcelable("USER_NAME");
-
         editName.setText(account.getName());
         editSurname.setText(account.getSurName());
         editAge.setText(String.format(Locale.getDefault(), "%d",

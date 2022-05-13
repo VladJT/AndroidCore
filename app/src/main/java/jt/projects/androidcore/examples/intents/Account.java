@@ -3,8 +3,8 @@ package jt.projects.androidcore.examples.intents;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Account implements Parcelable {
 
+public class Account implements Parcelable {
     private String name;
     private String surName;
     private int age;

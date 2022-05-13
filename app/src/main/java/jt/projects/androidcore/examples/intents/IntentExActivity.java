@@ -78,7 +78,7 @@ public class IntentExActivity extends AppCompatActivity {
                 //по таким же правилам. Нам нужна пара ключ-значение.
                 account.setName(t.getText().toString());
                 runSettings.putExtra("USER_NAME", account);
-               // startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
+                // startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
                 launchSomeActivity.launch(runSettings);
             }
         });
