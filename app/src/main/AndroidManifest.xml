@@ -9,20 +9,29 @@
         android:roundIcon="@mipmap/robot"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore">
-        <activity
-            android:name=".examples.intents.IntentExActivity"
-            android:exported="false"></activity>
-        <activity
-            android:name=".examples.intents.SettingsActivity"
-            android:exported="false"></activity>
-        <activity
-            android:name=".calculator.CalculatorActivity"
+        <activity android:name=".examples.fragmentobservers.FragmentObserversMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".cities.EmblemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cities.MainCitiesActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".examples.intents.IntentExActivity"
+            android:exported="false" />
+        <activity
+            android:name=".examples.intents.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".calculator.CalculatorActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -32,7 +41,6 @@
                     android:host="intent"
                     android:scheme="example" />
             </intent-filter>
-
         </activity>
     </application>
 

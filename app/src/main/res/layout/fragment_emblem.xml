@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".cities.EmblemFragment"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <ImageView
+        android:id="@+id/city_emblem_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="coat of arms"
+        android:scaleType="fitStart"
+        tools:src="@drawable/emblem_moscow" />
+
+
+</LinearLayout>

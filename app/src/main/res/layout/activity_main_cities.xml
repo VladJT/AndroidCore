@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cities.MainCitiesActivity">
+
+    <!--
+    Разберём, какие здесь присутствуют элементы:
+
+        1. FrameLayout — корневой элемент активити. В нашей активити не будет никакого UI.
+    Все экраны будут отображаться во фрагментах, поэтому MainActivity, по сути, просто
+    контейнер для фрагментов. Так же и в xml — мы просто создаем контейнер для
+    отображения UI фрагментов.
+
+        2. FrameLayout с id fragment_container: отдельный контейнер на нашего фрагмента
+    CitiesFragment. Именно в нем будет отображаться фрагмент. Так как фрагмент — это
+    часть экрана, значит на одном экране может отображаться несколько фрагментов. Это
+    мы увидим в дальнейшем, когда будем отображать два фрагмента в ландшафтной
+    ориентации. Для портретной у нас один фрагмент со списком городов.
+    -->
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

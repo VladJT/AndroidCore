@@ -15,4 +15,20 @@
         <item>@string/calcLightTheme</item>
         <item>@string/calcRedTheme</item>
     </string-array>
+    <string-array name="cities">
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+        <item>Екатеринбург</item>
+        <item>Новосибирск</item>
+        <item>Самара</item>
+    </string-array>
+
+    <integer-array name="coat_of_arms_imgs">
+        <item>@drawable/emblem_moscow</item><!-- герб Москвы -->
+        <item>@drawable/emblem_spb</item><!-- герб Санкт-Петербурга -->
+        <item>@drawable/emblem_ekb</item><!-- герб Екатеринбурга -->
+        <item>@drawable/emblem_novosib</item><!-- герб Новосибирска -->
+        <item>@drawable/emblem_samara</item><!-- герб Самары -->
+    </integer-array>
+
 </resources>

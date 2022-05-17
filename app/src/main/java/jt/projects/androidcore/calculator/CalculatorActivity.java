@@ -59,7 +59,7 @@ public class CalculatorActivity extends BaseActivity {
 
         initViewComponents();
 
-        testNewActivity();
+    //    testNewActivity();
     }
 
     private void testNewActivity() {
