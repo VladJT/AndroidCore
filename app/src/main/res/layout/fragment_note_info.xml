@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".notes.NoteInfoFragment">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes_info_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Тема"
+            android:textSize="@dimen/font_size_medium" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes_info_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Текст"
+            android:textSize="@dimen/font_size_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
