@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.calculator.CalculatorActivity;
 import jt.projects.androidcore.cities.EmblemFragment;
 import jt.projects.androidcore.common.ConfigInfo;
 
@@ -62,13 +63,13 @@ public class NotesListFragment extends Fragment {
 
     private void initNotes(View view) {
         LinearLayout layoutView = (LinearLayout) view;
-        String[] notes = {"заметка 1", "заметка 2", "заметка 3"};
+        String[] notes = NotesMainActivity.getNotesData().getNotesList();
 
         for (int i = 0; i < notes.length; i++) {
             String note = notes[i];
             TextView tw = new TextView(getContext());
             tw.setText(note);
-            tw.setTextSize(30);
+            tw.setTextSize(24);
             layoutView.addView(tw);
             final int pos = i;
             tw.setOnClickListener(v -> {
@@ -87,7 +88,7 @@ public class NotesListFragment extends Fragment {
     private void showPortraitNoteInfo() {
         Activity notesInfoActivity = requireActivity();
         final Intent intent = new Intent(notesInfoActivity, NoteInfoActivity.class);
-        //  intent.putExtra(ARG_INDEX, currentPosition);
+        intent.putExtra(NoteInfoFragment.CURRENT_NOTE_INDEX, currentPosition);
         notesInfoActivity.startActivity(intent);
     }
 

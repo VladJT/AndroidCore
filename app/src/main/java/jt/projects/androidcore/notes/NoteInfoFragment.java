@@ -18,7 +18,7 @@ import jt.projects.androidcore.R;
 
 
 public class NoteInfoFragment extends Fragment {
-
+    static final String CURRENT_NOTE_INDEX = "index";
 
     public NoteInfoFragment() {
         // Required empty public constructor
@@ -29,8 +29,8 @@ public class NoteInfoFragment extends Fragment {
         NoteInfoFragment noteInfoFragment = new NoteInfoFragment();
         // Передача параметра через бандл
         Bundle b = new Bundle();
-      //  b.putInt(ARG_INDEX, index);
-   //     noteInfoFragment.setArguments(b);
+        b.putInt(CURRENT_NOTE_INDEX, index);
+        noteInfoFragment.setArguments(b);
         return noteInfoFragment;
     }
 
@@ -49,24 +49,27 @@ public class NoteInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
+        if (args != null) {
+            int index = args.getInt(CURRENT_NOTE_INDEX);
+            NotesData.Note currentNote = NotesMainActivity.getNotesData().getNote(index);
 
-        TextInputEditText topic = view.findViewById(R.id.notes_info_topic);
-        topic.setText("Заметка Х");
+            TextInputEditText topic = view.findViewById(R.id.notes_info_topic);
+            TextInputEditText description = view.findViewById(R.id.notes_info_description);
 
+            topic.setText(currentNote.getTopic());
+            description.setText(currentNote.getDescription());
+        }
 
 //        if (args != null) {
-
 //            int index = args.getInt(NOTE_INDEX);
 //            // найдем в root view нужный ImageView
 //            ImageView emblemImage = view.findViewById(R.id.city_emblem_image_view);
-//
 //            // Получим из ресурсов массив указателей на изображения гербов
 //            // Обратите внимание на тип - TypedArray, и способ получения - obtainTypedArray
 //            TypedArray images = getResources().obtainTypedArray(R.array.coat_of_arms_imgs);
-//
 //            emblemImage.setImageResource(images.getResourceId(index, 0));
 //            // TypedArray рекомендуется закрыть после использования
 //            images.recycle();
- //       }
+        //       }
     }
 }

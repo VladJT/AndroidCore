@@ -8,9 +8,19 @@ import jt.projects.androidcore.R;
 
 public class NotesMainActivity extends AppCompatActivity {
 
+    private static NotesData notesData;
+
+    public static NotesData getNotesData() {
+        return notesData;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        notesData = new NotesData();
+        notesData.loadData();
+
         setTheme(R.style.CalcLightTheme);
         setContentView(R.layout.activity_notes);
 
