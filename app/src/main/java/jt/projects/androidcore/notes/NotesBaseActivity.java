@@ -20,7 +20,7 @@ public class NotesBaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.CalcLightTheme);
+        setTheme(R.style.NotesTheme);
         getSupportActionBar().hide();// отключаем AppBar
 
         if (notesData == null) {

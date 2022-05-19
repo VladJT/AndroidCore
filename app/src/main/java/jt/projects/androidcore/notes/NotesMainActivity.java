@@ -12,9 +12,9 @@ import android.view.WindowManager;
 
 import jt.projects.androidcore.R;
 
-public class NotesMainActivity extends NotesBaseActivity implements NoteChangePublisherGetter {
+public class NotesMainActivity extends NotesBaseActivity {
 
-    private NoteChangePublisher publisher = new NoteChangePublisher();
+    public static NoteChangePublisher publisher = new NoteChangePublisher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,8 @@ public class NotesMainActivity extends NotesBaseActivity implements NoteChangePu
         }
     }
 
-    @Override
-    public NoteChangePublisher getPublisher() {
-        return publisher;
-    }
+//    @Override
+//    public static NoteChangePublisher getPublisher() {
+//        return publisher;
+//    }
 }

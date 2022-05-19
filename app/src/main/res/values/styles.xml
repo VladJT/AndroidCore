@@ -35,6 +35,16 @@
         <item name="colorOnPrimary">@color/pitch_black</item>
     </style>
 
+    <!-- NEW LIGHT theme. -->
+    <style name="NotesTheme" parent="Theme.AppCompat.Light">
+        <!--item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item -->
+        <item name="android:windowBackground">#E6EFF6</item>
+        <item name="colorPrimary">@color/myBlue</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="android:navigationBarColor">@color/myBlue</item><!-- цвет navBar -->
+        <!--  <item name="colorPrimaryDark">@color/myBlue</item>--><!-- цвет самого верхнего bar -->
+        <!--  <item name="android:textStyle">italic</item> -->
+    </style>
 
     <!-- Buttons theme. -->
     <style name="MyCalcButton" parent="Widget.AppCompat.Button.Borderless">

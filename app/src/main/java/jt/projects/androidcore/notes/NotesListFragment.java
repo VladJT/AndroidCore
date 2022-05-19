@@ -11,12 +11,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.common.ConfigInfo;
@@ -25,7 +29,8 @@ import jt.projects.androidcore.common.ConfigInfo;
 public class NotesListFragment extends Fragment implements NoteChangeObserver {
     private static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;// Текущая позиция
-    private View currentView;
+    //  private View currentView;
+    private ListView notesListView;
 
     public NotesListFragment() {
         // Required empty public constructor
@@ -48,7 +53,8 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
-        currentView = view;
+        //currentView = view;
+        notesListView = view.findViewById(R.id.notes_list_listview);
         initNotesList();
         if (new ConfigInfo(getContext()).isLandscape()) {
             showNoteInfo();
@@ -62,20 +68,32 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
     }
 
     private void initNotesList() {
-        LinearLayout layoutView = (LinearLayout) currentView;
-        String[] notes = NotesBaseActivity.getNotesData().getNotesList();
-
-        for (int i = 0; i < notes.length; i++) {
-            String note = notes[i];
-            TextView tw = new TextView(getContext());
-            tw.setText(note);
-            tw.setTextSize(24);
-            layoutView.addView(tw);
-            final int pos = i;
-            tw.setOnClickListener(v -> {
-                currentPosition = pos;
+//        LinearLayout layoutView = (LinearLayout) currentView;
+//        String[] notes = NotesBaseActivity.getNotesData().getNotesList();
+//
+//        for (int i = 0; i < notes.length; i++) {
+//            String note = notes[i];
+//            TextView tw = new TextView(getContext());
+//            tw.setText(note);
+//            tw.setTextSize(24);
+//            layoutView.addView(tw);
+//            final int pos = i;
+//            tw.setOnClickListener(v -> {
+//                currentPosition = pos;
+//                showNoteInfo();
+//            });
+//        }
+        try {
+            ArrayList<String> list = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+            notesListView.setAdapter(adapter);
+            notesListView.setOnItemClickListener((parent, view, position, id) -> {
+                currentPosition = position;
                 showNoteInfo();
             });
+        } catch (Exception e) {
+            Toast toast = Toast.makeText(requireActivity().getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -87,7 +105,7 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
 
     private void showPortraitNoteInfo() {
         Activity notesInfoActivity = requireActivity();
-        final Intent intent = new Intent(notesInfoActivity, NoteInfoActivity.class);
+        final Intent intent = new Intent(NotesListFragment.this.getActivity(), NoteInfoActivity.class);
         intent.putExtra(NoteInfoFragment.CURRENT_NOTE_INDEX, currentPosition);
         notesInfoActivity.startActivity(intent);
     }

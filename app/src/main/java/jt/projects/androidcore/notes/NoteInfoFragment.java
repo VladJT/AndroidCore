@@ -28,7 +28,7 @@ import jt.projects.androidcore.common.ConfigInfo;
 public class NoteInfoFragment extends Fragment {
     static final String CURRENT_NOTE_INDEX = "index";
     private int currentNoteIndex = -1;// -1 для добавления, остальные для изменения записей
-    private NoteChangePublisher publisher;//обработчик подписок
+    //    private NoteChangePublisher publisher;//обработчик подписок
     private TextInputEditText etTopic;
     private TextInputEditText etDescription;
     private TextInputEditText etAuthor;
@@ -52,12 +52,12 @@ public class NoteInfoFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
-            publisher = ((NoteChangePublisherGetter) getActivity()).getPublisher();
-        } catch (Exception e) {
-            Toast toast = Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-            toast.show();
-        }
+//        try {
+//   //         publisher = ((NoteChangePublisherGetter) getActivity()).getPublisher();
+//        } catch (Exception e) {
+//            Toast toast = Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
     }
 
     @Override
@@ -114,7 +114,7 @@ public class NoteInfoFragment extends Fragment {
             } else {
                 NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex);
             }
-            publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
+            NotesMainActivity.publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
             if (!new ConfigInfo(getActivity()).isLandscape()) {
                 requireActivity().finish();
             }
