@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.calculator.CalculatorActivity;
-import jt.projects.androidcore.cities.EmblemFragment;
 import jt.projects.androidcore.common.ConfigInfo;
 
 
-public class NotesListFragment extends Fragment {
+public class NotesListFragment extends Fragment implements NoteChangeObserver {
     private static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;// Текущая позиция
+    private View currentView;
 
     public NotesListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,8 @@ public class NotesListFragment extends Fragment {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
-        initNotes(view);
+        currentView = view;
+        initNotesList();
         if (new ConfigInfo(getContext()).isLandscape()) {
             showNoteInfo();
         }
@@ -61,9 +61,9 @@ public class NotesListFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void initNotes(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        String[] notes = NotesMainActivity.getNotesData().getNotesList();
+    private void initNotesList() {
+        LinearLayout layoutView = (LinearLayout) currentView;
+        String[] notes = NotesBaseActivity.getNotesData().getNotesList();
 
         for (int i = 0; i < notes.length; i++) {
             String note = notes[i];
@@ -100,5 +100,10 @@ public class NotesListFragment extends Fragment {
         ft.addToBackStack("");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+    }
+
+    @Override
+    public void changeNote(NotesData.Note note, int index) {
+        initNotesList();
     }
 }

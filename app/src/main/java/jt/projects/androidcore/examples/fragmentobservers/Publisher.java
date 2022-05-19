@@ -3,7 +3,7 @@ package jt.projects.androidcore.examples.fragmentobservers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Publisher {
+class Publisher {
     private List<Observer> observers;// Все подписчики (Fragment1,    Fragment2)
 
     public Publisher() {

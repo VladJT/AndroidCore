@@ -1,5 +1,5 @@
 package jt.projects.androidcore.examples.fragmentobservers;
 
-public interface PublisherGetter {
+interface PublisherGetter {
     Publisher getPublisher();
 }

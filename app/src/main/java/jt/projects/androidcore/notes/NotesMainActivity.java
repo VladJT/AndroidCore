@@ -1,43 +1,41 @@
 package jt.projects.androidcore.notes;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.View;
 import android.view.WindowManager;
 
 import jt.projects.androidcore.R;
 
-public class NotesMainActivity extends AppCompatActivity {
+public class NotesMainActivity extends NotesBaseActivity implements NoteChangePublisherGetter {
 
-    private static NotesData notesData;
-
-    public static NotesData getNotesData() {
-        return notesData;
-    }
+    private NoteChangePublisher publisher = new NoteChangePublisher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        notesData = new NotesData();
-        notesData.loadData();
-
-        setTheme(R.style.CalcLightTheme);
-        // отключаем AppBar
-        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_notes);
 
         NotesListFragment notesListFragment = new NotesListFragment();
-        // Чтобы вставить фрагмент, надо получить «Менеджер фрагментов», затем открыть
-        //транзакцию, вставить макет и закрыть транзакцию
+        publisher.subscribe(notesListFragment);
         // Нам нужно создать фрагмент со списком всего лишь один раз — при первом запуске. Задачу по
-        //пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
+        // пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.notes_list_fragment_container, notesListFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public NoteChangePublisher getPublisher() {
+        return publisher;
     }
 }
