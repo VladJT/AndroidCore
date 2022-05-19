@@ -60,9 +60,14 @@ public class NotesData {
     }
 
     public void loadData() {
+        // TODO сделать загрузку из какого-либо хранилища
         data.add(new Note("Заметка 1", "Давным-давно ...", "Влад", new GregorianCalendar(2021, 0, 25)));
         data.add(new Note("Заметка 2", "Высоко-высоко в горах ...", "Стас", new GregorianCalendar(2022, 2, 1)));
-        data.add(new Note("Заметка 3", "В далекой галактике...", "Петр", new GregorianCalendar(2022, 3, 23)));
+        data.add(new Note("Заметка 3", "В далекой галактике...", "Петр", Calendar.getInstance()));
+    }
+
+    public void saveData() {
+        // TODO сделать сохранение данных в хранилище
     }
 
     public Note getNote(int index) {
@@ -77,4 +82,13 @@ public class NotesData {
         String[] rez = data.stream().map(n -> n.topic).toArray(String[]::new);
         return rez;
     }
+
+    public void addNote(Note note) {
+        data.add(note);
+    }
+
+    public void editNote(Note note, int index) {
+        data.set(index, note);
+    }
+
 }

@@ -4,6 +4,7 @@
     <dimen name="font_size_big">36sp</dimen>
     <dimen name="font_size_medium">28sp</dimen>
     <dimen name="font_size_small">20sp</dimen>
+    <dimen name="font_size_smallest">16sp</dimen>
 
     <!--> Calc Buttons <-->
     <dimen name="btn_margins">2dp</dimen>

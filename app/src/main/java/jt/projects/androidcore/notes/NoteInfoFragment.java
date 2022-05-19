@@ -10,15 +10,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.common.ConfigInfo;
 
 
 public class NoteInfoFragment extends Fragment {
     static final String CURRENT_NOTE_INDEX = "index";
+    private int currentNoteIndex = -1;// -1 для добавления, остальные для изменения записей
+    private TextInputEditText etTopic;
+    private TextInputEditText etDescription;
+    private TextInputEditText etAuthor;
+    private DatePicker dateOfCreation;
+    private MaterialButton bSave;
 
     public NoteInfoFragment() {
         // Required empty public constructor
@@ -50,26 +62,42 @@ public class NoteInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            int index = args.getInt(CURRENT_NOTE_INDEX);
-            NotesData.Note currentNote = NotesMainActivity.getNotesData().getNote(index);
+            currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
+            NotesData.Note currentNote = NotesMainActivity.getNotesData().getNote(currentNoteIndex);
 
-            TextInputEditText topic = view.findViewById(R.id.notes_info_topic);
-            TextInputEditText description = view.findViewById(R.id.notes_info_description);
+            etTopic = view.findViewById(R.id.notes_info_topic);
+            etDescription = view.findViewById(R.id.notes_info_description);
+            etAuthor = view.findViewById(R.id.notes_info_author);
+            dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
+            bSave = view.findViewById(R.id.notes_info_button_save);
 
-            topic.setText(currentNote.getTopic());
-            description.setText(currentNote.getDescription());
+            etTopic.setText(currentNote.getTopic());
+            etDescription.setText(currentNote.getDescription());
+            etAuthor.setText(currentNote.getAuthor());
+            int year = currentNote.getDateOfCreation().get(Calendar.YEAR);
+            int month = currentNote.getDateOfCreation().get(Calendar.MONTH);
+            int day = currentNote.getDateOfCreation().get(Calendar.DAY_OF_MONTH);
+            dateOfCreation.init(year, month, day, null);
         }
+        initListeners();
+    }
 
-//        if (args != null) {
-//            int index = args.getInt(NOTE_INDEX);
-//            // найдем в root view нужный ImageView
-//            ImageView emblemImage = view.findViewById(R.id.city_emblem_image_view);
-//            // Получим из ресурсов массив указателей на изображения гербов
-//            // Обратите внимание на тип - TypedArray, и способ получения - obtainTypedArray
-//            TypedArray images = getResources().obtainTypedArray(R.array.coat_of_arms_imgs);
-//            emblemImage.setImageResource(images.getResourceId(index, 0));
-//            // TypedArray рекомендуется закрыть после использования
-//            images.recycle();
-        //       }
+    private void initListeners() {
+        bSave.setOnClickListener(v -> {
+            NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
+                    etDescription.getText().toString(),
+                    etAuthor.getText().toString(),
+                    new GregorianCalendar(dateOfCreation.getYear(),
+                            dateOfCreation.getMonth(), dateOfCreation.getDayOfMonth()));
+
+            if (currentNoteIndex == -1) {
+                NotesMainActivity.getNotesData().addNote(newNote);
+            } else {
+                NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex);
+            }
+            if (!new ConfigInfo(getActivity()).isLandscape()) {
+                requireActivity().finish();
+            }
+        });
     }
 }

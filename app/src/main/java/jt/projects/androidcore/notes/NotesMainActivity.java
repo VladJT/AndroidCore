@@ -3,6 +3,7 @@ package jt.projects.androidcore.notes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import jt.projects.androidcore.R;
 
@@ -22,6 +23,9 @@ public class NotesMainActivity extends AppCompatActivity {
         notesData.loadData();
 
         setTheme(R.style.CalcLightTheme);
+        // отключаем AppBar
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_notes);
 
         NotesListFragment notesListFragment = new NotesListFragment();
