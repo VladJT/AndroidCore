@@ -26,14 +26,14 @@ import jt.projects.androidcore.common.ConfigInfo;
 
 
 public class NoteInfoFragment extends Fragment {
-    static final String CURRENT_NOTE_INDEX = "index";
+    static final String CURRENT_NOTE_INDEX = "index";// индекс заметки для отображения
     private int currentNoteIndex = -1;// -1 для добавления, остальные для изменения записей
-    //    private NoteChangePublisher publisher;//обработчик подписок
+    private NoteChangePublisher publisher;//обработчик подписок
     private TextInputEditText etTopic;
     private TextInputEditText etDescription;
     private TextInputEditText etAuthor;
     private DatePicker dateOfCreation;
-    private MaterialButton bSave;
+    private MaterialButton buttonSaveNote;
 
     public NoteInfoFragment() {
         // Required empty public constructor
@@ -52,17 +52,14 @@ public class NoteInfoFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-//        try {
-//   //         publisher = ((NoteChangePublisherGetter) getActivity()).getPublisher();
-//        } catch (Exception e) {
-//            Toast toast = Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT);
-//            toast.show();
-//        }
+        publisher = ((NoteChangePublisherGetter) context).getPublisher();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+            requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -78,13 +75,13 @@ public class NoteInfoFragment extends Fragment {
             Bundle args = getArguments();
             if (args != null) {
                 currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
-                NotesData.Note currentNote = NotesMainActivity.getNotesData().getNote(currentNoteIndex);
+                NotesData.Note currentNote = NotesBaseActivity.getNotesData().getNote(currentNoteIndex);
 
                 etTopic = view.findViewById(R.id.notes_info_topic);
                 etDescription = view.findViewById(R.id.notes_info_description);
                 etAuthor = view.findViewById(R.id.notes_info_author);
                 dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
-                bSave = view.findViewById(R.id.notes_info_button_save);
+                buttonSaveNote = view.findViewById(R.id.notes_info_button_save);
 
                 etTopic.setText(currentNote.getTopic());
                 etDescription.setText(currentNote.getDescription());
@@ -102,7 +99,7 @@ public class NoteInfoFragment extends Fragment {
     }
 
     private void initListeners() {
-        bSave.setOnClickListener(v -> {
+        buttonSaveNote.setOnClickListener(v -> {
             NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
                     etDescription.getText().toString(),
                     etAuthor.getText().toString(),
@@ -110,13 +107,14 @@ public class NoteInfoFragment extends Fragment {
                             dateOfCreation.getMonth(), dateOfCreation.getDayOfMonth()));
 
             if (currentNoteIndex == -1) {
-                NotesMainActivity.getNotesData().addNote(newNote);
+                NotesMainActivity.getNotesData().addNote(newNote);// добавить заметку
             } else {
-                NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex);
+                NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
             }
-            NotesMainActivity.publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
-            if (!new ConfigInfo(getActivity()).isLandscape()) {
-                requireActivity().finish();
+            publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
+            if (!new ConfigInfo(requireActivity()).isLandscape()) {
+                //  requireActivity().finish();//Для работы с данными заметки в виде фрагмента
+                requireActivity().getSupportFragmentManager().popBackStack();// Для работы с данными заметки в виде активити
             }
         });
     }

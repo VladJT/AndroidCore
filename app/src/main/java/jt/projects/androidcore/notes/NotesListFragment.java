@@ -1,8 +1,6 @@
 package jt.projects.androidcore.notes;
 
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,10 +12,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,12 +28,15 @@ import jt.projects.androidcore.common.ConfigInfo;
 public class NotesListFragment extends Fragment implements NoteChangeObserver {
     private static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;// Текущая позиция
-    //  private View currentView;
     private ListView notesListView;
+    private ArrayList<String> notesList;
+    private ArrayAdapter<String> notesListAdapter;
+    private MaterialButton buttonAddNote;
 
     public NotesListFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,14 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
-        //currentView = view;
+
         notesListView = view.findViewById(R.id.notes_list_listview);
+        buttonAddNote = view.findViewById(R.id.notes_button_add);
+        buttonAddNote.setOnClickListener(v -> {
+            currentPosition = -1;
+            showNoteInfo();
+        });
+
         initNotesList();
         if (new ConfigInfo(getContext()).isLandscape()) {
             showNoteInfo();
@@ -84,15 +92,30 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
 //            });
 //        }
         try {
-            ArrayList<String> list = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-            notesListView.setAdapter(adapter);
+            notesList = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
+            notesListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, notesList);
+            notesListView.setAdapter(notesListAdapter);
             notesListView.setOnItemClickListener((parent, view, position, id) -> {
                 currentPosition = position;
                 showNoteInfo();
             });
         } catch (Exception e) {
-            Toast toast = Toast.makeText(requireActivity().getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(requireActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void changeNote(NotesData.Note note, int index) {
+        try {
+            if (index != -1) {
+                notesList.set(index, note.getTopic());
+            } else {
+                notesList.add(note.getTopic());
+            }
+            notesListAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            Toast toast = Toast.makeText(requireActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -104,10 +127,17 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
     }
 
     private void showPortraitNoteInfo() {
-        Activity notesInfoActivity = requireActivity();
-        final Intent intent = new Intent(NotesListFragment.this.getActivity(), NoteInfoActivity.class);
-        intent.putExtra(NoteInfoFragment.CURRENT_NOTE_INDEX, currentPosition);
-        notesInfoActivity.startActivity(intent);
+//        Activity notesInfoActivity = requireActivity();
+//        final Intent intent = new Intent(NotesListFragment.this.getActivity(), NoteInfoActivity.class);
+//        intent.putExtra(NoteInfoFragment.CURRENT_NOTE_INDEX, currentPosition);
+//        notesInfoActivity.startActivity(intent);
+        NoteInfoFragment noteInfoFragment = NoteInfoFragment.newInstance(currentPosition);
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.notes_list_fragment_container, noteInfoFragment);
+        ft.addToBackStack("");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
     }
 
     private void showLandscapeNoteInfo() {
@@ -120,8 +150,4 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
         ft.commit();
     }
 
-    @Override
-    public void changeNote(NotesData.Note note, int index) {
-        initNotesList();
-    }
 }

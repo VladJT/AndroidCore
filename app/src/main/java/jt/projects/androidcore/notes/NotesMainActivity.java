@@ -1,20 +1,12 @@
 package jt.projects.androidcore.notes;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.WindowManager;
-
 import jt.projects.androidcore.R;
 
-public class NotesMainActivity extends NotesBaseActivity {
+public class NotesMainActivity extends NotesBaseActivity implements NoteChangePublisherGetter {
 
-    public static NoteChangePublisher publisher = new NoteChangePublisher();
+    public NoteChangePublisher publisher = new NoteChangePublisher();// Для отслеживания событий изменения данных заметки
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +26,9 @@ public class NotesMainActivity extends NotesBaseActivity {
         }
     }
 
-//    @Override
-//    public static NoteChangePublisher getPublisher() {
-//        return publisher;
-//    }
+
+    @Override
+    public NoteChangePublisher getPublisher() {
+        return publisher;
+    }
 }
