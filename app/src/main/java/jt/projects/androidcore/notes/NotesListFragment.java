@@ -1,6 +1,7 @@
 package jt.projects.androidcore.notes;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -100,7 +101,7 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
                 showNoteInfo();
             });
         } catch (Exception e) {
-            Toast toast = Toast.makeText(requireActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -115,7 +116,7 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
             }
             notesListAdapter.notifyDataSetChanged();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(requireActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
