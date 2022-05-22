@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,14 +16,14 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notes_button_add"
         style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-        app:cornerRadius="40dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:text="+"
-        android:backgroundTint="@color/myBlue"
         android:layout_margin="20dp"
+        android:backgroundTint="@color/myBlue"
+        android:text="+"
         android:textColor="@color/white"
         android:textSize="@dimen/font_size_big"
+        app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

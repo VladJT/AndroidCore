@@ -1,6 +1,5 @@
 package jt.projects.androidcore.notes;
 
-
 import android.os.Bundle;
 import jt.projects.androidcore.R;
 

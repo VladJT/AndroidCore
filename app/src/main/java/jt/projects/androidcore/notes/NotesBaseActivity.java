@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import jt.projects.androidcore.R;
 
+
 public class NotesBaseActivity extends AppCompatActivity{
     private static final String TAG = "NotesActivity"; // log
     private static NotesData notesData = null;

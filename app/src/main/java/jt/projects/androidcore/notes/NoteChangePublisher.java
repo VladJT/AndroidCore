@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class NoteChangePublisher {
-    private List<NoteChangeObserver> observers; // Все подписчики
+    private List<NoteChangeObserver> observers;// Все подписчики
 
     public NoteChangePublisher() {
         observers = new ArrayList<>();

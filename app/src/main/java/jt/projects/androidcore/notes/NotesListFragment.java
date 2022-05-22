@@ -77,21 +77,6 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
     }
 
     private void initNotesList() {
-//        LinearLayout layoutView = (LinearLayout) currentView;
-//        String[] notes = NotesBaseActivity.getNotesData().getNotesList();
-//
-//        for (int i = 0; i < notes.length; i++) {
-//            String note = notes[i];
-//            TextView tw = new TextView(getContext());
-//            tw.setText(note);
-//            tw.setTextSize(24);
-//            layoutView.addView(tw);
-//            final int pos = i;
-//            tw.setOnClickListener(v -> {
-//                currentPosition = pos;
-//                showNoteInfo();
-//            });
-//        }
         try {
             notesList = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
             notesListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, notesList);
