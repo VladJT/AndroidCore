@@ -15,11 +15,6 @@
         <activity
             android:name=".notes.NotesMainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".examples.fragmentobservers.FragmentObserversMainActivity"
@@ -29,7 +24,14 @@
             android:exported="false" />
         <activity
             android:name=".cities.MainCitiesActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".examples.intents.IntentExActivity"
             android:exported="false" />

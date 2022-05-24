@@ -23,7 +23,10 @@ public class MainCitiesActivity extends AppCompatActivity {
         // Нам нужно создать фрагмент со списком всего лишь один раз — при первом запуске. Задачу по
         //пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, cf).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, cf)
+                    .commit();
         }
     }
 }

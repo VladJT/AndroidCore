@@ -25,11 +25,13 @@ public class EmblemActivity extends AppCompatActivity {
 
         // Если эта activity запускается первый раз (с каждым новым гербом первый раз),
         // то перенаправим параметр фрагменту и запустим фрагмент
+        City city = getIntent().getExtras().getParcelable(ARG_INDEX);
         if (savedInstanceState == null)
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.coat_of_arms_fragment_container,
-                            EmblemFragment.getInstance(getIntent().getExtras().getInt(ARG_INDEX))).commit();
+                            EmblemFragment.newInstance(city)).commit();
     }
+
 
 }

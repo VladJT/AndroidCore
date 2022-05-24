@@ -113,8 +113,8 @@ public class NoteInfoFragment extends Fragment {
             }
             publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
             if (!new ConfigInfo(requireActivity()).isLandscape()) {
-                //  requireActivity().finish();//Для работы с данными заметки в виде фрагмента
-                requireActivity().getSupportFragmentManager().popBackStack();// Для работы с данными заметки в виде активити
+                //  requireActivity().finish();
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
     }
