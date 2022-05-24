@@ -3,20 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".cities.EmblemFragment"
     android:background="@color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".cities.EmblemFragment">
 
+    <TextView
+        android:id="@+id/coat_of_arms_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="Москва" />
 
-    <ImageView
-        android:id="@+id/city_emblem_image_view"
+    <Button
+        android:id="@+id/coat_of_arms_button_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Назад"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/coat_of_arms_button_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Remove"
+        />
+
+    <FrameLayout
+        android:id="@+id/coat_of_arms_child_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="coat of arms"
-        android:scaleType="fitStart"
-        tools:src="@drawable/emblem_moscow" />
-
+        />
 
 </LinearLayout>
