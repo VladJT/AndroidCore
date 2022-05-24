@@ -23,7 +23,7 @@
         android:layout_height="80dp"
         android:text="+"
         android:backgroundTint="@color/myBlue"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:textColor="@color/white"
         android:textSize="@dimen/font_size_big"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,80 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
+<?xml version="1.0" encoding="utf-8"?><!--androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".notes.NoteInfoFragment">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notes_til_topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes_info_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Тема"
+            android:textSize="@dimen/font_size_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notes_til_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notes_til_topic">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes_info_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            tools:context=".notes.NoteInfoFragment">
+            android:hint="Текст"
+            android:textSize="@dimen/font_size_smallest" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notes_til_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notes_til_description">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/notes_til_topic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notes_info_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Автор"
+            android:textSize="@dimen/font_size_smallest" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/notes_info_topic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Тема"
-                    android:textSize="@dimen/font_size_small" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <DatePicker
+        android:id="@+id/notes_info_date_of_creation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notes_til_author" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/notes_til_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notes_til_topic">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/notes_info_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Текст"
-                    android:textSize="@dimen/font_size_smallest" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/notes_til_author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notes_til_description">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/notes_info_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Автор"
-                    android:textSize="@dimen/font_size_smallest" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <DatePicker
-                android:id="@+id/notes_info_date_of_creation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notes_til_author" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/notes_info_button_save"
-                style="@style/JT.SmallShapeAppearance"
-                android:text="Сохранить"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notes_info_date_of_creation" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notes_info_button_save"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/myBlue"
+        android:text="💾"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_medium"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout><!-- /androidx.core.widget.NestedScrollView -->
