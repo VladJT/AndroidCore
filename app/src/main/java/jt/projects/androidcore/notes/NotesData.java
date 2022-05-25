@@ -89,5 +89,4 @@ public class NotesData {
     public void editNote(Note note, int index) {
         data.set(index, note);
     }
-
 }

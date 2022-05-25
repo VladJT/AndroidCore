@@ -1,11 +1,14 @@
 package jt.projects.androidcore.notes;
 
+import static jt.projects.androidcore.notes.NotesConstants.*;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -24,7 +27,7 @@ import jt.projects.androidcore.R;
 import jt.projects.androidcore.common.ConfigInfo;
 
 
-public class NotesListFragment extends Fragment implements NoteChangeObserver {
+public class NotesListFragment extends Fragment {
     private static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;// Текущая позиция
     private ListView notesListView;
@@ -37,6 +40,22 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener(FRAGMENT_RESULT_NOTES_DATA, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                int index = bundle.getInt(EDITED_NOTE_INDEX);
+                try {
+                    if (index != -1) {
+                        notesList.set(index, NotesBaseActivity.getNotesData().getNote(index).getTopic());
+                    } else {
+                        notesList.add(NotesBaseActivity.getNotesData().getNote(index).getTopic());
+                    }
+                    notesListAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -108,21 +127,6 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
         }
     }
 
-    @Override
-    public void changeNote(NotesData.Note note, int index) {
-        try {
-            if (index != -1) {
-                notesList.set(index, note.getTopic());
-            } else {
-                notesList.add(note.getTopic());
-            }
-            notesListAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-//            TODO видимо надо переделать на другое взаимодейтсвие между контейнерами,
-//            т.к. вызывается исключение при смене ориентации экрана notesList & notesListAdapter == null!!
-        }
-    }
-
     private void showNoteInfo() {
         showFragment(NoteInfoFragment.newInstance(currentPosition));
     }
@@ -134,8 +138,8 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
             ft.replace(R.id.notes_info_fragment_container, fragment);
         } else {
             ft.replace(R.id.notes_list_fragment_container, fragment);
-            ft.addToBackStack("");
         }
+        ft.addToBackStack("");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }

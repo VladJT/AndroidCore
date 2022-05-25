@@ -1,6 +1,8 @@
 package jt.projects.androidcore.notes;
 
 
+import static jt.projects.androidcore.notes.NotesConstants.*;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -26,9 +28,7 @@ import jt.projects.androidcore.common.ConfigInfo;
 
 
 public class NoteInfoFragment extends Fragment {
-    static final String CURRENT_NOTE_INDEX = "index";// индекс заметки для отображения
     private int currentNoteIndex = -1;// -1 для добавления, остальные для изменения записей
-    private NoteChangePublisher publisher;//обработчик подписок
     private TextInputEditText etTopic;
     private TextInputEditText etDescription;
     private TextInputEditText etAuthor;
@@ -46,7 +46,6 @@ public class NoteInfoFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        publisher = ((NoteChangePublisherGetter) context).getPublisher();
     }
 
     @Override
@@ -104,7 +103,10 @@ public class NoteInfoFragment extends Fragment {
             } else {
                 NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
             }
-            publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
+            // уведомляем подписчиков о событии - сохранение заметки
+            Bundle result = new Bundle();
+            result.putInt(EDITED_NOTE_INDEX, currentNoteIndex);
+            getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, result);
             if (!ConfigInfo.isLandscape(requireContext())) {
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
