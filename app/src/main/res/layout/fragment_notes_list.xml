@@ -14,18 +14,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notes_button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Настройки"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notes_button_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="О программе"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/notes_button_settings" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notes_button_add"
         style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-        app:cornerRadius="40dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:text="+"
-        android:backgroundTint="@color/myBlue"
         android:layout_margin="10dp"
+        android:backgroundTint="@color/myBlue"
+        android:text="+"
         android:textColor="@color/white"
         android:textSize="@dimen/font_size_big"
+        app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package jt.projects.androidcore.notes;
 
-
 import android.os.Bundle;
+
 import jt.projects.androidcore.R;
 
 public class NotesMainActivity extends NotesBaseActivity implements NoteChangePublisherGetter {
@@ -25,7 +25,6 @@ public class NotesMainActivity extends NotesBaseActivity implements NoteChangePu
                     .commit();
         }
     }
-
 
     @Override
     public NoteChangePublisher getPublisher() {

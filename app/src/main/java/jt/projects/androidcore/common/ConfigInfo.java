@@ -4,13 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 public class ConfigInfo {
-    private Context context;
-
-    public ConfigInfo(Context context) {
-        this.context = context;
-    }
-
-    public boolean isLandscape() {
+    public static boolean isLandscape(Context context) {
         return context.getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
     }

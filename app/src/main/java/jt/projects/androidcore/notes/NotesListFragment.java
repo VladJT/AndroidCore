@@ -1,7 +1,5 @@
 package jt.projects.androidcore.notes;
 
-
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,11 +31,8 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
     private ArrayList<String> notesList;
     private ArrayAdapter<String> notesListAdapter;
     private MaterialButton buttonAddNote;
-
-    public NotesListFragment() {
-        // Required empty public constructor
-    }
-
+    private MaterialButton buttonSettings;
+    private MaterialButton buttonAbout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,17 +52,38 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
 
-        notesListView = view.findViewById(R.id.notes_list_listview);
+        initButtonAdd(view);
+        initButtonSettings(view);
+        initButtonAbout(view);
+        initNotesList(view);
+
+        if (ConfigInfo.isLandscape(requireContext())) {
+            showNoteInfo();
+        }
+    }
+
+    private void initButtonAbout(@NonNull View view) {
+        // О программе
+        buttonAbout = view.findViewById(R.id.notes_button_about);
+        buttonAbout.setOnClickListener(v -> {
+            showFragment(new AboutFragment());
+        });
+    }
+
+    private void initButtonSettings(@NonNull View view) {
+        // настройки
+        buttonSettings = view.findViewById(R.id.notes_button_settings);
+        buttonSettings.setOnClickListener(v -> {
+            showFragment(new SettingsFragment());
+        });
+    }
+
+    private void initButtonAdd(@NonNull View view) {
         buttonAddNote = view.findViewById(R.id.notes_button_add);
         buttonAddNote.setOnClickListener(v -> {
             currentPosition = -1;
             showNoteInfo();
         });
-
-        initNotesList();
-        if (new ConfigInfo(getContext()).isLandscape()) {
-            showNoteInfo();
-        }
     }
 
     @Override
@@ -76,25 +92,11 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
         super.onSaveInstanceState(outState);
     }
 
-    private void initNotesList() {
-//        LinearLayout layoutView = (LinearLayout) currentView;
-//        String[] notes = NotesBaseActivity.getNotesData().getNotesList();
-//
-//        for (int i = 0; i < notes.length; i++) {
-//            String note = notes[i];
-//            TextView tw = new TextView(getContext());
-//            tw.setText(note);
-//            tw.setTextSize(24);
-//            layoutView.addView(tw);
-//            final int pos = i;
-//            tw.setOnClickListener(v -> {
-//                currentPosition = pos;
-//                showNoteInfo();
-//            });
-//        }
+    private void initNotesList(@NonNull View mainView) {
         try {
+            notesListView = mainView.findViewById(R.id.notes_list_listview);
             notesList = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
-            notesListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, notesList);
+            notesListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, notesList);
             notesListView.setAdapter(notesListAdapter);
             notesListView.setOnItemClickListener((parent, view, position, id) -> {
                 currentPosition = position;
@@ -116,39 +118,25 @@ public class NotesListFragment extends Fragment implements NoteChangeObserver {
             }
             notesListAdapter.notifyDataSetChanged();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
-            toast.show();
+//            TODO видимо надо переделать на другое взаимодейтсвие между контейнерами,
+//            т.к. вызывается исключение при смене ориентации экрана notesList & notesListAdapter == null!!
         }
     }
 
     private void showNoteInfo() {
-        if (new ConfigInfo(getContext()).isLandscape()) {
-            showLandscapeNoteInfo();
-        } else showPortraitNoteInfo();
+        showFragment(NoteInfoFragment.newInstance(currentPosition));
     }
 
-    private void showPortraitNoteInfo() {
-//        Activity notesInfoActivity = requireActivity();
-//        final Intent intent = new Intent(NotesListFragment.this.getActivity(), NoteInfoActivity.class);
-//        intent.putExtra(NoteInfoFragment.CURRENT_NOTE_INDEX, currentPosition);
-//        notesInfoActivity.startActivity(intent);
-        NoteInfoFragment noteInfoFragment = NoteInfoFragment.newInstance(currentPosition);
+    private void showFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.notes_list_fragment_container, noteInfoFragment);
-        ft.addToBackStack("");
+        if (ConfigInfo.isLandscape(requireContext())) {
+            ft.replace(R.id.notes_info_fragment_container, fragment);
+        } else {
+            ft.replace(R.id.notes_list_fragment_container, fragment);
+            ft.addToBackStack("");
+        }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
-
-    private void showLandscapeNoteInfo() {
-        NoteInfoFragment noteInfoFragment = NoteInfoFragment.newInstance(currentPosition);
-        FragmentManager fm = requireActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.notes_info_fragment_container, noteInfoFragment);
-        ft.addToBackStack("");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
-    }
-
 }

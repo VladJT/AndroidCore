@@ -35,16 +35,10 @@ public class NoteInfoFragment extends Fragment {
     private DatePicker dateOfCreation;
     private MaterialButton buttonSaveNote;
 
-    public NoteInfoFragment() {
-        // Required empty public constructor
-    }
-
-
     public static NoteInfoFragment newInstance(int index) {
         NoteInfoFragment noteInfoFragment = new NoteInfoFragment();
-        // Передача параметра через бандл
         Bundle b = new Bundle();
-        b.putInt(CURRENT_NOTE_INDEX, index);
+        b.putInt(CURRENT_NOTE_INDEX, index);   // Передача параметра индекс заметки через бандл
         noteInfoFragment.setArguments(b);
         return noteInfoFragment;
     }
@@ -73,16 +67,16 @@ public class NoteInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         try {
             Bundle args = getArguments();
+            etTopic = view.findViewById(R.id.notes_info_topic);
+            etDescription = view.findViewById(R.id.notes_info_description);
+            etAuthor = view.findViewById(R.id.notes_info_author);
+            dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
+            buttonSaveNote = view.findViewById(R.id.notes_info_button_save);
+            initButtonSave();
+
             if (args != null) {
                 currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
                 NotesData.Note currentNote = NotesBaseActivity.getNotesData().getNote(currentNoteIndex);
-
-                etTopic = view.findViewById(R.id.notes_info_topic);
-                etDescription = view.findViewById(R.id.notes_info_description);
-                etAuthor = view.findViewById(R.id.notes_info_author);
-                dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
-                buttonSaveNote = view.findViewById(R.id.notes_info_button_save);
-
                 etTopic.setText(currentNote.getTopic());
                 etDescription.setText(currentNote.getDescription());
                 etAuthor.setText(currentNote.getAuthor());
@@ -91,14 +85,13 @@ public class NoteInfoFragment extends Fragment {
                 int day = currentNote.getDateOfCreation().get(Calendar.DAY_OF_MONTH);
                 dateOfCreation.init(year, month, day, null);
             }
-            initListeners();
         } catch (Exception e) {
             Toast toast = Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
-    private void initListeners() {
+    private void initButtonSave() {
         buttonSaveNote.setOnClickListener(v -> {
             NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
                     etDescription.getText().toString(),
@@ -112,8 +105,7 @@ public class NoteInfoFragment extends Fragment {
                 NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
             }
             publisher.notify(newNote, currentNoteIndex);// уведомляем подписчиков о событии - сохранение заметки
-            if (!new ConfigInfo(requireActivity()).isLandscape()) {
-                //  requireActivity().finish();
+            if (!ConfigInfo.isLandscape(requireContext())) {
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
         });

@@ -42,7 +42,9 @@
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_emblem.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_note_info.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_notes_about.xml" value="0.8" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_notes_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/fragment_notes_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/GBAndroidCore/app/src/main/res/layout/linear_example_layout.xml" value="0.4" />
       </map>
     </option>
