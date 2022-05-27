@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,26 +35,27 @@ public class NotesListFragment extends Fragment {
     private ArrayList<String> notesList;
     private ArrayAdapter<String> notesListAdapter;
     private MaterialButton buttonAddNote;
-    private MaterialButton buttonSettings;
-    private MaterialButton buttonAbout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setNoteInfoChangeListener();
+    }
+
+    private void setNoteInfoChangeListener() {
         getParentFragmentManager().setFragmentResultListener(FRAGMENT_RESULT_NOTES_DATA, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
-                try {
-                    if (index != -1) {
-                        notesList.set(index, NotesBaseActivity.getNotesData().getNote(index).getTopic());
-                    } else {
-                        notesList.add(NotesBaseActivity.getNotesData().getNote(index).getTopic());
-                    }
-                    notesListAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
-
-                }
+//                    if (index != -1) {
+//                        notesList.set(index, NotesBaseActivity.getNotesData().getNote(index).getTopic());
+//                    } else {
+//                        notesList.add(NotesBaseActivity.getNotesData().getNote(index).getTopic());
+//                    }
+//                    notesListAdapter.notifyDataSetChanged();
+                // TODO пока так, в будущем надо оптимизировать и переделать на RecyclerView
+                initNotesList();
             }
         });
     }
@@ -72,29 +74,13 @@ public class NotesListFragment extends Fragment {
         }
 
         initButtonAdd(view);
-        initButtonSettings(view);
-        initButtonAbout(view);
-        initNotesList(view);
+
+        notesListView = view.findViewById(R.id.notes_list_listview);
+        initNotesList();
 
         if (ConfigInfo.isLandscape(requireContext())) {
             showNoteInfo();
         }
-    }
-
-    private void initButtonAbout(@NonNull View view) {
-        // О программе
-        buttonAbout = view.findViewById(R.id.notes_button_about);
-        buttonAbout.setOnClickListener(v -> {
-            showFragment(new AboutFragment());
-        });
-    }
-
-    private void initButtonSettings(@NonNull View view) {
-        // настройки
-        buttonSettings = view.findViewById(R.id.notes_button_settings);
-        buttonSettings.setOnClickListener(v -> {
-            showFragment(new SettingsFragment());
-        });
     }
 
     private void initButtonAdd(@NonNull View view) {
@@ -111,9 +97,8 @@ public class NotesListFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void initNotesList(@NonNull View mainView) {
+    private void initNotesList() {
         try {
-            notesListView = mainView.findViewById(R.id.notes_list_listview);
             notesList = new ArrayList(Arrays.asList(NotesBaseActivity.getNotesData().getNotesList()));// for listview
             notesListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, notesList);
             notesListView.setAdapter(notesListAdapter);

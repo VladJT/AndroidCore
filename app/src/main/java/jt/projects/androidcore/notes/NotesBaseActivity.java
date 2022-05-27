@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,11 +23,12 @@ public class NotesBaseActivity extends AppCompatActivity {
         return notesData;
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.NotesTheme);
-        getSupportActionBar().hide();// отключаем AppBar
+        // getSupportActionBar().hide();// отключаем AppBar
         if (notesData == null) {
             notesData = new NotesData();
             notesData.loadData();
