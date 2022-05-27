@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -79,6 +81,10 @@ public class NoteInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);// эта строчка говорит о том, что у фрагмента должен быть доступ к меню Активити
+        ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setSubtitle("Информация о заметке");
+        }
         return inflater.inflate(R.layout.fragment_note_info, container, false);
     }
 

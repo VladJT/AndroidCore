@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import jt.projects.androidcore.R;
 
@@ -27,7 +28,7 @@ public class NotesBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.NotesTheme);
+        setTheme(R.style.Theme_NotesTheme);
         // getSupportActionBar().hide();// отключаем AppBar
         if (notesData == null) {
             notesData = new NotesData();

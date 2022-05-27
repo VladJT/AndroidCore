@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +20,9 @@ public class NotesMainActivity extends NotesBaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_notes);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Нам нужно создать фрагмент со списком всего лишь один раз — при первом запуске. Задачу по
         // пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
