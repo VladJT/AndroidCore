@@ -35,6 +35,8 @@
         <item name="colorOnPrimary">@color/pitch_black</item>
     </style>
 
+
+    <!-- ************************************************** -->
     <!-- Тема для приложения заметок. -->
     <style name="Theme.NotesTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -43,11 +45,17 @@
         <item name="colorPrimaryDark">#01579B</item><!-- фон строки с батареей и часами -->
         <item name="colorSecondary">@color/black</item>
         <item name="android:navigationBarColor">@color/myBlue</item><!-- цвет navBar -->
+        <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
+    </style>
+
+    <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
     </style>
 
     <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">@color/white</item>
     </style>
+    <!-- ************************************************** -->
 
 
     <style name="Theme.Cities" parent="Theme.MaterialComponents.DayNight.NoActionBar">

@@ -89,4 +89,8 @@ public class NotesData {
     public void editNote(Note note, int index) {
         data.set(index, note);
     }
+
+    public void deleteNote(int index) {
+        data.remove(index);
+    }
 }

@@ -2,12 +2,14 @@ package jt.projects.androidcore.notes;
 
 import static jt.projects.androidcore.notes.NotesConstants.*;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.common.ConfigInfo;
@@ -65,10 +69,11 @@ public class NotesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setSubtitle("Список заметок");
         }
+
         return inflater.inflate(R.layout.fragment_notes_list, container, false);
     }
 
@@ -112,6 +117,31 @@ public class NotesListFragment extends Fragment {
                 currentPosition = position;
                 showNoteInfo();
             });
+
+            notesListView.setOnItemLongClickListener((parent, view, position, id) -> {
+                PopupMenu popupMenu = new PopupMenu(requireActivity(), view);
+                requireActivity().getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_popup_edit_note:
+                                currentPosition = position;
+                                showNoteInfo();
+                                return true;
+                            case R.id.action_popup_delete_note:
+                                currentPosition = 0;
+                                NotesMainActivity.getNotesData().deleteNote(position);
+                                initNotesList();
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                return true;
+            });
+
         } catch (Exception e) {
             Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();

@@ -12,4 +12,5 @@
 
     <dimen name="std_margins">4dp</dimen>
     <dimen name="text_horizontal_margin">10dp</dimen>
+    <dimen name="drawer_height">200dp</dimen>
 </resources>

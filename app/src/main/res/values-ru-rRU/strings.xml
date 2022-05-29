@@ -10,4 +10,10 @@
     <string name="Cancel">Отмена</string>
     <string name="calcRedTheme">Красная</string>
     <string name="ChooseTheme">Выберите тему</string>
+    <string name="back">Назад</string>
+    <string name="exit">Выход</string>
+    <string name="about">О программе</string>
+    <string name="settings">Настройки</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
 </resources>

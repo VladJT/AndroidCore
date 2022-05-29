@@ -24,7 +24,6 @@ public class NotesBaseActivity extends AppCompatActivity {
         return notesData;
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,6 @@ public class NotesBaseActivity extends AppCompatActivity {
             notesData.loadData();
         }
     }
-
 
     protected void showLogMessage(Context c, String message) {
         Log.e(TAG, message);
