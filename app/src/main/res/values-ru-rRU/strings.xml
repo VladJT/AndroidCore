@@ -23,4 +23,5 @@
         в рамках курса \n
         \"Android 1. Знакомство с платформой\"
     </string>
+    <string name="add_note">Добавить</string>
 </resources>

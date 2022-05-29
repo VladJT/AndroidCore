@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
@@ -101,6 +102,28 @@ public class NotesListFragment extends Fragment {
             currentPosition = -1;
             showNoteInfo();
         });
+
+        buttonAddNote.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(requireActivity(), v);
+            requireActivity().getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_add_note:
+                        currentPosition = -1;
+                        showNoteInfo();
+                        return true;
+                    case R.id.action_settings:
+                        showFragment(new SettingsFragment());
+                        return true;
+                    case R.id.action_about:
+                        showFragment(new AboutFragment());
+                        return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return false;
+        });
     }
 
     @Override
@@ -119,30 +142,6 @@ public class NotesListFragment extends Fragment {
                 showNoteInfo();
             });
 
-            notesListView.setOnItemLongClickListener((parent, view, position, id) -> {
-                PopupMenu popupMenu = new PopupMenu(requireActivity(), view);
-                requireActivity().getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_popup_edit_note:
-                                currentPosition = position;
-                                showNoteInfo();
-                                return true;
-                            case R.id.action_popup_delete_note:
-                                currentPosition = 0;
-                                NotesMainActivity.getNotesData().deleteNote(position);
-                                initNotesList();
-                                return true;
-                        }
-                        return true;
-                    }
-                });
-                popupMenu.show();
-                return true;
-            });
-
         } catch (Exception e) {
             Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
@@ -154,14 +153,22 @@ public class NotesListFragment extends Fragment {
     }
 
     private void showFragment(Fragment fragment) {
-        FragmentManager fm = requireActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        if (ConfigInfo.isLandscape(requireContext())) {
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        if (ConfigInfo.isLandscape(requireActivity().getApplicationContext())) {
             ft.replace(R.id.notes_info_fragment_container, fragment);
         } else {
             ft.replace(R.id.notes_list_fragment_container, fragment);
         }
-        ft.addToBackStack("");
+
+        boolean needAddToStack = false;
+        for (Fragment f : requireActivity().getSupportFragmentManager().getFragments()) {
+            if (f instanceof NotesListFragment & f.isVisible()) {
+                needAddToStack = true;
+            }
+        }
+        if (needAddToStack) {
+            ft.addToBackStack("");
+        }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }

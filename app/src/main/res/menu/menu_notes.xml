@@ -20,5 +20,4 @@
         android:title="@string/about"
         app:showAsAction="withText" />
 
-
 </menu>

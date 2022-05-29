@@ -33,8 +33,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="drawer_header" translatable="false">Мои заметки</string>
-    <string name="navigation_drawer_open" translatable="false">navigation_drawer_open</string>
-    <string name="navigation_drawer_close" translatable="false">navigation_drawer_close</string>
+    <string name="navigation_drawer_open" translatable="false">боковое меню открыто</string>
+    <string name="navigation_drawer_close" translatable="false">боковое меню закрыто</string>
     <string name="exit">Exit</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
@@ -43,4 +43,5 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="about_text">About</string>
+    <string name="add_note">Add note</string>
 </resources>

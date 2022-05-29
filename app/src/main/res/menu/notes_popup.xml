@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_popup_edit_note"
-        android:title="@string/edit" />
+        android:id="@+id/action_add_note"
+        android:title="@string/add_note" />
+
     <item
-        android:id="@+id/action_popup_delete_note"
-        android:title="@string/delete" />
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings" />
+
+    <item
+        android:id="@+id/action_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/about" />
 </menu>

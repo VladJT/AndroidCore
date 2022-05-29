@@ -76,10 +76,9 @@
         android:layout_height="80dp"
         android:layout_margin="10dp"
         android:backgroundTint="@color/myBlue"
-        android:text="💾"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_size_medium"
         app:cornerRadius="40dp"
+        app:icon="@drawable/ic_baseline_save_24"
+        app:iconSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout><!-- /androidx.core.widget.NestedScrollView -->
