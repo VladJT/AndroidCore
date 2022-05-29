@@ -3,6 +3,8 @@ package jt.projects.androidcore.notes;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -50,6 +52,29 @@ public class NotesMainActivity extends NotesBaseActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
+                twUserAccountName.setText(NotesSharedPreferences.getUserAccountName());
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
         // Обработка навигационного меню
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(item ->
@@ -90,6 +115,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         }
         return false;
     }
+
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

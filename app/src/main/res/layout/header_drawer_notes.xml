@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_height"
-    android:background="#242A4A"
+    android:background="#58595E"
     android:gravity="center"
     android:orientation="vertical">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,5 +18,14 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:contentDescription="@string/drawer_header"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_baseline_person_outline_24" />
+
+    <TextView
+        android:id="@+id/text_view_notes_user_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_small" />
+
 </LinearLayout>

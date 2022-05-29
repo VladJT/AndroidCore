@@ -33,6 +33,7 @@ public class NotesBaseActivity extends AppCompatActivity {
             notesData = new NotesData();
             notesData.loadData();
         }
+        NotesSharedPreferences.initSharedPreferences(getApplicationContext());
     }
 
     protected void showLogMessage(Context c, String message) {
