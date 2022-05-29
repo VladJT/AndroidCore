@@ -35,6 +35,7 @@ public class NotesBaseActivity extends AppCompatActivity {
         }
     }
 
+
     protected void showLogMessage(Context c, String message) {
         Log.e(TAG, message);
         if (toast != null) {

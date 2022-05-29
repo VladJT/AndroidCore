@@ -22,6 +22,10 @@
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_settings_layout.xml" value="0.4" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_styles_layout.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/ex_table_layout.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/fragment_note_info.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/fragment_notes_about.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/fragment_notes_list.xml" value="0.32834544677212485" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/fragment_notes_settings.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/header_drawer_notes.xml" value="0.3274903805044891" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/linear_example_layout.xml" value="0.3368421052631579" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/menu/menu_fragment_note_info.xml" value="0.32834544677212485" />

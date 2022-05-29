@@ -78,6 +78,7 @@ public class NotesData {
         }
     }
 
+
     public String[] getNotesList() {
         return data.stream().map(n -> n.topic).toArray(String[]::new);
     }

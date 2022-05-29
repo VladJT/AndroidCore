@@ -37,6 +37,7 @@ public class SettingsFragment extends Fragment {
         menu.findItem(R.id.action_back).setVisible(true);
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

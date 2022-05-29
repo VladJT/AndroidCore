@@ -148,6 +148,7 @@ public class NotesListFragment extends Fragment {
         }
     }
 
+
     private void showNoteInfo() {
         showFragment(NoteInfoFragment.newInstance(currentPosition));
     }
