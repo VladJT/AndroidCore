@@ -43,5 +43,4 @@ public class NotesBaseActivity extends AppCompatActivity {
         toast = Toast.makeText(c, message, Toast.LENGTH_SHORT);
         toast.show();
     }
-
 }

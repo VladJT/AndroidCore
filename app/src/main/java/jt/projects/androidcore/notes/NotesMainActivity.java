@@ -1,7 +1,6 @@
 package jt.projects.androidcore.notes;
 
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,7 +9,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,7 +23,6 @@ public class NotesMainActivity extends NotesBaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_notes);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,7 +55,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         navigationView.setNavigationItemSelectedListener(item ->
         {
             drawer.close();
-            return checkMenu(item.getItemId());
+            return checkMenuItemSelected(item.getItemId());
         });
     }
 
@@ -67,17 +64,16 @@ public class NotesMainActivity extends NotesBaseActivity {
         // мы получаем Меню приложения и с помощью специального MenuInflater’а (по
         //аналогии с LayoutInflater’ом) надуваем кнопки в получаемом меню.
         getMenuInflater().inflate(R.menu.menu_notes, menu);
-        menu.findItem(R.id.action_back).setVisible(false);// на списке заметок не отображаем кнопку Back
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        checkMenu(item.getItemId());
+        checkMenuItemSelected(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean checkMenu(int id) {
+    private boolean checkMenuItemSelected(int id) {
         switch (id) {
             case R.id.action_back:
                 getSupportFragmentManager().popBackStack();
@@ -102,7 +98,16 @@ public class NotesMainActivity extends NotesBaseActivity {
         } else {
             ft.replace(R.id.notes_list_fragment_container, fragment);
         }
-        ft.addToBackStack("");
+
+        boolean needAddToStack = false;
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f instanceof NotesListFragment & f.isVisible()) {
+                needAddToStack = true;
+            }
+        }
+        if (needAddToStack) {
+            ft.addToBackStack("");
+        }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }

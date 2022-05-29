@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +56,6 @@ public class NotesListFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
-//                    if (index != -1) {
-//                        notesList.set(index, NotesBaseActivity.getNotesData().getNote(index).getTopic());
-//                    } else {
-//                        notesList.add(NotesBaseActivity.getNotesData().getNote(index).getTopic());
-//                    }
-//                    notesListAdapter.notifyDataSetChanged();
                 // TODO пока так, в будущем надо оптимизировать и переделать на RecyclerView
                 initNotesList();
             }
@@ -67,13 +63,18 @@ public class NotesListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.findItem(R.id.action_back).setVisible(false);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);// эта строчка говорит о том, что у фрагмента должен быть доступ к меню Активити
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setSubtitle("Список заметок");
         }
-
         return inflater.inflate(R.layout.fragment_notes_list, container, false);
     }
 

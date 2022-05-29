@@ -12,8 +12,15 @@
     <string name="ChooseTheme">Выберите тему</string>
     <string name="back">Назад</string>
     <string name="exit">Выход</string>
-    <string name="about">О программе</string>
+    <string name="about">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="edit">Редактировать</string>
     <string name="delete">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="about_text">
+        Приложение разработано студентом GeekBrains \n
+        Богданковым В.А. в 2022 году \n
+        в рамках курса \n
+        \"Android 1. Знакомство с платформой\"
+    </string>
 </resources>

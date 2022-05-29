@@ -32,8 +32,8 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        menu.findItem(R.id.action_settings).setVisible(false);
-        menu.findItem(R.id.action_about).setVisible(false);
+//        menu.findItem(R.id.action_settings).setVisible(false);
+//        menu.findItem(R.id.action_about).setVisible(false);
         menu.findItem(R.id.action_back).setVisible(true);
     }
 
