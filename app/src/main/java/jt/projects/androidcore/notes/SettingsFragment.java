@@ -1,15 +1,17 @@
 package jt.projects.androidcore.notes;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.SharedPreferences;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +28,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.cities.EmblemFragment;
 
 public class SettingsFragment extends Fragment {
+    static final int GALLERY_REQUEST = 1;
+
     private TextInputEditText itAccountName;
     private MaterialButton btnSaveAccountName;
+    private MaterialButton btnChangeAccountPhoto;
+    private ImageView ivAccountPhoto;
+    private String encodedBitmapPhoto;
+    Bitmap bitmapPhoto = null;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,24 +78,63 @@ public class SettingsFragment extends Fragment {
         TextView t = view.findViewById(R.id.notes_info_settings);
         t.setText(stFragments);
 
-
-        String accountUserName = NotesSharedPreferences.getUserAccountName();
+        ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
+        encodedBitmapPhoto = NotesSharedPreferences.getUserPhotoUriString();
+        if (!encodedBitmapPhoto.equals("")) {
+            try {
+                Bitmap image = NotesSharedPreferences.decodeBase64(encodedBitmapPhoto);
+                ivAccountPhoto.setImageBitmap(image);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
 
         itAccountName = view.findViewById(R.id.notes_account_name);
-        itAccountName.setText(accountUserName);
+        itAccountName.setText(NotesSharedPreferences.getUserAccountName());
 
-        btnSaveAccountName = view.findViewById(R.id.button_notes_account_save);
         initButtonSaveAccountName(view);
+        initChangeAccountPhoto(view);
+    }
+
+    private void initChangeAccountPhoto(View view) {
+        btnChangeAccountPhoto = view.findViewById(R.id.button_notes_change_account_photo);
+        btnChangeAccountPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, GALLERY_REQUEST);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            try {
+                bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                ivAccountPhoto.setImageBitmap(bitmapPhoto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initButtonSaveAccountName(View view) {
-        btnSaveAccountName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NotesSharedPreferences.saveUserAccountName(itAccountName.getText() + "");
-                Toast toast = Toast.makeText(requireContext(), "Имя пользователя сохранено", Toast.LENGTH_SHORT);
-                toast.show();
+        btnSaveAccountName = view.findViewById(R.id.button_notes_account_save);
+        btnSaveAccountName.setOnClickListener(v -> {
+            // сохраняем аватарку
+            if (bitmapPhoto != null) {
+                NotesSharedPreferences.saveUserPhotoUriString(NotesSharedPreferences.encodeTobase64(bitmapPhoto));
             }
+            // сохраняем имя пользователя
+            NotesSharedPreferences.saveUserAccountName(itAccountName.getText() + "");
+            Toast toast = Toast.makeText(requireContext(), "Настройки сохранены", Toast.LENGTH_SHORT);
+            toast.show();
         });
     }
 }

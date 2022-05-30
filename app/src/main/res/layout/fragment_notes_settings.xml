@@ -7,11 +7,24 @@
     android:clickable="true"
     android:focusable="true">
 
+    <ImageView
+        android:id="@+id/image_view_notes_user_account_photo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="@dimen/padding_standart"
+        android:background="@color/cardview_dark_background"
+        android:contentDescription="@string/drawer_header"
+        android:src="@drawable/ic_baseline_person_outline_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_account_name_til"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/padding_standart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -23,16 +36,27 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_notes_account_save"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_notes_change_account_photo"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_standart"
+        android:text="@string/change_avatar"
+        android:textColor="@color/white"
+        app:backgroundTint="?attr/colorPrimaryDark"
+        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
+        app:layout_constraintTop_toBottomOf="@id/notes_account_name_til" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_notes_account_save"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/padding_standart"
         android:text="@string/save"
         android:textColor="@color/white"
         app:backgroundTint="?attr/colorPrimaryDark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notes_account_name_til" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_user_account_photo"
+        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
+        app:layout_constraintTop_toBottomOf="@id/button_notes_change_account_photo" />
 
     <TextView
         android:id="@+id/notes_info_settings"
@@ -41,6 +65,7 @@
         android:text="Список фрагментов: ..."
         android:textSize="@dimen/font_size_smallest"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
