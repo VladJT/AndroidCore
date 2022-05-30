@@ -3,6 +3,7 @@ package jt.projects.androidcore.notes;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -35,6 +37,7 @@ public class SettingsFragment extends Fragment {
     private TextInputEditText itAccountName;
     private MaterialButton btnSaveAccountName;
     private MaterialButton btnChangeAccountPhoto;
+    private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
     private String encodedBitmapPhoto;
     Bitmap bitmapPhoto = null;
@@ -96,6 +99,20 @@ public class SettingsFragment extends Fragment {
 
         initButtonSaveAccountName(view);
         initChangeAccountPhoto(view);
+        initDeletePhoto(view);
+    }
+
+    private void initDeletePhoto(View view) {
+        btnDeleteAccountPhoto = view.findViewById(R.id.button_notes_delete_account_photo);
+        btnDeleteAccountPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bitmapPhoto = null;
+                NotesSharedPreferences.saveUserPhotoUriString("");
+                ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getEmptyPhoto());
+         //       ivAccountPhoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_person_outline_24, null));
+            }
+        });
     }
 
     private void initChangeAccountPhoto(View view) {

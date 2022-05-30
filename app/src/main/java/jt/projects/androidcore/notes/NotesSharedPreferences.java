@@ -9,15 +9,23 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.io.ByteArrayOutputStream;
+
+import jt.projects.androidcore.R;
 
 
 public class NotesSharedPreferences {
     private static Context context;
     private static SharedPreferences sharedPref;
+    private static Bitmap cachedPhoto = null;
 
     public static void initSharedPreferences(Context c) {
         context = c;
+        if (!getUserPhotoUriString().equals("")) {
+            cachedPhoto = decodeBase64(getUserPhotoUriString());
+        }
     }
 
     public static void saveUserAccountName(String name) {
@@ -36,6 +44,7 @@ public class NotesSharedPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, uriString);
         editor.apply();
+        cachedPhoto = decodeBase64(getUserPhotoUriString());
     }
 
     public static String getUserPhotoUriString() {
@@ -60,4 +69,14 @@ public class NotesSharedPreferences {
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
+    public static Bitmap getEmptyPhoto() {
+        return BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.no_avatar);
+    }
+
+    public static Bitmap getBitmapPhoto() {
+        if (cachedPhoto == null) {
+            return getEmptyPhoto();
+        } else return cachedPhoto;
+    }
 }

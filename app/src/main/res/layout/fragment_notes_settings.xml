@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/image_view_notes_user_account_photo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_margin="@dimen/padding_standart"
         android:background="@color/cardview_dark_background"
         android:contentDescription="@string/drawer_header"
-        android:src="@drawable/ic_baseline_person_outline_24"
+        android:src="@drawable/no_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_standart"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_notes_account_save"
         app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -43,29 +43,47 @@
         android:text="@string/change_avatar"
         android:textColor="@color/white"
         app:backgroundTint="?attr/colorPrimaryDark"
-        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
-        app:layout_constraintTop_toBottomOf="@id/notes_account_name_til" />
+        app:icon="@android:drawable/ic_menu_gallery"
+        app:iconGravity="textStart"
+        app:layout_constraintStart_toStartOf="@+id/notes_account_name_til"
+        app:layout_constraintTop_toBottomOf="@+id/notes_account_name_til" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_notes_delete_account_photo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        app:backgroundTint="?attr/colorPrimaryDark"
+        app:icon="@android:drawable/ic_menu_delete"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_user_account_photo"
+        app:layout_constraintEnd_toEndOf="@+id/button_notes_change_account_photo"
+        app:layout_constraintStart_toStartOf="@+id/button_notes_change_account_photo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_notes_account_save"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/padding_standart"
-        android:text="@string/save"
-        android:textColor="@color/white"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_user_account_photo"
-        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
-        app:layout_constraintTop_toBottomOf="@id/button_notes_change_account_photo" />
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/myBlue"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/ic_baseline_save_24"
+        app:iconSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/notes_info_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Список фрагментов: ..."
-        android:textSize="@dimen/font_size_smallest"
+        android:textSize="8dp"
+        app:icon="@android:drawable/ic_menu_save"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/button_notes_account_save"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

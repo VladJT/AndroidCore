@@ -1,19 +1,24 @@
 package jt.projects.androidcore.notes;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.NotSerializableException;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.common.ConfigInfo;
@@ -29,6 +34,10 @@ public class NotesMainActivity extends NotesBaseActivity {
         setSupportActionBar(toolbar);
 
         initNavigationDrawer(toolbar);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View hView = navigationView.getHeaderView(0);
+        ImageView i = hView.findViewById(R.id.image_view_notes_user_account);
+        i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
 
         // Нам нужно создать фрагмент со списком всего лишь один раз — при первом запуске. Задачу по
         // пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
@@ -55,13 +64,16 @@ public class NotesMainActivity extends NotesBaseActivity {
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
+                twUserAccountName.setText(NotesSharedPreferences.getUserAccountName());
 
+                ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
+                i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
-                twUserAccountName.setText(NotesSharedPreferences.getUserAccountName());
+
             }
 
             @Override
