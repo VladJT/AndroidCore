@@ -49,6 +49,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         }
     }
 
+
     // инициализируем Navigation Drawer
     private void initNavigationDrawer(Toolbar toolbar) {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);

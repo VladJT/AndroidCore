@@ -126,7 +126,6 @@ public class NoteInfoFragment extends Fragment {
         });
     }
 
-
     private void saveNote() {
         NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
                 etDescription.getText().toString(),

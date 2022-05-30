@@ -10,7 +10,6 @@ class NotesConstants {
     // индекс отредактированной или новой заметки для передачи события в другие фрагменты через FragmentResultListener
     static final String EDITED_NOTE_INDEX = "EDITED_NOTE_INDEX";
 
-
     // Имя настроек в SHARED_PREFERENCES
     static final String NAME_SHARED_PREFERENCES = "GB_NOTES";
     // user name в SHARED_PREFERENCES

@@ -53,6 +53,7 @@ public class NotesSharedPreferences {
         return sharedPref.getString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, "");
     }
 
+
     // encode your bitmap into string base64
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;

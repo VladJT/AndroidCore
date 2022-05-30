@@ -172,4 +172,5 @@ public class NotesListFragment extends Fragment {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
+
 }
