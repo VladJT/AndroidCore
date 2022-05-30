@@ -24,32 +24,16 @@ public class NotesData {
             return topic;
         }
 
-        public void setTopic(String topic) {
-            this.topic = topic;
-        }
-
         public String getDescription() {
             return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
         }
 
         public String getAuthor() {
             return author;
         }
 
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-
         public Calendar getDateOfCreation() {
             return dateOfCreation;
-        }
-
-        public void setDateOfCreation(Calendar dateOfCreation) {
-            this.dateOfCreation = dateOfCreation;
         }
     }
 

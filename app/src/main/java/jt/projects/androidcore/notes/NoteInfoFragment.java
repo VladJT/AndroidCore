@@ -74,6 +74,9 @@ public class NoteInfoFragment extends Fragment {
         if (id == R.id.action_save_note) {
             saveNote();
         }
+        if (id == R.id.action_delete_note) {
+            deleteNote();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -133,10 +136,21 @@ public class NoteInfoFragment extends Fragment {
 
         if (currentNoteIndex == -1) {
             NotesMainActivity.getNotesData().addNote(newNote);// добавить заметку
+        } else if (currentNoteIndex == -2) {
+            NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// добавить заметку
         } else {
             NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
         }
         // уведомляем подписчиков о событии - сохранение заметки
+        setResult();
+    }
+
+    private void deleteNote() {
+        NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// удалить заметку
+        setResult();
+    }
+
+    private void setResult() {
         Bundle result = new Bundle();
         result.putInt(EDITED_NOTE_INDEX, currentNoteIndex);
         getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, result);
@@ -144,5 +158,6 @@ public class NoteInfoFragment extends Fragment {
             requireActivity().getSupportFragmentManager().popBackStack();
         }
     }
+
 
 }
