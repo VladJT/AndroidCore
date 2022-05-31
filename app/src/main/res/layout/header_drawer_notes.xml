@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_height"
-    android:background="#58595E"
+    android:background="?attr/colorSecondary"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -10,16 +11,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
         android:text="@string/drawer_header"
+        android:fontFamily="@font/becker_rus"
         android:textColor="@color/white"
         android:textSize="@dimen/font_size_medium" />
 
-    <ImageView
-        android:id="@+id/image_view_notes_user_account"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:contentDescription="@string/drawer_header"
-        android:src="@drawable/ic_baseline_person_outline_24" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/image_view_notes_user_account"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/drawer_header"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_person_outline_24" />
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/text_view_notes_user_account"

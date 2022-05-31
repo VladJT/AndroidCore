@@ -15,4 +15,6 @@
     <dimen name="drawer_height">250dp</dimen>
 
     <dimen name="padding_standart">4dp</dimen>
+
+    <dimen name="margin_big">16dp</dimen>
 </resources>

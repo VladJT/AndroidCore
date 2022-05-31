@@ -13,8 +13,13 @@ class NotesConstants {
 
     // Имя настроек в SHARED_PREFERENCES
     static final String NAME_SHARED_PREFERENCES = "GB_NOTES";
+    // тема приложения
+    static final String APP_THEME_SHARED_PREFERENCES = "APP_THEME_SHARED_PREFERENCES";
     // user name в SHARED_PREFERENCES
     static final String ACCOUNT_USER_NAME_SHARED_PREFERENCES = "ACCOUNT_USER_NAME_SHARED_PREFERENCES";
     // user photo в SHARED_PREFERENCES
     static final String ACCOUNT_PHOTO_SHARED_PREFERENCES = "ACCOUNT_PHOTO_SHARED_PREFERENCES";
+
+    // ID для PUSH NOTIFICATION
+    static final String CHANNEL_ID = "CHANNEL_ID";
 }

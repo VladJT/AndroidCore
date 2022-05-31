@@ -10,9 +10,11 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -35,6 +38,7 @@ public class SettingsFragment extends Fragment {
     static final int GALLERY_REQUEST = 1;
 
     private TextInputEditText itAccountName;
+    private ProgressBar progressBar;
     private MaterialButton btnSaveAccountName;
     private MaterialButton btnChangeAccountPhoto;
     private MaterialButton btnDeleteAccountPhoto;
@@ -52,9 +56,20 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        menu.findItem(R.id.action_settings).setVisible(false);
-//        menu.findItem(R.id.action_about).setVisible(false);
+        inflater.inflate(R.menu.menu_fragment_note_info, menu);
+        menu.findItem(R.id.action_settings).setVisible(false);
+        menu.findItem(R.id.action_about).setVisible(false);
+        menu.findItem(R.id.action_delete_note).setVisible(false);
         menu.findItem(R.id.action_back).setVisible(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_save_note) {
+            saveAccountData();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
@@ -97,6 +112,8 @@ public class SettingsFragment extends Fragment {
         itAccountName = view.findViewById(R.id.notes_account_name);
         itAccountName.setText(NotesSharedPreferences.getUserAccountName());
 
+        progressBar = view.findViewById(R.id.progress_bar_notes_settings);
+
         initButtonSaveAccountName(view);
         initChangeAccountPhoto(view);
         initDeletePhoto(view);
@@ -104,14 +121,18 @@ public class SettingsFragment extends Fragment {
 
     private void initDeletePhoto(View view) {
         btnDeleteAccountPhoto = view.findViewById(R.id.button_notes_delete_account_photo);
-        btnDeleteAccountPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bitmapPhoto = null;
-                NotesSharedPreferences.saveUserPhotoUriString("");
-                ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getEmptyPhoto());
-         //       ivAccountPhoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_person_outline_24, null));
-            }
+        btnDeleteAccountPhoto.setOnClickListener(v -> {
+            Snackbar snackbar = Snackbar
+                    .make(view, "Удалить фото профиля?", Snackbar.LENGTH_LONG)
+                    .setAction(requireContext().getResources().getText(R.string.yes), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view1) {
+                            bitmapPhoto = null;
+                            NotesSharedPreferences.saveUserPhotoUriString("");
+                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getEmptyPhoto());
+                        }
+                    });
+            snackbar.show();
         });
     }
 
@@ -144,14 +165,27 @@ public class SettingsFragment extends Fragment {
     private void initButtonSaveAccountName(View view) {
         btnSaveAccountName = view.findViewById(R.id.button_notes_account_save);
         btnSaveAccountName.setOnClickListener(v -> {
-            // сохраняем аватарку
-            if (bitmapPhoto != null) {
-                NotesSharedPreferences.saveUserPhotoUriString(NotesSharedPreferences.encodeTobase64(bitmapPhoto));
-            }
+            saveAccountData();
+        });
+    }
+
+    private void saveAccountData() {
+        try {
+            progressBar.setVisibility(View.VISIBLE);
+            Thread threadLoadPhoto = new Thread(() -> {
+                // сохраняем аватарку
+                if (bitmapPhoto != null) {
+                    NotesSharedPreferences.saveUserPhotoUriString(NotesSharedPreferences.encodeTobase64(bitmapPhoto));
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+            threadLoadPhoto.start();
+            threadLoadPhoto.join();
             // сохраняем имя пользователя
             NotesSharedPreferences.saveUserAccountName(itAccountName.getText() + "");
-            Toast toast = Toast.makeText(requireContext(), "Настройки сохранены", Toast.LENGTH_SHORT);
-            toast.show();
-        });
+            Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), requireContext().getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

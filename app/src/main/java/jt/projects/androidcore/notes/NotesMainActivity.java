@@ -1,5 +1,6 @@
 package jt.projects.androidcore.notes;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.NotSerializableException;
 
@@ -28,7 +32,6 @@ public class NotesMainActivity extends NotesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,14 +69,12 @@ public class NotesMainActivity extends NotesBaseActivity {
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
                 twUserAccountName.setText(NotesSharedPreferences.getUserAccountName());
-
-                ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
-                i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
+                ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
+                i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
             }
 
             @Override
@@ -121,11 +122,37 @@ public class NotesMainActivity extends NotesBaseActivity {
             case R.id.action_about:
                 showFragment(new AboutFragment());
                 return true;
+            case R.id.action_theme:
+                changeTheme();
+                return true;
             case R.id.action_exit:
                 finish();
                 return true;
         }
         return false;
+    }
+
+    private void changeTheme() {
+        String[] items = getResources().getStringArray(R.array.choose_notes_theme);
+        // Создаём билдер и передаём контекст приложения
+        AlertDialog.Builder ab = new AlertDialog.Builder(NotesMainActivity.this);
+
+        // В билдере указываем заголовок окна. Можно указывать как ресурс, так и строку
+        ab.setTitle("Выбор темы");
+        ab.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int currentTheme = R.style.Theme_NotesTheme;
+                switch (which){
+                    case 0: currentTheme = R.style.Theme_NotesTheme;break;
+                    case 1: currentTheme = R.style.Theme_NotesDarkTheme;break;
+                }
+                NotesSharedPreferences.saveAppTheme(currentTheme);
+                recreate();
+            }
+        });
+        ab.create().show();
+        Snackbar.make(findViewById(R.id.navigation_view), getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
     }
 
 

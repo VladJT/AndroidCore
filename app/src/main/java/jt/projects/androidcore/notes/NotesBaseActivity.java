@@ -1,17 +1,12 @@
 package jt.projects.androidcore.notes;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import jt.projects.androidcore.R;
 
@@ -27,13 +22,13 @@ public class NotesBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_NotesTheme);
         // getSupportActionBar().hide();// отключаем AppBar
         if (notesData == null) {
             notesData = new NotesData();
             notesData.loadData();
         }
         NotesSharedPreferences.initSharedPreferences(getApplicationContext());
+        setTheme(NotesSharedPreferences.getAppTheme());
     }
 
     protected void showLogMessage(Context c, String message) {

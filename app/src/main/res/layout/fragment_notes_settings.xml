@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
     android:focusable="true">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_notes_account_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:cardCornerRadius="60dp"
+        android:layout_margin="@dimen/margin_big"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <ImageView
         android:id="@+id/image_view_notes_user_account_photo"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_margin="@dimen/padding_standart"
-        android:background="@color/cardview_dark_background"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#D4D6D6"
         android:contentDescription="@string/drawer_header"
         android:src="@drawable/no_avatar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scaleType="centerCrop" />
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_account_name_til"
         android:layout_width="0dp"
+        android:layout_marginTop="@dimen/margin_big"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_standart"
-        app:layout_constraintEnd_toEndOf="@+id/button_notes_account_save"
-        app:layout_constraintStart_toEndOf="@+id/image_view_notes_user_account_photo"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/card_view_notes_account_photo"
+        app:layout_constraintStart_toStartOf="@+id/card_view_notes_account_photo"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_notes_account_photo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notes_account_name"
@@ -37,29 +49,30 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_notes_change_account_photo"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_standart"
-        android:text="@string/change_avatar"
-        android:textColor="@color/white"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        app:icon="@android:drawable/ic_menu_gallery"
-        app:iconGravity="textStart"
-        app:layout_constraintStart_toStartOf="@+id/notes_account_name_til"
-        app:layout_constraintTop_toBottomOf="@+id/notes_account_name_til" />
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:backgroundTint="@color/myBlue"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_baseline_mode_edit_24"
+        app:iconGravity="textTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_view_notes_account_photo"
+        app:layout_constraintTop_toTopOf="@+id/card_view_notes_account_photo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_notes_delete_account_photo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"
-        android:textColor="@color/white"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        app:icon="@android:drawable/ic_menu_delete"
-        app:iconGravity="textStart"
-        app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_user_account_photo"
-        app:layout_constraintEnd_toEndOf="@+id/button_notes_change_account_photo"
-        app:layout_constraintStart_toStartOf="@+id/button_notes_change_account_photo" />
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/std_margins"
+        app:backgroundTint="@color/myBlue"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_baseline_delete_24"
+        app:iconGravity="textTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_view_notes_account_photo"
+        app:layout_constraintTop_toBottomOf="@+id/button_notes_change_account_photo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_notes_account_save"
@@ -85,5 +98,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_notes_account_save"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_notes_settings"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

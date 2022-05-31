@@ -25,4 +25,10 @@
     </string>
     <string name="add_note">Добавить</string>
     <string name="change_avatar">Сменить аватар</string>
+    <string name="settings_saved">Настройки сохранены</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="change_theme">Выбор темы</string>
+    <string name="theme_standart">Стандартная тема</string>
+    <string name="theme_dark">Темная тема</string>
 </resources>

@@ -43,7 +43,7 @@
         <item name="android:windowBackground">#E6EFF6</item>
         <item name="colorPrimary">@color/myBlue</item>
         <item name="colorPrimaryDark">#01579B</item><!-- фон строки с батареей и часами -->
-        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondary">#01579B</item>
         <item name="android:navigationBarColor">@color/myBlue</item><!-- цвет navBar -->
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
@@ -56,6 +56,20 @@
     <!-- Стиль для кнопки 🚦 в toolbar -->
     <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">@color/white</item>
+    </style>
+    <!-- ************************************************** -->
+
+    <!-- ************************************************** -->
+    <!-- Тема Dark для приложения заметок. -->
+    <style name="Theme.NotesDarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="android:windowBackground">#222323</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">#830804</item><!-- фон строки с батареей и часами -->
+        <item name="colorSecondary">@color/pitch_black</item>
+        <item name="android:navigationBarColor">@color/pitch_black</item><!-- цвет navBar -->
+        <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
     </style>
     <!-- ************************************************** -->
 

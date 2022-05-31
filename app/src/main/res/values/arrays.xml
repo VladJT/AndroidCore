@@ -31,4 +31,10 @@
         <item>@drawable/emblem_samara</item><!-- герб Самары -->
     </integer-array>
 
+    <string-array name="choose_notes_theme">
+        <item>@string/theme_standart</item>
+        <item>@string/theme_dark</item>
+    </string-array>
+
+
 </resources>

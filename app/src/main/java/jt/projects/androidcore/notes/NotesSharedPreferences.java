@@ -21,11 +21,24 @@ public class NotesSharedPreferences {
     private static SharedPreferences sharedPref;
     private static Bitmap cachedPhoto = null;
 
+
     public static void initSharedPreferences(Context c) {
         context = c;
         if (!getUserPhotoUriString().equals("")) {
             cachedPhoto = decodeBase64(getUserPhotoUriString());
         }
+    }
+
+    public static void saveAppTheme(int theme) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, theme);
+        editor.apply();
+    }
+
+    public static int getAppTheme() {
+        sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
+                MODE_PRIVATE);
+        return sharedPref.getInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, R.style.Theme_NotesTheme);
     }
 
     public static void saveUserAccountName(String name) {

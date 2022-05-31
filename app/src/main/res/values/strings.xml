@@ -30,7 +30,6 @@
     <string name="Cancel">Cancel</string>
     <string name="calcRedTheme">Red theme</string>
     <string name="ChooseTheme">Choose theme</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="drawer_header" translatable="false">Мои заметки</string>
     <string name="navigation_drawer_open" translatable="false">боковое меню открыто</string>
@@ -45,4 +44,10 @@
     <string name="about_text">About</string>
     <string name="add_note">Add note</string>
     <string name="change_avatar">Change avatar</string>
+    <string name="settings_saved">Settings saved</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="change_theme">Change theme</string>
+    <string name="theme_standart">Basic theme</string>
+    <string name="theme_dark">Dark theme</string>
 </resources>
