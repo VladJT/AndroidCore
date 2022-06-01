@@ -132,6 +132,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         return false;
     }
 
+
     private void changeTheme() {
         String[] items = getResources().getStringArray(R.array.choose_notes_theme);
         // Создаём билдер и передаём контекст приложения

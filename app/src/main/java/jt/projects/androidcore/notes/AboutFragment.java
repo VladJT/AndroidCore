@@ -75,7 +75,6 @@ public class AboutFragment extends Fragment {
         });
     }
 
-
     private void showNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(requireActivity(), NotesConstants.CHANNEL_ID);
         // Все цветные иконки отображаются только в оттенках серого

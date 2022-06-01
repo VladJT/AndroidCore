@@ -14,5 +14,4 @@
         android:src="@drawable/delete_note"
         android:scaleType="centerCrop" />
 
-
 </LinearLayout>
