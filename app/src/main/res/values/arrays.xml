@@ -34,6 +34,7 @@
     <string-array name="choose_notes_theme">
         <item>@string/theme_standart</item>
         <item>@string/theme_dark</item>
+        <item>Отмена</item>
     </string-array>
 
 

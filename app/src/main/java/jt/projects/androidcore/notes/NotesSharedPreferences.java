@@ -21,7 +21,6 @@ public class NotesSharedPreferences {
     private static SharedPreferences sharedPref;
     private static Bitmap cachedPhoto = null;
 
-
     public static void initSharedPreferences(Context c) {
         context = c;
         if (!getUserPhotoUriString().equals("")) {

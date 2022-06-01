@@ -68,9 +68,9 @@ public class AboutFragment extends Fragment {
                 showNotification();
                 // Создаем NotificationChannel, но это делается только для API 26+
                 // Потому что NotificationChannel -- это новый класс и его нет в support library
-                //  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //     createNotificationChannel();
-                //   }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createNotificationChannel();
+                }
             }
         });
     }

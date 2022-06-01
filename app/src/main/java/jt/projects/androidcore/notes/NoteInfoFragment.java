@@ -142,10 +142,14 @@ public class NoteInfoFragment extends Fragment {
     }
 
     private void deleteNote() {
+        final View customDialogView = getLayoutInflater().inflate(R.layout.dialog_delete_note,null);
+
         Context c = requireContext();
         new AlertDialog.Builder(c)
                 .setTitle("Подтверждение операции")
                 .setMessage("Удалить заметку?")
+                .setView(customDialogView)
+                .setIcon(android.R.drawable.ic_menu_delete)
                 .setNeutralButton(c.getText(R.string.no), null)
                 .setPositiveButton(c.getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override

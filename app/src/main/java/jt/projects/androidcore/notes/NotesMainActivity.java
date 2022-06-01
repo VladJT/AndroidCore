@@ -143,18 +143,22 @@ public class NotesMainActivity extends NotesBaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int currentTheme = R.style.Theme_NotesTheme;
-                switch (which){
-                    case 0: currentTheme = R.style.Theme_NotesTheme;break;
-                    case 1: currentTheme = R.style.Theme_NotesDarkTheme;break;
+                switch (which) {
+                    case 0:
+                        currentTheme = R.style.Theme_NotesTheme;
+                        break;
+                    case 1:
+                        currentTheme = R.style.Theme_NotesDarkTheme;
+                        break;
+                    case 2:
+                        return;
                 }
                 NotesSharedPreferences.saveAppTheme(currentTheme);
                 recreate();
             }
         });
         ab.create().show();
-        Snackbar.make(findViewById(R.id.navigation_view), getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
     }
-
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
