@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 
 import androidx.core.content.res.ResourcesCompat;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.Set;
 
 import jt.projects.androidcore.R;
 
@@ -90,5 +93,38 @@ public class NotesSharedPreferences {
         if (cachedPhoto == null) {
             return getEmptyPhoto();
         } else return cachedPhoto;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String getAllPreferences() {
+        StringBuilder result = new StringBuilder();
+        SharedPreferences preference = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES, MODE_PRIVATE);
+        Map<String, ?> prefs = preference.getAll();
+        for (String key : prefs.keySet()) {
+            if(key.equals(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES)) continue;
+            Object pref = prefs.get(key);
+            String printVal = "";
+            if (pref instanceof Boolean) {
+                printVal = key + " : " + (Boolean) pref;
+            }
+            if (pref instanceof Float) {
+                printVal = key + " : " + (Float) pref;
+            }
+            if (pref instanceof Integer) {
+                printVal = key + " : " + (Integer) pref;
+            }
+            if (pref instanceof Long) {
+                printVal = key + " : " + (Long) pref;
+            }
+            if (pref instanceof String) {
+                printVal = key + " : " + (String) pref;
+            }
+            if (pref instanceof Set<?>) {
+                printVal = key + " : " + (Set<String>) pref;
+            }
+            // Every new preference goes to a new line
+            result.append(printVal + "\n\n");
+        }
+        return result.toString();
     }
 }

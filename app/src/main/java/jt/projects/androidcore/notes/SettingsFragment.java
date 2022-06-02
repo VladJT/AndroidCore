@@ -171,7 +171,7 @@ public class SettingsFragment extends Fragment {
 
     private void saveAccountData() {
         try {
-            progressBar.setVisibility(View.VISIBLE);
+            //progressBar.setVisibility(View.VISIBLE);
             Thread threadLoadPhoto = new Thread(() -> {
                 // сохраняем аватарку
                 if (bitmapPhoto != null) {

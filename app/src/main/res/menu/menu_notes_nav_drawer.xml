@@ -21,6 +21,10 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/action_sh_pref"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Shared preferences" />
+        <item
             android:id="@+id/action_exit"
             android:icon="@android:drawable/ic_menu_close_clear_cancel"
             android:title="@string/exit" />

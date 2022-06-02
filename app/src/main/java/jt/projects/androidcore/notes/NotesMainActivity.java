@@ -128,6 +128,23 @@ public class NotesMainActivity extends NotesBaseActivity {
             case R.id.action_exit:
                 finish();
                 return true;
+            case R.id.action_sh_pref:
+                OnDialogListener dialogListener = new OnDialogListener() {
+                    @Override
+                    public void onDialogNo() {
+                        Toast.makeText(getApplicationContext(), "Нажата No", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onDialogYes() {
+                        Toast.makeText(getApplicationContext(), "Нажата Yes", Toast.LENGTH_SHORT).show();
+                    }
+                };
+
+                SharedPrefViewerDialogFragment dialogFragment = SharedPrefViewerDialogFragment.newInstance();
+                dialogFragment.setOnDialogListener(dialogListener);
+                dialogFragment.show(getSupportFragmentManager(),
+                        "dialog_fragment");
+                return true;
         }
         return false;
     }
