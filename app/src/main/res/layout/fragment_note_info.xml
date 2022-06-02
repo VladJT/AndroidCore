@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?android:windowBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
@@ -42,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Текст"
+            android:maxHeight="250sp"
             android:textSize="@dimen/font_size_smallest" />
     </com.google.android.material.textfield.TextInputLayout>
 

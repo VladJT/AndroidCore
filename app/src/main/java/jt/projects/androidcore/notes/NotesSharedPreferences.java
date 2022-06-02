@@ -101,7 +101,7 @@ public class NotesSharedPreferences {
         SharedPreferences preference = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES, MODE_PRIVATE);
         Map<String, ?> prefs = preference.getAll();
         for (String key : prefs.keySet()) {
-            if(key.equals(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES)) continue;
+            if (key.equals(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES)) continue;
             Object pref = prefs.get(key);
             String printVal = "";
             if (pref instanceof Boolean) {
@@ -123,7 +123,7 @@ public class NotesSharedPreferences {
                 printVal = key + " : " + (Set<String>) pref;
             }
             // Every new preference goes to a new line
-            result.append(printVal + "\n\n");
+            result.append(printVal + "\n");
         }
         return result.toString();
     }

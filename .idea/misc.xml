@@ -10,6 +10,7 @@
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/ic_baseline_done_outline_24.xml" value="0.3995" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.3615" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/my_button.xml" value="0.3995" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/drawable/separator.xml" value="0.3615" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout-land/activity_notes.xml" value="0.4275331338178709" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout-land/calculator_grid_layout.xml" value="0.4" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout-land/calculator_layout.xml" value="0.4" />
@@ -31,6 +32,7 @@
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/fragment_notes_settings.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/header_drawer_notes.xml" value="0.3274903805044891" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/linear_example_layout.xml" value="0.3368421052631579" />
+        <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/layout/notes_item.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/menu/menu_fragment_note_info.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/menu/menu_notes.xml" value="0.32834544677212485" />
         <entry key="..\:/Projects/Android/GBAndroidCore/app/src/main/res/menu/menu_notes_nav_drawer.xml" value="0.32834544677212485" />
