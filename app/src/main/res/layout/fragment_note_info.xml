@@ -19,6 +19,7 @@
         android:id="@+id/notes_til_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,6 +35,7 @@
         android:id="@+id/notes_til_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notes_til_topic">
 
@@ -50,6 +52,7 @@
         android:id="@+id/notes_til_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notes_til_description">
 

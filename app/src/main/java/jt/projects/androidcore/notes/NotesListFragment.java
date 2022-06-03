@@ -117,12 +117,7 @@ public class NotesListFragment extends Fragment {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
-
         initButtonAdd(view);
-
-        if (ConfigInfo.isLandscape(requireContext())) {
-            showNoteInfo();
-        }
     }
 
     private void initButtonAdd(@NonNull View view) {
@@ -167,11 +162,7 @@ public class NotesListFragment extends Fragment {
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        if (ConfigInfo.isLandscape(requireActivity().getApplicationContext())) {
-            ft.replace(R.id.notes_info_fragment_container, fragment);
-        } else {
-            ft.replace(R.id.notes_list_fragment_container, fragment);
-        }
+        ft.replace(R.id.notes_list_fragment_container, fragment);
 
         boolean needAddToStack = false;
         for (Fragment f : requireActivity().getSupportFragmentManager().getFragments()) {

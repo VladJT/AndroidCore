@@ -179,11 +179,7 @@ public class NotesMainActivity extends NotesBaseActivity {
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (ConfigInfo.isLandscape(getApplicationContext())) {
-            ft.replace(R.id.notes_info_fragment_container, fragment);
-        } else {
-            ft.replace(R.id.notes_list_fragment_container, fragment);
-        }
+        ft.replace(R.id.notes_list_fragment_container, fragment);
 
         boolean needAddToStack = false;
         for (Fragment f : getSupportFragmentManager().getFragments()) {
