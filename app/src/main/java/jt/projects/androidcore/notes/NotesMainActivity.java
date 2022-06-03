@@ -52,6 +52,20 @@ public class NotesMainActivity extends NotesBaseActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // мы получаем Меню приложения и с помощью специального MenuInflater’а (по
+        //аналогии с LayoutInflater’ом) надуваем кнопки в получаемом меню.
+        getMenuInflater().inflate(R.menu.menu_notes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        checkMenuItemSelected(item.getItemId());
+        return super.onOptionsItemSelected(item);
+    }
+
     // инициализируем Navigation Drawer
     private void initNavigationDrawer(Toolbar toolbar) {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -97,20 +111,6 @@ public class NotesMainActivity extends NotesBaseActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // мы получаем Меню приложения и с помощью специального MenuInflater’а (по
-        //аналогии с LayoutInflater’ом) надуваем кнопки в получаемом меню.
-        getMenuInflater().inflate(R.menu.menu_notes, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        checkMenuItemSelected(item.getItemId());
-        return super.onOptionsItemSelected(item);
-    }
-
     private boolean checkMenuItemSelected(int id) {
         switch (id) {
             case R.id.action_back:
@@ -129,67 +129,63 @@ public class NotesMainActivity extends NotesBaseActivity {
                 finish();
                 return true;
             case R.id.action_sh_pref:
-                OnDialogListener dialogListener = new OnDialogListener() {
-                    @Override
-                    public void onDialogNo() {
-                        Toast.makeText(getApplicationContext(), "Нажата No", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onDialogYes() {
-                        Toast.makeText(getApplicationContext(), "Нажата Yes", Toast.LENGTH_SHORT).show();
-                    }
-                };
-
-                SharedPrefViewerDialogFragment dialogFragment = SharedPrefViewerDialogFragment.newInstance();
-                dialogFragment.setOnDialogListener(dialogListener);
-                dialogFragment.show(getSupportFragmentManager(),
-                        "dialog_fragment");
+                showSharedPreferencesDialog();
                 return true;
         }
         return false;
     }
 
+    private void showSharedPreferencesDialog() {
+        OnDialogListener dialogListener = new OnDialogListener() {
+            @Override
+            public void onDialogNo() {
+                Toast.makeText(getApplicationContext(), "Нажата No", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDialogYes() {
+                Toast.makeText(getApplicationContext(), "Нажата Yes", Toast.LENGTH_SHORT).show();
+            }
+        };
+        SharedPrefViewerDialogFragment dialogFragment = SharedPrefViewerDialogFragment.newInstance();
+        dialogFragment.setOnDialogListener(dialogListener);
+        dialogFragment.show(getSupportFragmentManager(), "dialog_fragment");
+    }
+
     private void changeTheme() {
         String[] items = getResources().getStringArray(R.array.choose_notes_theme);
         // Создаём билдер и передаём контекст приложения
-        AlertDialog.Builder ab = new AlertDialog.Builder(NotesMainActivity.this);
-
-        // В билдере указываем заголовок окна. Можно указывать как ресурс, так и строку
-        ab.setTitle("Выбор темы");
-        ab.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int currentTheme = R.style.Theme_NotesTheme;
-                switch (which) {
-                    case 0:
-                        currentTheme = R.style.Theme_NotesTheme;
-                        break;
-                    case 1:
-                        currentTheme = R.style.Theme_NotesDarkTheme;
-                        break;
-                    case 2:
-                        return;
-                }
-                NotesSharedPreferences.saveAppTheme(currentTheme);
-                recreate();
-            }
-        });
+        AlertDialog.Builder ab = new AlertDialog.Builder(NotesMainActivity.this)
+                .setTitle("Выбор темы")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int currentTheme = R.style.Theme_NotesTheme;
+                        switch (which) {
+                            case 0:
+                                currentTheme = R.style.Theme_NotesTheme;
+                                break;
+                            case 1:
+                                currentTheme = R.style.Theme_NotesDarkTheme;
+                                break;
+                            case 2:
+                                return;
+                        }
+                        NotesSharedPreferences.saveAppTheme(currentTheme);
+                        recreate();
+                    }
+                });
         ab.create().show();
     }
-
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.notes_list_fragment_container, fragment);
-
-        boolean needAddToStack = false;
         for (Fragment f : getSupportFragmentManager().getFragments()) {
             if (f instanceof NotesListFragment & f.isVisible()) {
-                needAddToStack = true;
+                ft.addToBackStack("");
+                break;
             }
-        }
-        if (needAddToStack) {
-            ft.addToBackStack("");
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();

@@ -27,7 +27,6 @@ public class SharedPrefViewerDialogFragment extends BottomSheetDialogFragment {
         this.dialogListener = dialogListener;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

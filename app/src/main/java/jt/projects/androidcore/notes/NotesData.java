@@ -18,43 +18,9 @@ public class NotesData {
         return notesData;
     }
 
-    public static class Note {
-        private String topic;
-        private String description;
-        private String author;
-        private Calendar dateOfCreation;
-
-        public Note(String topic, String description, String author, Calendar dateOfCreation) {
-            this.topic = topic;
-            this.description = description;
-            this.author = author;
-            this.dateOfCreation = dateOfCreation;
-        }
-
-        public String getTopic() {
-            return topic;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public Calendar getDateOfCreation() {
-            return dateOfCreation;
-        }
-
-        public String getDateOfCreationAsString() {
-            return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
-        }
-    }
-
     private ArrayList<Note> data;
 
-    public NotesData() {
+    private NotesData() {
         this.data = new ArrayList<>();
     }
 
@@ -103,5 +69,40 @@ public class NotesData {
 
     public void deleteNote(int index) {
         data.remove(index);
+    }
+
+    // Внутренний класс для ЗАМЕТКИ
+    public static class Note {
+        private String topic;
+        private String description;
+        private String author;
+        private Calendar dateOfCreation;
+
+        public Note(String topic, String description, String author, Calendar dateOfCreation) {
+            this.topic = topic;
+            this.description = description;
+            this.author = author;
+            this.dateOfCreation = dateOfCreation;
+        }
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public Calendar getDateOfCreation() {
+            return dateOfCreation;
+        }
+
+        public String getDateOfCreationAsString() {
+            return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
+        }
     }
 }

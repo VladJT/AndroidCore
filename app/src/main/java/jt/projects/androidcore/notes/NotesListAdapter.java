@@ -18,15 +18,15 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
     private NotesData dataSource;
     private OnItemClickListener itemClickListener; // Слушатель будет устанавливаться извне
     private final NotesListFragment fragment; // фрагмент, обрабатывающий контекстное меню
-    private int menuPosition; // Поле menuPosition будет хранить элемент, на котором вызывается контекстное меню
-
-    public int getMenuPosition() {
-        return menuPosition;
-    }
+    private int menuPosition; // хранит элемент, на котором вызывается контекстное меню
 
     public NotesListAdapter(NotesData dataSource, NotesListFragment fragment) {
         this.dataSource = dataSource;
         this.fragment = fragment;
+    }
+
+    public int getMenuPosition() {
+        return menuPosition;
     }
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
@@ -61,6 +61,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         return dataSource.getSize();
     }
 
+
     // Этот класс хранит связь между данными и элементами View
     // Сложные данные могут потребовать несколько View на один пункт списка
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,7 +70,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         private TextView textViewAuthor;
         private TextView textViewDateOfCreation;
         private ImageView imageViewNoteItem;
-        private ImageButton buttonContextMenu;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +90,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 });
             }
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,9 +99,9 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 }
             });
 
-            buttonContextMenu = itemView.findViewById(R.id.button_notes_item_context_menu);
+            ImageButton buttonContextMenu = itemView.findViewById(R.id.button_notes_item_context_menu);
             // контекстное меню
-            buttonContextMenu.setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.button_notes_item_context_menu).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     menuPosition = getLayoutPosition();
@@ -111,7 +110,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                     itemView.showContextMenu(x, y);
                 }
             });
-
         }
 
 

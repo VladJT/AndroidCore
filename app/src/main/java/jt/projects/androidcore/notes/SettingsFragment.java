@@ -86,28 +86,18 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentManager fragmentManager =
-                requireActivity().getSupportFragmentManager();
-        final List<Fragment> fragments = fragmentManager.getFragments();
-        String stFragments = "Список активных фрагментов:\n";
-        for (Fragment fragment : fragments) {
-            stFragments += fragment.toString() + "\n";
-        }
-        TextView t = view.findViewById(R.id.notes_info_settings);
-        t.setText(stFragments);
+//        final FragmentManager fragmentManager =
+//                requireActivity().getSupportFragmentManager();
+//        final List<Fragment> fragments = fragmentManager.getFragments();
+//        String stFragments = "Список активных фрагментов:\n";
+//        for (Fragment fragment : fragments) {
+//            stFragments += fragment.toString() + "\n";
+//        }
+//        TextView t = view.findViewById(R.id.notes_info_settings);
+//        t.setText(stFragments);
 
         ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
-        encodedBitmapPhoto = NotesSharedPreferences.getUserPhotoUriString();
-        if (!encodedBitmapPhoto.equals("")) {
-            try {
-                Bitmap image = NotesSharedPreferences.decodeBase64(encodedBitmapPhoto);
-                ivAccountPhoto.setImageBitmap(image);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_LONG);
-                toast.show();
-            }
-        }
+        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
 
         itAccountName = view.findViewById(R.id.notes_account_name);
         itAccountName.setText(NotesSharedPreferences.getUserAccountName());
@@ -129,7 +119,7 @@ public class SettingsFragment extends Fragment {
                         public void onClick(View view1) {
                             bitmapPhoto = null;
                             NotesSharedPreferences.saveUserPhotoUriString("");
-                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getEmptyPhoto());
+                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
                         }
                     });
             snackbar.show();
@@ -152,12 +142,14 @@ public class SettingsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            try {
-                bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
-                ivAccountPhoto.setImageBitmap(bitmapPhoto);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (data != null) {
+                try {
+                    Uri selectedImageUri = data.getData();
+                    bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                    ivAccountPhoto.setImageBitmap(bitmapPhoto);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

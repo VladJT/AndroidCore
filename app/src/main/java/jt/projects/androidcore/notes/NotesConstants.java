@@ -20,6 +20,7 @@ class NotesConstants {
     // user photo в SHARED_PREFERENCES
     static final String ACCOUNT_PHOTO_SHARED_PREFERENCES = "ACCOUNT_PHOTO_SHARED_PREFERENCES";
 
+
     // ID для PUSH NOTIFICATION
     static final String CHANNEL_ID = "CHANNEL_ID";
 }
