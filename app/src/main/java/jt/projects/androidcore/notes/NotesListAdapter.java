@@ -3,21 +3,30 @@ package jt.projects.androidcore.notes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+
 import jt.projects.androidcore.R;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.ViewHolder> {
     private NotesData dataSource;
     private OnItemClickListener itemClickListener; // Слушатель будет устанавливаться извне
+    private final NotesListFragment fragment; // фрагмент, обрабатывающий контекстное меню
+    private int menuPosition; // Поле menuPosition будет хранить элемент, на котором вызывается контекстное меню
 
-    public NotesListAdapter(NotesData dataSource) {
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    public NotesListAdapter(NotesData dataSource, NotesListFragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
     }
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
@@ -60,6 +69,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         private TextView textViewAuthor;
         private TextView textViewDateOfCreation;
         private ImageView imageViewNoteItem;
+        private ImageButton buttonContextMenu;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +78,19 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
             textViewAuthor = (TextView) itemView.findViewById(R.id.text_view_notes_item_author);
             textViewDateOfCreation = (TextView) itemView.findViewById(R.id.text_view_notes_item_date_of_creation);
             imageViewNoteItem = (ImageView) itemView.findViewById(R.id.image_view_notes_item);
+
+            // регистрируем контекстное меню
+            if (fragment != null) {
+                fragment.registerForContextMenu(itemView);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        menuPosition = getLayoutPosition();
+                    }
+                });
+            }
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,7 +99,21 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                     }
                 }
             });
+
+            buttonContextMenu = itemView.findViewById(R.id.button_notes_item_context_menu);
+            // контекстное меню
+            buttonContextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menuPosition = getLayoutPosition();
+                    int x = buttonContextMenu.getLeft();
+                    int y = buttonContextMenu.getTop();
+                    itemView.showContextMenu(x, y);
+                }
+            });
+
         }
+
 
         public TextView getTextViewTopic() {
             return textViewTopic;

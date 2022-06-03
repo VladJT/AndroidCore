@@ -68,6 +68,8 @@ public class NoteInfoFragment extends Fragment {
         menu.findItem(R.id.action_settings).setVisible(false);
         menu.findItem(R.id.action_about).setVisible(false);
         menu.findItem(R.id.action_back).setVisible(true);
+        if(currentNoteIndex==-1)
+            menu.findItem(R.id.action_delete_note).setVisible(false);
     }
 
     @Override
@@ -134,7 +136,7 @@ public class NoteInfoFragment extends Fragment {
         if (currentNoteIndex == -1) {
             NotesMainActivity.getNotesData().addNote(newNote);// добавить заметку
         } else if (currentNoteIndex == -2) {
-            NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// добавить заметку
+            NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// удалить заметку
         } else {
             NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
         }
@@ -166,9 +168,7 @@ public class NoteInfoFragment extends Fragment {
         Bundle result = new Bundle();
         result.putInt(EDITED_NOTE_INDEX, currentNoteIndex);
         getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, result);
-        if (!ConfigInfo.isLandscape(requireContext())) {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        }
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 
 

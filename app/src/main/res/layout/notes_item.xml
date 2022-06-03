@@ -2,6 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="15dp"
@@ -9,7 +10,7 @@
     app:cardBackgroundColor="?attr/cardBackgroundColor">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -43,7 +44,7 @@
             android:text="Тема"
             android:textColor="?attr/colorPrimaryDark"
             android:textSize="@dimen/font_size_small"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_notes_item_context_menu"
             app:layout_constraintStart_toEndOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,6 +87,16 @@
             app:layout_constraintStart_toEndOf="@+id/text_view_notes_item_date_of_creation"
             app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
 
+        <ImageButton
+            android:id="@+id/button_notes_item_context_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/std_margins"
+            android:background="?attr/cardBackgroundColor"
+            android:scaleType="centerCrop"
+            android:src="@drawable/xbox_menu"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_notes_item_description"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!--   <View
                android:id="@+id/notes_item_ivider"

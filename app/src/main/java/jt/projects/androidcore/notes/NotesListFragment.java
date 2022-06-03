@@ -2,7 +2,6 @@ package jt.projects.androidcore.notes;
 
 import static jt.projects.androidcore.notes.NotesConstants.*;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,35 +9,26 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.android.material.snackbar.Snackbar;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.common.ConfigInfo;
 
 
 public class NotesListFragment extends Fragment {
@@ -46,6 +36,7 @@ public class NotesListFragment extends Fragment {
     private int currentPosition = 0;// Текущая позиция
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
+    private NotesListAdapter notesListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +49,10 @@ public class NotesListFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
-                //initNotesList();
+                if (index == -1)
+                    notesRecyclerView.scrollToPosition(NotesBaseActivity.getNotesData().getSize() - 1);
+                else notesListAdapter.notifyItemChanged(index);
+
             }
         });
     }
@@ -83,14 +77,13 @@ public class NotesListFragment extends Fragment {
         return view;
     }
 
-
     private void initRecyclerView(RecyclerView notesRecyclerView) {
         // Эта установка служит для повышения производительности системы
         notesRecyclerView.setHasFixedSize(true);
         // Будем работать со встроенным менеджером
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // Установим адаптер
-        NotesListAdapter notesListAdapter = new NotesListAdapter(NotesBaseActivity.getNotesData());
+        notesListAdapter = new NotesListAdapter(NotesBaseActivity.getNotesData(), this);
         notesRecyclerView.setAdapter(notesListAdapter);
 
         // Добавим разделитель карточек
@@ -153,6 +146,29 @@ public class NotesListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt(CURRENT_NOTE, currentPosition);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = requireActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.notes_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_note:
+                currentPosition = -1;
+                showNoteInfo();
+                return true;
+            case R.id.action_delete_note:
+                NotesMainActivity.getNotesData().deleteNote(notesListAdapter.getMenuPosition());
+                Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка №: "+(notesListAdapter.getMenuPosition()+1), Snackbar.LENGTH_SHORT).show();
+                notesListAdapter.notifyItemRemoved(notesListAdapter.getMenuPosition());
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void showNoteInfo() {
