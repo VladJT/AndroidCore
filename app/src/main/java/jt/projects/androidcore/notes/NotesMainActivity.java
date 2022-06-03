@@ -177,6 +177,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         ab.create().show();
     }
 
+
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.notes_list_fragment_container, fragment);

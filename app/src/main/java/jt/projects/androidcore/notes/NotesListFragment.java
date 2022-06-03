@@ -83,6 +83,7 @@ public class NotesListFragment extends Fragment {
         return view;
     }
 
+
     private void initRecyclerView(RecyclerView notesRecyclerView) {
         // Эта установка служит для повышения производительности системы
         notesRecyclerView.setHasFixedSize(true);
@@ -103,8 +104,6 @@ public class NotesListFragment extends Fragment {
         notesListAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Toast toast = Toast.makeText(requireContext(), position+"", Toast.LENGTH_SHORT);
-//                 toast.show();
                 currentPosition = position;
                 showNoteInfo();
             }

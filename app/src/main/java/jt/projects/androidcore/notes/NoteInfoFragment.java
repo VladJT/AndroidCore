@@ -117,6 +117,7 @@ public class NoteInfoFragment extends Fragment {
         }
     }
 
+
     private void initButtonSave() {
         buttonSaveNote.setOnClickListener(v -> {
             saveNote();
