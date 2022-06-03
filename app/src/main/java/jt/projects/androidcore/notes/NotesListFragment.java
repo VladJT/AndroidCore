@@ -47,7 +47,6 @@ public class NotesListFragment extends Fragment {
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +100,7 @@ public class NotesListFragment extends Fragment {
         notesRecyclerView.addItemDecoration(itemDecoration);
 
         // Установим слушателя
-        notesListAdapter.setItemClickListener(new NotesListAdapter.OnItemClickListener() {
+        notesListAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 //                Toast toast = Toast.makeText(requireContext(), position+"", Toast.LENGTH_SHORT);

@@ -24,12 +24,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         this.itemClickListener = itemClickListener;
     }
 
-    // Интерфейс для обработки нажатий, как в ListView
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-
     // Создать новый элемент пользовательского интерфейса (Запускается менеджером)
     @NonNull
     @Override
@@ -39,7 +33,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 .inflate(R.layout.notes_item, parent, false);
         // Здесь можно установить всякие параметры
         return new ViewHolder(v);
-
     }
 
     // Заменить данные в пользовательском интерфейсе (Вызывается менеджером)
@@ -67,7 +60,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         private TextView textViewAuthor;
         private TextView textViewDateOfCreation;
         private ImageView imageViewNoteItem;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -12,27 +12,37 @@
         android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/image_view_notes_item"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_view_notes_item_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/std_margins"
             android:layout_marginTop="@dimen/std_margins"
-            android:scaleType="centerCrop"
+            android:orientation="vertical"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/no_img" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_view_notes_item"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/no_img" />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/text_view_notes_item_topic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:fontFamily="@font/nautiluspompilius"
             android:text="Тема"
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view_notes_item"
+            app:layout_constraintStart_toEndOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -41,44 +51,46 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/clear_sans"
             android:text="Заметка"
             android:textSize="@dimen/font_size_smallest"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_item"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_item_card"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view_notes_item"
+            app:layout_constraintStart_toEndOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toBottomOf="@+id/text_view_notes_item_topic" />
 
         <TextView
             android:id="@+id/text_view_notes_item_date_of_creation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nautiluspompilius"
             android:text="28.08.2010"
             android:textAlignment="center"
             android:textSize="@dimen/font_size_smallest"
-            app:layout_constraintEnd_toEndOf="@+id/image_view_notes_item"
-            app:layout_constraintStart_toStartOf="@+id/image_view_notes_item"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item" />
+            app:layout_constraintEnd_toEndOf="@+id/image_view_notes_item_card"
+            app:layout_constraintStart_toStartOf="@+id/image_view_notes_item_card"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
 
         <TextView
             android:id="@+id/text_view_notes_item_author"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/std_margins"
+            android:fontFamily="@font/nautiluspompilius"
             android:text="Автор: Иванов И.И."
             android:textAlignment="textStart"
             android:textSize="@dimen/font_size_smallest"
-            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_notes_item_date_of_creation"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item" />
+            app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
 
 
-     <!--   <View
-            android:id="@+id/notes_item_ivider"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="#676565"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_notes_item_author" />-->
+        <!--   <View
+               android:id="@+id/notes_item_ivider"
+               android:layout_width="match_parent"
+               android:layout_height="3dp"
+               android:background="#676565"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/text_view_notes_item_author" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
