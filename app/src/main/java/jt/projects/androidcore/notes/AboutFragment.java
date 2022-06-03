@@ -49,7 +49,7 @@ public class AboutFragment extends Fragment {
         setHasOptionsMenu(true);// эта строчка говорит о том, что у фрагмента должен быть доступ к меню Активити
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setSubtitle("О программе");
+            actionBar.setSubtitle("О приложении");
         }
         return inflater.inflate(R.layout.fragment_notes_about, container, false);
     }
@@ -101,5 +101,4 @@ public class AboutFragment extends Fragment {
                 (NotificationManager) requireActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.createNotificationChannel(channel);
     }
-
 }

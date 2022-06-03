@@ -108,7 +108,7 @@ public class NoteInfoFragment extends Fragment {
 
         if (args != null) {
             currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
-            NotesData.Note currentNote = NotesBaseActivity.getNotesData().getNote(currentNoteIndex);
+            NotesData.Note currentNote = NotesData.getInstance().getNote(currentNoteIndex);
             etTopic.setText(currentNote.getTopic());
             etDescription.setText(currentNote.getDescription());
             etAuthor.setText(currentNote.getAuthor());
@@ -134,11 +134,11 @@ public class NoteInfoFragment extends Fragment {
                         dateOfCreation.getMonth(), dateOfCreation.getDayOfMonth()));
 
         if (currentNoteIndex == -1) {
-            NotesMainActivity.getNotesData().addNote(newNote);// добавить заметку
+            NotesData.getInstance().addNote(newNote);// добавить заметку
         } else if (currentNoteIndex == -2) {
-            NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// удалить заметку
+            NotesData.getInstance().deleteNote(currentNoteIndex);// удалить заметку
         } else {
-            NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
+            NotesData.getInstance().editNote(newNote, currentNoteIndex); // отредактировать заметку
         }
         // уведомляем подписчиков о событии - сохранение заметки
         setResult();
@@ -157,7 +157,7 @@ public class NoteInfoFragment extends Fragment {
                 .setPositiveButton(c.getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// удалить заметку
+                        NotesData.getInstance().deleteNote(currentNoteIndex);// удалить заметку
                         setResult();
                     }
                 })

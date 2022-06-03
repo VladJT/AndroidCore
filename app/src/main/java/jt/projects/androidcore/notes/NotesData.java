@@ -8,6 +8,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class NotesData {
+    private static NotesData notesData = null;
+
+    public static NotesData getInstance() {
+        if (notesData == null) {
+            notesData = new NotesData();
+            notesData.loadData();
+        }
+        return notesData;
+    }
 
     public static class Note {
         private String topic;

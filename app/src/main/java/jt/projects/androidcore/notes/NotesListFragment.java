@@ -50,7 +50,7 @@ public class NotesListFragment extends Fragment {
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
                 if (index == -1)
-                    notesRecyclerView.scrollToPosition(NotesBaseActivity.getNotesData().getSize() - 1);
+                    notesRecyclerView.scrollToPosition(NotesData.getInstance().getSize() - 1);
                 else notesListAdapter.notifyItemChanged(index);
 
             }
@@ -83,7 +83,7 @@ public class NotesListFragment extends Fragment {
         // Будем работать со встроенным менеджером
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // Установим адаптер
-        notesListAdapter = new NotesListAdapter(NotesBaseActivity.getNotesData(), this);
+        notesListAdapter = new NotesListAdapter(NotesData.getInstance(), this);
         notesRecyclerView.setAdapter(notesListAdapter);
 
         // Добавим разделитель карточек
@@ -163,7 +163,7 @@ public class NotesListFragment extends Fragment {
                 showNoteInfo();
                 return true;
             case R.id.action_delete_note:
-                NotesMainActivity.getNotesData().deleteNote(notesListAdapter.getMenuPosition());
+                NotesData.getInstance().deleteNote(notesListAdapter.getMenuPosition());
                 Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка №: "+(notesListAdapter.getMenuPosition()+1), Snackbar.LENGTH_SHORT).show();
                 notesListAdapter.notifyItemRemoved(notesListAdapter.getMenuPosition());
                 return true;
