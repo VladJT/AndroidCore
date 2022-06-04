@@ -3,6 +3,7 @@ package jt.projects.androidcore.notes;
 
 import static jt.projects.androidcore.notes.NotesConstants.*;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -39,8 +42,10 @@ public class NoteInfoFragment extends Fragment {
     private TextInputEditText etTopic;
     private TextInputEditText etDescription;
     private TextInputEditText etAuthor;
-    private DatePicker dateOfCreation;
     private MaterialButton buttonSaveNote;
+    private Button buttonEditDateOfCreation;
+    private NotesData.Note currentNote;
+    private Calendar newDateOfCreation = Calendar.getInstance();
 
     public static NoteInfoFragment newInstance(int index) {
         NoteInfoFragment noteInfoFragment = new NoteInfoFragment();
@@ -87,6 +92,11 @@ public class NoteInfoFragment extends Fragment {
         if (actionBar != null) {
             actionBar.setSubtitle("Информация о заметке");
         }
+        Bundle args = getArguments();
+        if (args != null) {
+            currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
+            currentNote = NotesData.getInstance().getNote(currentNoteIndex);
+        }
         return inflater.inflate(R.layout.fragment_note_info, container, false);
     }
 
@@ -96,21 +106,14 @@ public class NoteInfoFragment extends Fragment {
         etTopic = view.findViewById(R.id.notes_info_topic);
         etDescription = view.findViewById(R.id.notes_info_description);
         etAuthor = view.findViewById(R.id.notes_info_author);
-        dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
-        initButtonSave(view);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
-            NotesData.Note currentNote = NotesData.getInstance().getNote(currentNoteIndex);
-            etTopic.setText(currentNote.getTopic());
-            etDescription.setText(currentNote.getDescription());
-            etAuthor.setText(currentNote.getAuthor());
-            dateOfCreation.init(currentNote.getDateOfCreation().get(Calendar.YEAR),
-                    currentNote.getDateOfCreation().get(Calendar.MONTH),
-                    currentNote.getDateOfCreation().get(Calendar.DAY_OF_MONTH),
-                    null);
-        }
+        initButtonSave(view);
+        initButtonEditDateOfCreation(view);
+
+        etTopic.setText(currentNote.getTopic());
+        etDescription.setText(currentNote.getDescription());
+        etAuthor.setText(currentNote.getAuthor());
+        buttonEditDateOfCreation.setText(currentNote.getDateOfCreationAsString());
     }
 
     private void initButtonSave(@NonNull View view) {
@@ -120,16 +123,41 @@ public class NoteInfoFragment extends Fragment {
         });
     }
 
+    private void initButtonEditDateOfCreation(View view) {
+        buttonEditDateOfCreation = view.findViewById(R.id.button_notes_info_date_of_creation);
+        buttonEditDateOfCreation.setOnClickListener(new View.OnClickListener() {
+            // Process to get Current Date
+            final Calendar c = currentNote.getDateOfCreation();
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dpd = new DatePickerDialog(requireContext(),
+                        android.R.style.ThemeOverlay_Material_Dialog_Alert,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // Display Selected date
+                                newDateOfCreation = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+                                String newStrDate = new SimpleDateFormat("dd.MM.yyyy").format(newDateOfCreation.getTime());
+                                buttonEditDateOfCreation.setText(newStrDate);
+                            }
+                        }, mYear, mMonth, mDay);
+                dpd.show();
+            }
+        });
+    }
+
     private void saveNote() {
         NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
-                etDescription.getText().toString(),
-                etAuthor.getText().toString(),
-                new GregorianCalendar(dateOfCreation.getYear(),
-                        dateOfCreation.getMonth(), dateOfCreation.getDayOfMonth()));
+                etDescription.getText().toString(), etAuthor.getText().toString(), newDateOfCreation);
         if (currentNoteIndex == -1) {
             // добавить заметку
             NotesData.getInstance().addNote(newNote);
-            currentNoteIndex =  NotesData.getInstance().getSize()-1;
+            currentNoteIndex = NotesData.getInstance().getSize() - 1;
             setResult(RESULT_EDIT_NOTE.ADD); // уведомляем подписчиков о событии - сохранение заметки
         } else {
             // отредактировать заметку

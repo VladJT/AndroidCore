@@ -65,14 +65,17 @@
             android:textSize="@dimen/font_size_smallest" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <DatePicker
-        android:id="@+id/notes_info_date_of_creation"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_notes_info_date_of_creation"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
+        android:clickable="true"
+        android:text="Дата создания: 28.01.2022"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_smallest"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notes_til_author" />
+        app:layout_constraintTop_toBottomOf="@+id/notes_til_author" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notes_info_button_save"
