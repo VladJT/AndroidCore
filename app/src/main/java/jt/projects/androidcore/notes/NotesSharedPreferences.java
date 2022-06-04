@@ -7,10 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.util.Base64;
-
-import androidx.core.content.res.ResourcesCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
@@ -18,58 +15,74 @@ import java.util.Set;
 
 import jt.projects.androidcore.R;
 
-
+// pattern ОДИНОЧКА
 public class NotesSharedPreferences {
-    private static Context context;
-    private static SharedPreferences sharedPref;
-    private static Bitmap cachedPhoto = null;
+    private Context context;
+    private SharedPreferences sharedPref;
+    private Bitmap cachedPhoto = null;
 
-    public static void initSharedPreferences(Context c) {
+    private static volatile NotesSharedPreferences instance;
+
+    public static NotesSharedPreferences getInstance(){
+        NotesSharedPreferences localInstance = instance;
+        if (localInstance == null) {
+            // Synchronized - это ключевое слово, которое позволяет заблокировать доступ к методу или части кода, если его уже использует другой поток.
+            synchronized (NotesSharedPreferences.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new NotesSharedPreferences();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    public void initSharedPreferences(Context c) {
         context = c;
         if (!getUserPhotoUriString().equals("")) {
             cachedPhoto = decodeBase64(getUserPhotoUriString());
         }
     }
 
-    public static void saveAppTheme(int theme) {
+    public void saveAppTheme(int theme) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, theme);
         editor.apply();
     }
 
-    public static int getAppTheme() {
+    public int getAppTheme() {
         sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
                 MODE_PRIVATE);
         return sharedPref.getInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, R.style.Theme_NotesTheme);
     }
 
-    public static void saveUserAccountName(String name) {
+    public void saveUserAccountName(String name) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NotesConstants.ACCOUNT_USER_NAME_SHARED_PREFERENCES, name);
         editor.apply();
     }
 
-    public static String getUserAccountName() {
+    public String getUserAccountName() {
         sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
                 MODE_PRIVATE);
         return sharedPref.getString(NotesConstants.ACCOUNT_USER_NAME_SHARED_PREFERENCES, "user");
     }
 
-    public static void saveUserPhotoUriString(String uriString) {
+    public void saveUserPhotoUriString(String uriString) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, uriString);
         editor.apply();
         cachedPhoto = decodeBase64(getUserPhotoUriString());
     }
 
-    public static String getUserPhotoUriString() {
+    public String getUserPhotoUriString() {
         sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
                 MODE_PRIVATE);
         return sharedPref.getString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, "");
     }
 
     // encode your bitmap into string base64
-    public static String encodeTobase64(Bitmap image) {
+    public String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -79,24 +92,24 @@ public class NotesSharedPreferences {
     }
 
     // decode Bitmap
-    public static Bitmap decodeBase64(String input) {
+    public Bitmap decodeBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    public static Bitmap getEmptyPhoto() {
+    public Bitmap getEmptyPhoto() {
         return BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.no_avatar);
     }
 
-    public static Bitmap getBitmapPhoto() {
+    public Bitmap getBitmapPhoto() {
         if (cachedPhoto == null) {
             return getEmptyPhoto();
         } else return cachedPhoto;
     }
 
     @SuppressWarnings("unchecked")
-    public static String getAllPreferences() {
+    public String getAllPreferences() {
         StringBuilder result = new StringBuilder();
         SharedPreferences preference = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES, MODE_PRIVATE);
         Map<String, ?> prefs = preference.getAll();

@@ -13,7 +13,8 @@ public class NotesBaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // getSupportActionBar().hide();// отключаем AppBar
-        NotesSharedPreferences.initSharedPreferences(getApplicationContext());
-        setTheme(NotesSharedPreferences.getAppTheme());
+        NotesSharedPreferences.getInstance().
+                initSharedPreferences(getApplicationContext());
+        setTheme(NotesSharedPreferences.getInstance().getAppTheme());
     }
 }

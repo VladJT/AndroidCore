@@ -52,7 +52,7 @@ public class SharedPrefViewerDialogFragment extends BottomSheetDialogFragment {
                 });
 
         TextView tvSharedPref = view.findViewById(R.id.text_view_shared_preferences);
-        String result = NotesSharedPreferences.getAllPreferences();
+        String result = NotesSharedPreferences.getInstance().getAllPreferences();
         tvSharedPref.setText(result);
         return view;
     }

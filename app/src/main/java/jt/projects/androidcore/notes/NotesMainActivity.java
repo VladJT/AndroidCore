@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.NotSerializableException;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.calculator.BaseActivity;
 import jt.projects.androidcore.common.ConfigInfo;
 
 public class NotesMainActivity extends NotesBaseActivity {
@@ -40,7 +41,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View hView = navigationView.getHeaderView(0);
         ImageView i = hView.findViewById(R.id.image_view_notes_user_account);
-        i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
+        i.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
 
         // Нам нужно создать фрагмент со списком всего лишь один раз — при первом запуске. Задачу по
         // пересозданию фрагментов после поворота экрана берет на себя FragmentManager.
@@ -82,13 +83,13 @@ public class NotesMainActivity extends NotesBaseActivity {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
-                twUserAccountName.setText(NotesSharedPreferences.getUserAccountName());
+                twUserAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
                 ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
-                i.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
+                i.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
             }
 
             @Override
@@ -171,7 +172,7 @@ public class NotesMainActivity extends NotesBaseActivity {
                             case 2:
                                 return;
                         }
-                        NotesSharedPreferences.saveAppTheme(currentTheme);
+                        NotesSharedPreferences.getInstance().saveAppTheme(currentTheme);
                         recreate();
                     }
                 });

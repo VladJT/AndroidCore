@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.calculator.BaseActivity;
 
 public class SettingsFragment extends Fragment {
     static final int GALLERY_REQUEST = 1;
@@ -97,10 +98,10 @@ public class SettingsFragment extends Fragment {
 //        t.setText(stFragments);
 
         ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
-        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
+        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
 
         itAccountName = view.findViewById(R.id.notes_account_name);
-        itAccountName.setText(NotesSharedPreferences.getUserAccountName());
+        itAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
 
         progressBar = view.findViewById(R.id.progress_bar_notes_settings);
 
@@ -118,8 +119,8 @@ public class SettingsFragment extends Fragment {
                         @Override
                         public void onClick(View view1) {
                             bitmapPhoto = null;
-                            NotesSharedPreferences.saveUserPhotoUriString("");
-                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getBitmapPhoto());
+                            NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
                         }
                     });
             snackbar.show();
@@ -167,14 +168,15 @@ public class SettingsFragment extends Fragment {
             Thread threadLoadPhoto = new Thread(() -> {
                 // сохраняем аватарку
                 if (bitmapPhoto != null) {
-                    NotesSharedPreferences.saveUserPhotoUriString(NotesSharedPreferences.encodeTobase64(bitmapPhoto));
+                    NotesSharedPreferences.getInstance()
+                            .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
                     progressBar.setVisibility(View.GONE);
                 }
             });
             threadLoadPhoto.start();
             threadLoadPhoto.join();
             // сохраняем имя пользователя
-            NotesSharedPreferences.saveUserAccountName(itAccountName.getText() + "");
+            NotesSharedPreferences.getInstance().saveUserAccountName(itAccountName.getText() + "");
             Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), requireContext().getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
