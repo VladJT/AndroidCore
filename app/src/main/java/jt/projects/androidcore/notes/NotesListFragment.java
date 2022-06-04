@@ -12,6 +12,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ import jt.projects.androidcore.R;
 
 
 public class NotesListFragment extends Fragment {
-    private static final int MY_DEFAULT_DURATION = 1000;
+    private static final int MY_DEFAULT_DURATION = 100;
     //    private static final String CURRENT_NOTE = "CurrentNote";
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
@@ -100,6 +101,12 @@ public class NotesListFragment extends Fragment {
                 DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
         notesRecyclerView.addItemDecoration(itemDecoration);
+
+        // Установим анимацию. А чтобы было хорошо заметно, сделаем анимацию долгой
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setAddDuration(MY_DEFAULT_DURATION);
+        animator.setRemoveDuration(MY_DEFAULT_DURATION);
+        notesRecyclerView.setItemAnimator(animator);
 
         // Установим слушателя
         notesListAdapter.setItemClickListener(new OnItemClickListener() {
