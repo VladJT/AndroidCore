@@ -52,6 +52,7 @@
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
     </style>
 
+
     <!-- Стиль для кнопки "гамбургер" -->
     <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>

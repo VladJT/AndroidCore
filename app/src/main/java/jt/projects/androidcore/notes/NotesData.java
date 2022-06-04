@@ -8,44 +8,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class NotesData {
+    private static NotesData notesData = null;
 
-    public static class Note {
-        private String topic;
-        private String description;
-        private String author;
-        private Calendar dateOfCreation;
-
-        public Note(String topic, String description, String author, Calendar dateOfCreation) {
-            this.topic = topic;
-            this.description = description;
-            this.author = author;
-            this.dateOfCreation = dateOfCreation;
+    public static NotesData getInstance() {
+        if (notesData == null) {
+            notesData = new NotesData();
+            notesData.loadData();
         }
-
-        public String getTopic() {
-            return topic;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public Calendar getDateOfCreation() {
-            return dateOfCreation;
-        }
-
-        public String getDateOfCreationAsString() {
-            return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
-        }
+        return notesData;
     }
 
     private ArrayList<Note> data;
 
-    public NotesData() {
+    private NotesData() {
         this.data = new ArrayList<>();
     }
 
@@ -60,7 +35,7 @@ public class NotesData {
         data.add(new Note("Заметка 2", "Высоко-высоко в горах ...", "Стас", new GregorianCalendar(2022, 2, 1)));
         data.add(new Note("Заметка 3", "В далекой галактике...", "Петр", Calendar.getInstance()));
         data.add(new Note("Заметка 4", "Использование SimpleDateFormat для форматирование ввода-вывода даты в Java. ... SimpleDateFormat является подклассом DateFormat, который позволяет форматировать ввод-вывод даты и времени в рамках... ", "Влад", new GregorianCalendar(2021, 0, 25)));
-        data.add(new Note("Заметка 5", "Высоко-высоко в горах ...", "Стас", new GregorianCalendar(2022, 2, 1)));
+        data.add(new Note("Заметка 5", "Настройка цветов происходит по определённым правилам. На сайте http://www.google.com/design/spec/style/color.html# есть таблица цветов. Обратите внимание на числа слева. Основным цветом (colorPrimary) считается цвет под номером 500, он идёт первым в таблицах. Этот цвет должен использоваться в качестве заголовка (Toolbar).", "Стас", new GregorianCalendar(2022, 2, 1)));
         data.add(new Note("Заметка 6", "В далекой галактике...", "Петр", Calendar.getInstance()));
     }
 
@@ -94,5 +69,40 @@ public class NotesData {
 
     public void deleteNote(int index) {
         data.remove(index);
+    }
+
+    // Внутренний класс для ЗАМЕТКИ
+    public static class Note {
+        private String topic;
+        private String description;
+        private String author;
+        private Calendar dateOfCreation;
+
+        public Note(String topic, String description, String author, Calendar dateOfCreation) {
+            this.topic = topic;
+            this.description = description;
+            this.author = author;
+            this.dateOfCreation = dateOfCreation;
+        }
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public Calendar getDateOfCreation() {
+            return dateOfCreation;
+        }
+
+        public String getDateOfCreationAsString() {
+            return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
+        }
     }
 }

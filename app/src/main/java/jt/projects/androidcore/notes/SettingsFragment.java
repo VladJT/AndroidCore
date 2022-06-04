@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.calculator.BaseActivity;
 
 public class SettingsFragment extends Fragment {
     static final int GALLERY_REQUEST = 1;
@@ -86,31 +87,21 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentManager fragmentManager =
-                requireActivity().getSupportFragmentManager();
-        final List<Fragment> fragments = fragmentManager.getFragments();
-        String stFragments = "Список активных фрагментов:\n";
-        for (Fragment fragment : fragments) {
-            stFragments += fragment.toString() + "\n";
-        }
-        TextView t = view.findViewById(R.id.notes_info_settings);
-        t.setText(stFragments);
+//        final FragmentManager fragmentManager =
+//                requireActivity().getSupportFragmentManager();
+//        final List<Fragment> fragments = fragmentManager.getFragments();
+//        String stFragments = "Список активных фрагментов:\n";
+//        for (Fragment fragment : fragments) {
+//            stFragments += fragment.toString() + "\n";
+//        }
+//        TextView t = view.findViewById(R.id.notes_info_settings);
+//        t.setText(stFragments);
 
         ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
-        encodedBitmapPhoto = NotesSharedPreferences.getUserPhotoUriString();
-        if (!encodedBitmapPhoto.equals("")) {
-            try {
-                Bitmap image = NotesSharedPreferences.decodeBase64(encodedBitmapPhoto);
-                ivAccountPhoto.setImageBitmap(image);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_LONG);
-                toast.show();
-            }
-        }
+        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
 
         itAccountName = view.findViewById(R.id.notes_account_name);
-        itAccountName.setText(NotesSharedPreferences.getUserAccountName());
+        itAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
 
         progressBar = view.findViewById(R.id.progress_bar_notes_settings);
 
@@ -128,8 +119,8 @@ public class SettingsFragment extends Fragment {
                         @Override
                         public void onClick(View view1) {
                             bitmapPhoto = null;
-                            NotesSharedPreferences.saveUserPhotoUriString("");
-                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getEmptyPhoto());
+                            NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
                         }
                     });
             snackbar.show();
@@ -152,12 +143,14 @@ public class SettingsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            try {
-                bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
-                ivAccountPhoto.setImageBitmap(bitmapPhoto);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (data != null) {
+                try {
+                    Uri selectedImageUri = data.getData();
+                    bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                    ivAccountPhoto.setImageBitmap(bitmapPhoto);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -175,14 +168,15 @@ public class SettingsFragment extends Fragment {
             Thread threadLoadPhoto = new Thread(() -> {
                 // сохраняем аватарку
                 if (bitmapPhoto != null) {
-                    NotesSharedPreferences.saveUserPhotoUriString(NotesSharedPreferences.encodeTobase64(bitmapPhoto));
+                    NotesSharedPreferences.getInstance()
+                            .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
                     progressBar.setVisibility(View.GONE);
                 }
             });
             threadLoadPhoto.start();
             threadLoadPhoto.join();
             // сохраняем имя пользователя
-            NotesSharedPreferences.saveUserAccountName(itAccountName.getText() + "");
+            NotesSharedPreferences.getInstance().saveUserAccountName(itAccountName.getText() + "");
             Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), requireContext().getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();

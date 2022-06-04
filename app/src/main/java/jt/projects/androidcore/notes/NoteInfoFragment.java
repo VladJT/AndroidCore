@@ -51,15 +51,10 @@ public class NoteInfoFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-            requireActivity().getSupportFragmentManager().popBackStack();
+//        if (savedInstanceState != null)
+//            requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -68,6 +63,8 @@ public class NoteInfoFragment extends Fragment {
         menu.findItem(R.id.action_settings).setVisible(false);
         menu.findItem(R.id.action_about).setVisible(false);
         menu.findItem(R.id.action_back).setVisible(true);
+        if (currentNoteIndex == -1)// для создания новой заметки - не показываем кнопку удаления
+            menu.findItem(R.id.action_delete_note).setVisible(false);
     }
 
     @Override
@@ -96,17 +93,16 @@ public class NoteInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle args = getArguments();
         etTopic = view.findViewById(R.id.notes_info_topic);
         etDescription = view.findViewById(R.id.notes_info_description);
         etAuthor = view.findViewById(R.id.notes_info_author);
         dateOfCreation = view.findViewById(R.id.notes_info_date_of_creation);
-        buttonSaveNote = view.findViewById(R.id.notes_info_button_save);
-        initButtonSave();
+        initButtonSave(view);
 
+        Bundle args = getArguments();
         if (args != null) {
             currentNoteIndex = args.getInt(CURRENT_NOTE_INDEX);
-            NotesData.Note currentNote = NotesBaseActivity.getNotesData().getNote(currentNoteIndex);
+            NotesData.Note currentNote = NotesData.getInstance().getNote(currentNoteIndex);
             etTopic.setText(currentNote.getTopic());
             etDescription.setText(currentNote.getDescription());
             etAuthor.setText(currentNote.getAuthor());
@@ -117,7 +113,8 @@ public class NoteInfoFragment extends Fragment {
         }
     }
 
-    private void initButtonSave() {
+    private void initButtonSave(@NonNull View view) {
+        buttonSaveNote = view.findViewById(R.id.notes_info_button_save);
         buttonSaveNote.setOnClickListener(v -> {
             saveNote();
         });
@@ -129,21 +126,20 @@ public class NoteInfoFragment extends Fragment {
                 etAuthor.getText().toString(),
                 new GregorianCalendar(dateOfCreation.getYear(),
                         dateOfCreation.getMonth(), dateOfCreation.getDayOfMonth()));
-
         if (currentNoteIndex == -1) {
-            NotesMainActivity.getNotesData().addNote(newNote);// добавить заметку
-        } else if (currentNoteIndex == -2) {
-            NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// добавить заметку
+            // добавить заметку
+            NotesData.getInstance().addNote(newNote);
+            currentNoteIndex =  NotesData.getInstance().getSize()-1;
+            setResult(RESULT_EDIT_NOTE.ADD); // уведомляем подписчиков о событии - сохранение заметки
         } else {
-            NotesMainActivity.getNotesData().editNote(newNote, currentNoteIndex); // отредактировать заметку
+            // отредактировать заметку
+            NotesData.getInstance().editNote(newNote, currentNoteIndex);
+            setResult(RESULT_EDIT_NOTE.EDIT); // уведомляем подписчиков о событии - сохранение заметки
         }
-        // уведомляем подписчиков о событии - сохранение заметки
-        setResult();
     }
 
     private void deleteNote() {
-        final View customDialogView = getLayoutInflater().inflate(R.layout.dialog_delete_note,null);
-
+        final View customDialogView = getLayoutInflater().inflate(R.layout.dialog_delete_note, null);
         Context c = requireContext();
         new AlertDialog.Builder(c)
                 .setTitle("Подтверждение операции")
@@ -154,21 +150,17 @@ public class NoteInfoFragment extends Fragment {
                 .setPositiveButton(c.getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NotesMainActivity.getNotesData().deleteNote(currentNoteIndex);// удалить заметку
-                        setResult();
+                        NotesData.getInstance().deleteNote(currentNoteIndex);// удалить заметку
+                        setResult(RESULT_EDIT_NOTE.DELETE);
                     }
-                })
-                .show();
+                }).show();
     }
 
-    private void setResult() {
-        Bundle result = new Bundle();
-        result.putInt(EDITED_NOTE_INDEX, currentNoteIndex);
-        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, result);
-        if (!ConfigInfo.isLandscape(requireContext())) {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        }
+    private void setResult(RESULT_EDIT_NOTE result) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(EDITED_NOTE_INDEX, currentNoteIndex);
+        bundle.putSerializable(RESULT_EDIT, result);
+        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, bundle);
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
-
-
 }
