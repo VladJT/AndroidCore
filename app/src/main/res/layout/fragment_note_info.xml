@@ -67,12 +67,11 @@
 
     <Button
         android:id="@+id/button_notes_info_date_of_creation"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:text="Дата создания: 28.01.2022"
-        android:textColor="@color/black"
+        android:text="28.01.2022"
         android:textSize="@dimen/font_size_smallest"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes_til_author" />

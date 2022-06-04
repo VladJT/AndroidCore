@@ -169,6 +169,9 @@ public class NotesListFragment extends Fragment {
             case R.id.action_add_note:
                 showNoteInfo(-1);
                 return true;
+            case R.id.action_edit_note:
+                showNoteInfo(notesListAdapter.getMenuPosition());
+                return true;
             case R.id.action_delete_note:
                 String deletedNoteTopic = NotesData.getInstance().getNote(notesListAdapter.getMenuPosition()).getTopic();
                 NotesData.getInstance().deleteNote(notesListAdapter.getMenuPosition());
