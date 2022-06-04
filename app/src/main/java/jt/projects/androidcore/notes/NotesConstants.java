@@ -1,5 +1,10 @@
 package jt.projects.androidcore.notes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 class NotesConstants {
     // индекс заметки, с которой мы работаем в данный момент, для отображения в NoteInfoFragment
     static final String CURRENT_NOTE_INDEX = "CURRENT_NOTE_INDEX";
@@ -9,6 +14,7 @@ class NotesConstants {
 
     // индекс отредактированной или новой заметки для передачи события в другие фрагменты через FragmentResultListener
     static final String EDITED_NOTE_INDEX = "EDITED_NOTE_INDEX";
+    static final String RESULT_EDIT = "RESULT_EDIT";
 
 
     // Имя настроек в SHARED_PREFERENCES
@@ -23,4 +29,8 @@ class NotesConstants {
 
     // ID для PUSH NOTIFICATION
     static final String CHANNEL_ID = "CHANNEL_ID";
+}
+
+enum RESULT_EDIT_NOTE implements Serializable {
+    ADD, DELETE, EDIT;
 }

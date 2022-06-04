@@ -32,8 +32,7 @@ import jt.projects.androidcore.R;
 
 
 public class NotesListFragment extends Fragment {
-    private static final String CURRENT_NOTE = "CurrentNote";
-    private int currentPosition = 0;// Текущая позиция
+    //    private static final String CURRENT_NOTE = "CurrentNote";
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
     private NotesListAdapter notesListAdapter;
@@ -44,15 +43,24 @@ public class NotesListFragment extends Fragment {
         setNoteInfoChangeListener();
     }
 
+    // обработчик события редактирования/удаления заметки
     private void setNoteInfoChangeListener() {
         getParentFragmentManager().setFragmentResultListener(FRAGMENT_RESULT_NOTES_DATA, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
-                if (index == -1)
-                    notesRecyclerView.scrollToPosition(NotesData.getInstance().getSize() - 1);
-                else notesListAdapter.notifyItemChanged(index);
+                RESULT_EDIT_NOTE resultEditNote = (RESULT_EDIT_NOTE) bundle.getSerializable(RESULT_EDIT);
 
+                if (resultEditNote == RESULT_EDIT_NOTE.ADD) {// если добавлена новая заметка
+                    notesRecyclerView.scrollToPosition(index);
+                } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {
+                    notesListAdapter.notifyItemChanged(index);
+                    notesRecyclerView.scrollToPosition(index);
+                } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {
+                    notesListAdapter.notifyItemRemoved(index);
+                    int scrollIndex = index - 1;
+                    if (scrollIndex >= 0) notesRecyclerView.scrollToPosition(scrollIndex);
+                }
             }
         });
     }
@@ -88,17 +96,15 @@ public class NotesListFragment extends Fragment {
 
         // Добавим разделитель карточек
         DividerItemDecoration itemDecoration = new
-                DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator,
-                null));
+                DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
         notesRecyclerView.addItemDecoration(itemDecoration);
 
         // Установим слушателя
         notesListAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                currentPosition = position;
-                showNoteInfo();
+                showNoteInfo(notesListAdapter.getMenuPosition());
             }
         });
     }
@@ -107,7 +113,7 @@ public class NotesListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
+            //    currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
         initButtonAdd(view);
     }
@@ -115,28 +121,14 @@ public class NotesListFragment extends Fragment {
     private void initButtonAdd(@NonNull View view) {
         buttonAddNote = view.findViewById(R.id.notes_button_add);
         buttonAddNote.setOnClickListener(v -> {
-            currentPosition = -1;
-            showNoteInfo();
+            showNoteInfo(-1);
         });
 
+        // POPUP MENU
         buttonAddNote.setOnLongClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(requireActivity(), v);
             requireActivity().getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_add_note:
-                        currentPosition = -1;
-                        showNoteInfo();
-                        return true;
-                    case R.id.action_settings:
-                        showFragment(new SettingsFragment());
-                        return true;
-                    case R.id.action_about:
-                        showFragment(new AboutFragment());
-                        return true;
-                }
-                return false;
-            });
+            popupMenu.setOnMenuItemClickListener(item -> checkMenuItemSelected(item.getItemId()));
             popupMenu.show();
             return false;
         });
@@ -144,7 +136,7 @@ public class NotesListFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(CURRENT_NOTE, currentPosition);
+        //outState.putInt(CURRENT_NOTE, currentPosition);
         super.onSaveInstanceState(outState);
     }
 
@@ -157,36 +149,43 @@ public class NotesListFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_note:
-                currentPosition = -1;
-                showNoteInfo();
-                return true;
-            case R.id.action_delete_note:
-                NotesData.getInstance().deleteNote(notesListAdapter.getMenuPosition());
-                Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка №: "+(notesListAdapter.getMenuPosition()+1), Snackbar.LENGTH_SHORT).show();
-                notesListAdapter.notifyItemRemoved(notesListAdapter.getMenuPosition());
-                return true;
-        }
+        checkMenuItemSelected(item.getItemId());
         return super.onContextItemSelected(item);
     }
 
-    private void showNoteInfo() {
-        showFragment(NoteInfoFragment.newInstance(currentPosition));
+    private boolean checkMenuItemSelected(int id) {
+        switch (id) {
+            case R.id.action_add_note:
+                showNoteInfo(-1);
+                return true;
+            case R.id.action_delete_note:
+                String deletedNoteTopic = NotesData.getInstance().getNote(notesListAdapter.getMenuPosition()).getTopic();
+                NotesData.getInstance().deleteNote(notesListAdapter.getMenuPosition());
+                Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка: " + deletedNoteTopic, Snackbar.LENGTH_SHORT).show();
+                notesListAdapter.notifyItemRemoved(notesListAdapter.getMenuPosition());
+                return true;
+            case R.id.action_settings:
+                showFragment(new SettingsFragment());
+                return true;
+            case R.id.action_about:
+                showFragment(new AboutFragment());
+                return true;
+        }
+        return false;
+    }
+
+    private void showNoteInfo(int noteIndex) {
+        showFragment(NoteInfoFragment.newInstance(noteIndex));
     }
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.notes_list_fragment_container, fragment);
-
-        boolean needAddToStack = false;
         for (Fragment f : requireActivity().getSupportFragmentManager().getFragments()) {
             if (f instanceof NotesListFragment & f.isVisible()) {
-                needAddToStack = true;
+                ft.addToBackStack("");
+                break;
             }
-        }
-        if (needAddToStack) {
-            ft.addToBackStack("");
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();

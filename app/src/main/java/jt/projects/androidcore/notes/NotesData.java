@@ -35,7 +35,7 @@ public class NotesData {
         data.add(new Note("Заметка 2", "Высоко-высоко в горах ...", "Стас", new GregorianCalendar(2022, 2, 1)));
         data.add(new Note("Заметка 3", "В далекой галактике...", "Петр", Calendar.getInstance()));
         data.add(new Note("Заметка 4", "Использование SimpleDateFormat для форматирование ввода-вывода даты в Java. ... SimpleDateFormat является подклассом DateFormat, который позволяет форматировать ввод-вывод даты и времени в рамках... ", "Влад", new GregorianCalendar(2021, 0, 25)));
-        data.add(new Note("Заметка 5", "Высоко-высоко в горах ...", "Стас", new GregorianCalendar(2022, 2, 1)));
+        data.add(new Note("Заметка 5", "Настройка цветов происходит по определённым правилам. На сайте http://www.google.com/design/spec/style/color.html# есть таблица цветов. Обратите внимание на числа слева. Основным цветом (colorPrimary) считается цвет под номером 500, он идёт первым в таблицах. Этот цвет должен использоваться в качестве заголовка (Toolbar).", "Стас", new GregorianCalendar(2022, 2, 1)));
         data.add(new Note("Заметка 6", "В далекой галактике...", "Петр", Calendar.getInstance()));
     }
 
