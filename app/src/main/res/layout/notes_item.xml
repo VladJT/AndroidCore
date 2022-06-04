@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardCornerRadius="15dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="?attr/cardBackgroundColor">
+    app:cardElevation="4dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,12 +39,13 @@
             android:id="@+id/text_view_notes_item_topic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_margin="@dimen/margin_small"
+            android:ellipsize="end"
             android:fontFamily="@font/nautiluspompilius"
             android:text="Тема"
             android:textColor="?attr/colorPrimaryDark"
             android:textSize="@dimen/font_size_small"
-            app:layout_constraintEnd_toStartOf="@+id/button_notes_item_context_menu"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,15 +53,14 @@
             android:id="@+id/text_view_notes_item_description"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_small"
-            android:layout_marginBottom="12dp"
+            android:ellipsize="end"
+            android:layout_marginBottom="@dimen/std_margins"
             android:fontFamily="@font/clear_sans"
             android:text="Заметка"
-            android:ellipsize="end"
             android:textSize="@dimen/text_size_notes_desc"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view_notes_item_card"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_notes_item_author"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view_notes_item_card"
+            app:layout_constraintStart_toStartOf="@+id/text_view_notes_item_topic"
             app:layout_constraintTop_toBottomOf="@+id/text_view_notes_item_topic" />
 
         <TextView
@@ -68,8 +68,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="28.08.2010"
-            android:textSize="@dimen/text_size_notes_desc"
             android:textAlignment="center"
+            android:textSize="@dimen/text_size_notes_desc"
             app:layout_constraintEnd_toEndOf="@+id/image_view_notes_item_card"
             app:layout_constraintStart_toStartOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
@@ -78,25 +78,25 @@
             android:id="@+id/text_view_notes_item_author"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/std_margins"
+            android:layout_marginBottom="@dimen/std_margins"
             android:fontFamily="@font/nautiluspompilius"
             android:text="Автор: Иванов И.И."
             android:textAlignment="textStart"
             android:textSize="@dimen/font_size_smallest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_view_notes_item_date_of_creation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_notes_item_context_menu"
+            app:layout_constraintStart_toStartOf="@+id/text_view_notes_item_topic"
             app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
 
         <ImageButton
             android:id="@+id/button_notes_item_context_menu"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="@dimen/std_margins"
-            android:background="?attr/cardBackgroundColor"
             android:scaleType="centerCrop"
-            android:src="@drawable/xbox_menu"
-            app:layout_constraintEnd_toEndOf="@+id/text_view_notes_item_description"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/context_menu_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!--   <View
                android:id="@+id/notes_item_ivider"

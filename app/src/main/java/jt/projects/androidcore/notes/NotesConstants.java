@@ -1,8 +1,5 @@
 package jt.projects.androidcore.notes;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 class NotesConstants {

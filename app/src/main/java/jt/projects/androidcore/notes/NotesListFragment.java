@@ -32,6 +32,7 @@ import jt.projects.androidcore.R;
 
 
 public class NotesListFragment extends Fragment {
+    private static final int MY_DEFAULT_DURATION = 1000;
     //    private static final String CURRENT_NOTE = "CurrentNote";
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
@@ -53,13 +54,13 @@ public class NotesListFragment extends Fragment {
 
                 if (resultEditNote == RESULT_EDIT_NOTE.ADD) {// если добавлена новая заметка
                     notesRecyclerView.scrollToPosition(index);
-                } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {
+                } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
                     notesListAdapter.notifyItemChanged(index);
                     notesRecyclerView.scrollToPosition(index);
-                } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {
+                } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
                     notesListAdapter.notifyItemRemoved(index);
                     int scrollIndex = index - 1;
-                    if (scrollIndex >= 0) notesRecyclerView.scrollToPosition(scrollIndex);
+                    if (scrollIndex >= 0) notesRecyclerView.smoothScrollToPosition(scrollIndex);
                 }
             }
         });
