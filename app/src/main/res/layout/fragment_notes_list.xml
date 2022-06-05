@@ -7,7 +7,6 @@
     android:id="@+id/notes_list_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground"
     android:clickable="true"
     android:focusable="true">
 
@@ -25,7 +24,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/myBlue"
         android:textSize="@dimen/font_size_big"
         app:cornerRadius="40dp"
         app:icon="@drawable/ic_baseline_post_add_24"

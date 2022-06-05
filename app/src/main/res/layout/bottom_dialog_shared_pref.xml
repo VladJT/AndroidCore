@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Shared preferences Data"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="@dimen/font_size_small"
             android:textStyle="bold" />
 
@@ -23,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="shared_preferences"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="@dimen/font_size_smallest" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -8,7 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
@@ -17,9 +16,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_til_topic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxCornerRadiusTopStart="15dp"
+        style="@style/NotesTextInputLayout"
+        android:hint="Тема"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -27,41 +25,42 @@
             android:id="@+id/notes_info_topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Тема"
+            android:fontFamily="@font/nautiluspompilius"
+            android:singleLine="true"
             android:textSize="@dimen/font_size_small" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_til_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxCornerRadiusTopStart="15dp"
+        style="@style/NotesTextInputLayout"
+        android:hint="Текст"
+        app:counterEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notes_til_topic">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notes_info_description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Текст"
-            android:maxHeight="250sp"
-            android:textSize="@dimen/font_size_smallest" />
+            style="@style/NotesTextInputLayout"
+            android:maxLines="10"
+            android:scrollbars="vertical" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_til_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxCornerRadiusTopStart="15dp"
-        app:layout_constraintStart_toStartOf="parent"
+        style="@style/NotesTextInputLayout"
+        android:layout_width="0dp"
+        android:hint="Автор"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_notes_info_date_of_creation"
         app:layout_constraintTop_toBottomOf="@id/notes_til_description">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notes_info_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Автор"
+            android:fontFamily="@font/nautiluspompilius"
+            android:singleLine="true"
             android:textSize="@dimen/font_size_smallest" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,11 +69,13 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/std_margins"
         android:clickable="true"
         android:text="28.01.2022"
         android:textSize="@dimen/font_size_smallest"
+        app:layout_constraintBottom_toBottomOf="@+id/notes_til_author"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notes_til_author" />
+        app:layout_constraintTop_toTopOf="@+id/notes_til_author" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notes_info_button_save"
@@ -82,7 +83,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/myBlue"
         app:cornerRadius="40dp"
         app:icon="@drawable/ic_baseline_save_24"
         app:iconSize="40dp"

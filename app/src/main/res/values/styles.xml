@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-
     <!-- Base DARK theme. -->
     <style name="CalcDarkTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="shapeAppearanceSmallComponent">@style/JT.SmallShapeAppearance</item>
@@ -38,21 +37,12 @@
 
     <!-- ************************************************** -->
     <!-- Тема для приложения заметок. -->
-    <style name="Theme.NotesTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="android:windowBackground">#E6EFF6</item>
-        <item name="colorPrimary">@color/myBlue</item>
-        <item name="cardBackgroundColor">@color/myWhite</item>
-        <item name="color">@color/myBlue</item>
-        <item name="android:textColorPrimaryInverse">#001945</item>
-        <item name="colorPrimaryDark">#01579B</item><!-- фон строки с батареей и часами -->
-        <item name="colorSecondary">#01579B</item>
+    <style name="Theme.NotesTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:navigationBarColor">@color/myBlue</item><!-- цвет navBar -->
+        <item name="colorPrimaryDark">#01579B</item>
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
     </style>
-
-
     <!-- Стиль для кнопки "гамбургер" -->
     <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>
@@ -65,26 +55,9 @@
 
     <!-- ************************************************** -->
     <!-- Тема Dark для приложения заметок. -->
-    <style name="Theme.NotesDarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">#222323</item>
-        <item name="android:textColor">#FFCA28</item>
-        <item name="cardBackgroundColor">#605D5D</item>
-        <item name="android:textColorPrimaryInverse">#001945</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">#830804</item><!-- фон строки с батареей и часами -->
-        <item name="colorSecondary">@color/pitch_black</item>
-        <item name="android:navigationBarColor">@color/pitch_black</item><!-- цвет navBar -->
-        <item name="drawerArrowStyle">@style/DrawerIconStyleDark</item>
-        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyleDark</item>
-        <item name="actionMenuTextColor">@color/myRed</item>
-    </style>
-    <!-- Стиль для кнопки "гамбургер" -->
-    <style name="DrawerIconStyleDark" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/white</item>
-    </style>
-    <!-- Стиль для кнопки 🚦 в toolbar -->
-    <style name="actionOverflowButtonStyleDark" parent="@style/Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/white</item>
+    <style name="Theme.NotesDarkTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
     </style>
     <!-- ************************************************** -->
 
@@ -171,6 +144,13 @@
         <item name="boxStrokeColor">?attr/colorSecondary</item>
         <item name="errorEnabled">true</item>
         <item name="android:hint">@string/result</item>
+    </style>
+
+    <style name="NotesTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_size_smallest</item>
+        <item name="android:layout_margin">@dimen/std_margins</item>
     </style>
 
 </resources>

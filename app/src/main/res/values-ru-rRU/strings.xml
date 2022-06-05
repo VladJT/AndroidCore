@@ -29,6 +29,6 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="change_theme">Выбор темы</string>
-    <string name="theme_standart">Стандартная тема</string>
+    <string name="theme_standart">Светлая тема</string>
     <string name="theme_dark">Темная тема</string>
 </resources>

@@ -135,7 +135,7 @@ public class NoteInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dpd = new DatePickerDialog(requireContext(),
-                        android.R.style.Theme_Material_Dialog,
+                        // android.R.style.Theme_Material_Dialog,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
