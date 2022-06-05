@@ -123,6 +123,7 @@ public class NoteInfoFragment extends Fragment {
         });
     }
 
+
     private void initButtonEditDateOfCreation(View view) {
         buttonEditDateOfCreation = view.findViewById(R.id.button_notes_info_date_of_creation);
         buttonEditDateOfCreation.setOnClickListener(new View.OnClickListener() {

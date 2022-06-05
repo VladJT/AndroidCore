@@ -100,6 +100,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 }
             });
 
+
             ImageButton buttonContextMenu = itemView.findViewById(R.id.button_notes_item_context_menu);
             // контекстное меню
             itemView.findViewById(R.id.button_notes_item_context_menu).setOnClickListener(new View.OnClickListener() {

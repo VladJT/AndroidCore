@@ -137,6 +137,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         });
     }
 
+
     private boolean checkMenuItemSelected(int id) {
         switch (id) {
             case R.id.action_back:

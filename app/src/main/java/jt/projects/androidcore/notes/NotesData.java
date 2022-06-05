@@ -55,6 +55,7 @@ public class NotesData {
         return data.stream().map(n -> n.topic).toArray(String[]::new);
     }
 
+
     public int getSize() {
         return data.size();
     }

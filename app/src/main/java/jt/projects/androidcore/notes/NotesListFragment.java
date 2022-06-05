@@ -164,6 +164,7 @@ public class NotesListFragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
+
     private boolean checkMenuItemSelected(int id) {
         switch (id) {
             case R.id.action_add_note:

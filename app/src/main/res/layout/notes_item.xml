@@ -73,6 +73,7 @@
             app:layout_constraintStart_toStartOf="@+id/image_view_notes_item_card"
             app:layout_constraintTop_toBottomOf="@+id/image_view_notes_item_card" />
 
+
         <TextView
             android:id="@+id/text_view_notes_item_author"
             android:layout_width="0dp"
