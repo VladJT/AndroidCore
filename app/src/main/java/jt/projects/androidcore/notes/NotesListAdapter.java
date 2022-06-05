@@ -107,7 +107,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 public void onClick(View v) {
                     menuPosition = getLayoutPosition();
                     int x = buttonContextMenu.getLeft();
-                    int y = buttonContextMenu.getBottom();
+                    int y = buttonContextMenu.getBottom()-30;
                     itemView.showContextMenu(x, y);
                 }
             });

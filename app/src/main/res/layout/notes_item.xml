@@ -92,10 +92,10 @@
         <ImageButton
             android:id="@+id/button_notes_item_context_menu"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/context_menu_2"
+            android:src="@drawable/ic_baseline_expand_circle_down_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

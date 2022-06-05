@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import jt.projects.androidcore.calculator.BaseActivity;
 import jt.projects.androidcore.common.ConfigInfo;
 
 public class NotesMainActivity extends NotesBaseActivity {
+    Switch switchTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,29 @@ public class NotesMainActivity extends NotesBaseActivity {
                     .replace(R.id.notes_list_fragment_container, new NotesListFragment())
                     .commit();
         }
+
+        initSwitchTheme();
+    }
+
+    private void initSwitchTheme() {
+        switchTheme = findViewById(R.id.switch_theme);
+        if ( NotesSharedPreferences.getInstance().getAppTheme()==R.style.Theme_NotesDarkTheme){
+            switchTheme.setChecked(true);
+        }
+
+        switchTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switchTheme.isChecked()) {
+                    NotesSharedPreferences.getInstance().saveAppTheme(R.style.Theme_NotesDarkTheme);
+                    recreate();
+                }
+                else {
+                    NotesSharedPreferences.getInstance().saveAppTheme(R.style.Theme_NotesTheme);
+                    recreate();
+                }
+            }
+        });
     }
 
     @Override
@@ -165,9 +190,11 @@ public class NotesMainActivity extends NotesBaseActivity {
                         switch (which) {
                             case 0:
                                 currentTheme = R.style.Theme_NotesTheme;
+                                switchTheme.setChecked(false);
                                 break;
                             case 1:
                                 currentTheme = R.style.Theme_NotesDarkTheme;
+                                switchTheme.setChecked(true);
                                 break;
                             case 2:
                                 return;
