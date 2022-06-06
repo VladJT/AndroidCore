@@ -19,6 +19,7 @@ public class NotesData {
         return notesData;
     }
 
+
     private ArrayList<Note> data;
 
     private NotesData() {

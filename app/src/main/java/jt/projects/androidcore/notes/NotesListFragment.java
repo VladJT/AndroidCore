@@ -76,6 +76,7 @@ public class NotesListFragment extends Fragment {
         });
     }
 
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.findItem(R.id.action_back).setVisible(false);

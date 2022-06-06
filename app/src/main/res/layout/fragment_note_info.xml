@@ -14,6 +14,7 @@
     tools:context=".notes.NoteInfoFragment">
 
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notes_til_topic"
         style="@style/NotesTextInputLayout"

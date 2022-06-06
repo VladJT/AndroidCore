@@ -55,6 +55,7 @@ public class NoteInfoFragment extends Fragment {
         return noteInfoFragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

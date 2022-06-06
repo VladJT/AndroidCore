@@ -71,6 +71,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
         private TextView textViewDateOfCreation;
         private ImageView imageViewNoteItem;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTopic = (TextView) itemView.findViewById(R.id.text_view_notes_item_topic);
