@@ -58,18 +58,17 @@ public class NotesListFragment extends Fragment {
                 String noteTopic = NotesData.getInstance().getNote(index).getTopic();
 
                 if (resultEditNote == RESULT_EDIT_NOTE.ADD) {// если добавлена новая заметка
-                    notesRecyclerView.smoothScrollToPosition(index);
+                    notesListAdapter.notifyItemInserted(index);
+                    notesRecyclerView.scrollToPosition(index);
                     Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Добавлена заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
-                }
-                else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
+                } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
                     notesListAdapter.notifyItemChanged(index);
-                    notesRecyclerView.smoothScrollToPosition(index);
+                    notesRecyclerView.scrollToPosition(index);
                     Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Отредактирована заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
-                }
-                else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
-                    Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка: " +  noteTopic, Snackbar.LENGTH_SHORT).show();
-                    NotesData.getInstance().deleteNote(index);
+                } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
                     notesListAdapter.notifyItemRemoved(index);
+                    Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
+                    NotesData.getInstance().deleteNote(index);
                     int scrollIndex = index - 1;
                     if (scrollIndex >= 0) notesRecyclerView.smoothScrollToPosition(scrollIndex);
                 }
@@ -117,6 +116,7 @@ public class NotesListFragment extends Fragment {
         animator.setAddDuration(MY_DEFAULT_DURATION);
         animator.setChangeDuration(MY_DEFAULT_DURATION);
         animator.setRemoveDuration(MY_DEFAULT_DURATION);
+        animator.setMoveDuration(MY_DEFAULT_DURATION);
         notesRecyclerView.setItemAnimator(animator);
 
         // Установим слушателя
