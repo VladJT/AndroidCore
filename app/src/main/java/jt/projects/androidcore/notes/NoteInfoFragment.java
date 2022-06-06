@@ -178,7 +178,6 @@ public class NoteInfoFragment extends Fragment {
                 .setPositiveButton(c.getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NotesData.getInstance().deleteNote(currentNoteIndex);// удалить заметку
                         setResult(RESULT_EDIT_NOTE.DELETE);
                     }
                 }).show();

@@ -35,7 +35,7 @@ import jt.projects.androidcore.R;
 
 
 public class NotesListFragment extends Fragment {
-    private static final int MY_DEFAULT_DURATION = 100;
+    private static final int MY_DEFAULT_DURATION = 300;
     //    private static final String CURRENT_NOTE = "CurrentNote";
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
@@ -55,13 +55,20 @@ public class NotesListFragment extends Fragment {
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 int index = bundle.getInt(EDITED_NOTE_INDEX);
                 RESULT_EDIT_NOTE resultEditNote = (RESULT_EDIT_NOTE) bundle.getSerializable(RESULT_EDIT);
+                String noteTopic = NotesData.getInstance().getNote(index).getTopic();
 
                 if (resultEditNote == RESULT_EDIT_NOTE.ADD) {// если добавлена новая заметка
-                    notesRecyclerView.scrollToPosition(index);
-                } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
+                    notesRecyclerView.smoothScrollToPosition(index);
+                    Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Добавлена заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
+                }
+                else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
                     notesListAdapter.notifyItemChanged(index);
-                    notesRecyclerView.scrollToPosition(index);
-                } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
+                    notesRecyclerView.smoothScrollToPosition(index);
+                    Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Отредактирована заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
+                }
+                else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
+                    Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка: " +  noteTopic, Snackbar.LENGTH_SHORT).show();
+                    NotesData.getInstance().deleteNote(index);
                     notesListAdapter.notifyItemRemoved(index);
                     int scrollIndex = index - 1;
                     if (scrollIndex >= 0) notesRecyclerView.smoothScrollToPosition(scrollIndex);
@@ -108,6 +115,7 @@ public class NotesListFragment extends Fragment {
         // Установим анимацию. А чтобы было хорошо заметно, сделаем анимацию долгой
         DefaultItemAnimator animator = new DefaultItemAnimator();
         animator.setAddDuration(MY_DEFAULT_DURATION);
+        animator.setChangeDuration(MY_DEFAULT_DURATION);
         animator.setRemoveDuration(MY_DEFAULT_DURATION);
         notesRecyclerView.setItemAnimator(animator);
 
@@ -173,10 +181,7 @@ public class NotesListFragment extends Fragment {
                 showNoteInfo(notesListAdapter.getMenuPosition());
                 return true;
             case R.id.action_delete_note:
-                String deletedNoteTopic = NotesData.getInstance().getNote(notesListAdapter.getMenuPosition()).getTopic();
-                NotesData.getInstance().deleteNote(notesListAdapter.getMenuPosition());
-                Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Удалена заметка: " + deletedNoteTopic, Snackbar.LENGTH_SHORT).show();
-                notesListAdapter.notifyItemRemoved(notesListAdapter.getMenuPosition());
+                setResult(RESULT_EDIT_NOTE.DELETE);
                 return true;
             case R.id.action_settings:
                 showFragment(new SettingsFragment());
@@ -203,5 +208,12 @@ public class NotesListFragment extends Fragment {
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+    }
+
+    private void setResult(RESULT_EDIT_NOTE result) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(EDITED_NOTE_INDEX, notesListAdapter.getMenuPosition());
+        bundle.putSerializable(RESULT_EDIT, result);
+        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_NOTES_DATA, bundle);
     }
 }
