@@ -88,7 +88,7 @@ public class CalculatorActivity extends BaseActivity {
                 setAppTheme(themesMap.get(p));
             }
 
-        } else showLogMessage(getApplicationContext(), "Настойки входящей темы = null");
+        } //else showLogMessage(getApplicationContext(), "Настойки входящей темы = null");
     }
 
     private void initViewComponents() {

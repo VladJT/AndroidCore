@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 class CalcData implements Parcelable {
 
-    public static final String DIVIDE_BY_ZERO_ERROR = "Division by zero";
+    public static final String DIVIDE_BY_ZERO_ERROR = "divide by zero";
 
     private String resultInfoText;
     private BigDecimal number1;
