@@ -32,12 +32,20 @@ import jt.projects.androidcore.common.ConfigInfo;
 public class NotesMainActivity extends NotesBaseActivity {
     Switch switchTheme;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        try {
+            setSupportActionBar(toolbar);
+        }
+        catch (Exception e) {
+            Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         initNavigationDrawer(toolbar);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -59,7 +67,7 @@ public class NotesMainActivity extends NotesBaseActivity {
 
     private void initSwitchTheme() {
         switchTheme = findViewById(R.id.switch_theme);
-        if ( NotesSharedPreferences.getInstance().getAppTheme()==R.style.Theme_NotesDarkTheme){
+        if (NotesSharedPreferences.getInstance().getAppTheme() == R.style.Theme_NotesDarkTheme) {
             switchTheme.setChecked(true);
         }
 
@@ -69,8 +77,7 @@ public class NotesMainActivity extends NotesBaseActivity {
                 if (switchTheme.isChecked()) {
                     NotesSharedPreferences.getInstance().saveAppTheme(R.style.Theme_NotesDarkTheme);
                     recreate();
-                }
-                else {
+                } else {
                     NotesSharedPreferences.getInstance().saveAppTheme(R.style.Theme_NotesTheme);
                     recreate();
                 }

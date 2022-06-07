@@ -49,7 +49,13 @@ public class NotesListFragment extends Fragment {
         NotesData.getInstance().setResponse(new IFBResponse() {
             @Override
             public void initialized() {
-                notesListAdapter.notifyDataSetChanged();
+                try {
+                    notesListAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e) {
+                    Toast toast = Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }
@@ -93,7 +99,7 @@ public class NotesListFragment extends Fragment {
         setHasOptionsMenu(true);// эта строчка говорит о том, что у фрагмента должен быть доступ к меню Активити
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setSubtitle("Список заметок");
+            actionBar.setSubtitle("Список заметок ("+NotesSharedPreferences.getInstance().getDBSource()+")");
         }
 
         View view = inflater.inflate(R.layout.fragment_notes_list, container, false);

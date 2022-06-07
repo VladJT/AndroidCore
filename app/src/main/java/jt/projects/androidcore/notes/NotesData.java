@@ -39,10 +39,6 @@ public class NotesData {
         return notesData;
     }
 
-    public void clearData(){
-        notesData = null;
-    }
-
     // ТИП БАЗЫ ДАННЫХ
     public DATABASE getSourceType() {
         return NotesSharedPreferences.getInstance().getDBSource();

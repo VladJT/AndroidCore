@@ -119,9 +119,9 @@ public class SettingsFragment extends Fragment {
         switchDbSource = view.findViewById(R.id.switch_db_source);
         ivDbSource = view.findViewById(R.id.image_view_notes_db_source);
 
-        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.FIREBASE) {
-            switchDbSource.setChecked(false);
-        } else switchDbSource.setChecked(true);
+        if ( NotesSharedPreferences.getInstance().getDBSource()== DATABASE.SHARED_PREF){
+            switchDbSource.setChecked(true);
+        }
         switchDbSourceStartChecked = switchDbSource.isChecked();
 
         showDbSourceInfo();
@@ -196,6 +196,7 @@ public class SettingsFragment extends Fragment {
         btnSaveAccountName = view.findViewById(R.id.button_notes_account_save);
         btnSaveAccountName.setOnClickListener(v -> {
             saveAccountData();
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
 
@@ -225,12 +226,12 @@ public class SettingsFragment extends Fragment {
             if (switchDbSource.isChecked() != switchDbSourceStartChecked) {
                 NotesData.getInstance().saveData();
                 NotesSharedPreferences.getInstance().saveDBSource(switchDbSource.isChecked() ? DATABASE.SHARED_PREF : DATABASE.FIREBASE);
-         //       NotesData.getInstance().clearData();
-                result.append("Изменен источник данных\n");
+                result.append("Изменен источник данных: " + NotesSharedPreferences.getInstance().getDBSource().name() + "\n");
                 NotesData.getInstance().loadData();
             }
 
             Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), result.toString().equals("") ? "Нет изменений" : result.toString(), Snackbar.LENGTH_LONG).show();
+            switchDbSourceStartChecked = switchDbSource.isChecked();
         } catch (Exception e) {
             e.printStackTrace();
         }
