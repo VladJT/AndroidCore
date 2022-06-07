@@ -35,3 +35,7 @@ class NotesConstants {
 enum RESULT_EDIT_NOTE implements Serializable {
     ADD, DELETE, EDIT;
 }
+
+enum DATABASE implements Serializable {
+    SHARED_PREF, FIREBASE
+}

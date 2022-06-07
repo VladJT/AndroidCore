@@ -22,7 +22,7 @@ public class NotesBaseActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Данные сохранены в shared_preferences", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "Данные сохранены в " + NotesData.getInstance().sourceType, Toast.LENGTH_SHORT);
         toast.show();
         NotesData.getInstance().saveData();
         super.onSaveInstanceState(outState);

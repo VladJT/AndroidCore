@@ -1,22 +1,33 @@
 package jt.projects.androidcore.notes;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import jt.projects.androidcore.notes.firebase.IFBResponse;
 
 public class NotesData {
     private static NotesData notesData = null;
@@ -29,6 +40,15 @@ public class NotesData {
         return notesData;
     }
 
+    // ТИП БАЗЫ ДАННЫХ
+    public DATABASE sourceType = DATABASE.FIREBASE;
+
+    //FIREBASE
+    private static final String CARDS_COLLECTION = "cards";
+    private FirebaseFirestore store = FirebaseFirestore.getInstance();
+    private CollectionReference collection = store.collection(CARDS_COLLECTION);
+
+
     private ArrayList<Note> data;
 
     private NotesData() {
@@ -36,7 +56,36 @@ public class NotesData {
     }
 
     public void loadData() {
-        loadFromSharedPreferences();
+        if (sourceType == DATABASE.SHARED_PREF) {
+            loadFromSharedPreferences();
+        }
+    }
+
+    public void loadFromFireBase(IFBResponse response) {
+        collection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> doc = document.getData();
+                        String id = document.getId();
+                        Note note = getNoteFromFBDoc(id, doc);
+                        data.add(note);
+                    }
+                    data.sort(new Comparator<Note>() {
+                        @Override
+                        public int compare(Note o1, Note o2) {
+                            if (o1.dateOfCreation.getTimeInMillis() > o2.dateOfCreation.getTimeInMillis())
+                                return 1;
+                            if (o1.dateOfCreation.getTimeInMillis() < o2.dateOfCreation.getTimeInMillis())
+                                return -1;
+                            return 0;
+                        }
+                    });
+                    response.initialized();
+                }
+            }
+        });
     }
 
     private void loadFromSharedPreferences() {
@@ -47,7 +96,7 @@ public class NotesData {
             }.getType();
 
             this.data = new GsonBuilder().create().fromJson(jsonNotes, type);
-            if (data==null) {
+            if (data == null) {
                 data = new ArrayList<>();
             }
         } catch (JsonSyntaxException e) {
@@ -71,7 +120,12 @@ public class NotesData {
     }
 
     public void saveData() {
-        saveToSharedPreferences();
+        if (sourceType == DATABASE.FIREBASE) {
+            //   automatically
+        }
+        if (sourceType == DATABASE.SHARED_PREF) {
+            saveToSharedPreferences(); // on exit app
+        }
     }
 
     private void saveToSharedPreferences() {
@@ -102,22 +156,69 @@ public class NotesData {
 
     public void addNote(Note note) {
         data.add(note);
+        if (sourceType == DATABASE.FIREBASE) {
+            collection.add(note.toFBDoc()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    note.setId(documentReference.getId());
+                }
+            });
+        }
     }
 
-    public void editNote(Note note, int index) {
-        data.set(index, note);
+    public void editNote(Note editedNote, int index) {
+        editedNote.setId(data.get(index).getId());
+        data.set(index, editedNote);
+
+        if (sourceType == DATABASE.FIREBASE) {
+            Note n = data.get(index);
+            // Изменить документ по идентификатору
+            collection.document(n.getId()).set(n.toFBDoc());
+        }
     }
 
     public void deleteNote(int index) {
+        if (sourceType == DATABASE.FIREBASE) {
+            // Удалить документ с определённым идентификатором
+            collection.document(data.get(index).getId()).delete();
+        }
         data.remove(index);
+    }
+
+    // FIREBASE only
+    public static Note getNoteFromFBDoc(String id, Map<String, Object> doc) {
+        Note note = new Note();
+        note.setId(id);
+        note.topic = (String) doc.get("topic");
+        note.description = (String) doc.get("description");
+        note.author = (String) doc.get("author");
+        String date = (String) doc.get("dateofcreation");
+        String[] sDate = date.split("\\.");// ex.: 13.01.2022
+        int year = Integer.parseInt(sDate[2]);
+        int month = Integer.parseInt(sDate[1]);
+        int day = Integer.parseInt(sDate[0]);
+        note.dateOfCreation = new GregorianCalendar(year, month, day);
+        return note;
     }
 
     // Внутренний класс для ЗАМЕТКИ
     public static class Note {
+        private String id; // идентификатор (для firebase)
         private String topic;
         private String description;
         private String author;
         private Calendar dateOfCreation;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public Note() {
+        }
 
         public Note(String topic, String description, String author, Calendar dateOfCreation) {
             this.topic = topic;
@@ -144,6 +245,17 @@ public class NotesData {
 
         public String getDateOfCreationAsString() {
             return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
+        }
+
+        // FIREBASE only
+        public Map<String, Object> toFBDoc() {
+            Map<String, Object> answer = new HashMap<>();
+            answer.put("topic", getTopic());
+            answer.put("description", getDescription());
+            answer.put("author", getAuthor());
+            answer.put("dateofcreation", getDateOfCreationAsString());
+            return answer;
+
         }
     }
 }

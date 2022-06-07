@@ -32,6 +32,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.notes.firebase.IFBResponse;
 
 
 public class NotesListFragment extends Fragment {
@@ -46,6 +47,14 @@ public class NotesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setNoteInfoChangeListener();
+        if (NotesData.getInstance().sourceType == DATABASE.FIREBASE) {
+            NotesData.getInstance().loadFromFireBase(new IFBResponse() {
+                @Override
+                public void initialized() {
+                    notesListAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     // обработчик события редактирования/удаления заметки
