@@ -42,19 +42,16 @@ public class NotesListFragment extends Fragment {
     private RecyclerView notesRecyclerView;
     private NotesListAdapter notesListAdapter;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setNoteInfoChangeListener();
-        if (NotesData.getInstance().sourceType == DATABASE.FIREBASE) {
-            NotesData.getInstance().loadFromFireBase(new IFBResponse() {
-                @Override
-                public void initialized() {
-                    notesListAdapter.notifyDataSetChanged();
-                }
-            });
-        }
+        NotesData.getInstance().setResponse(new IFBResponse() {
+            @Override
+            public void initialized() {
+                notesListAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // обработчик события редактирования/удаления заметки

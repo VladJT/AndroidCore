@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import jt.projects.androidcore.notes.firebase.IFBResponse;
+
 
 public class NotesBaseActivity extends AppCompatActivity {
 

@@ -47,7 +47,7 @@ public class NotesData {
     private static final String CARDS_COLLECTION = "cards";
     private FirebaseFirestore store = FirebaseFirestore.getInstance();
     private CollectionReference collection = store.collection(CARDS_COLLECTION);
-
+    private IFBResponse response = null;
 
     private ArrayList<Note> data;
 
@@ -59,9 +59,16 @@ public class NotesData {
         if (sourceType == DATABASE.SHARED_PREF) {
             loadFromSharedPreferences();
         }
+        if (sourceType == DATABASE.FIREBASE) {
+            loadFromFireBase();
+        }
     }
 
-    public void loadFromFireBase(IFBResponse response) {
+    public void setResponse(IFBResponse response) {
+        this.response = response;
+    }
+
+    public void loadFromFireBase() {
         collection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -82,7 +89,7 @@ public class NotesData {
                             return 0;
                         }
                     });
-                    response.initialized();
+                    if (response != null) response.initialized();
                 }
             }
         });
