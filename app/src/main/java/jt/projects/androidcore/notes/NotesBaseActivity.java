@@ -20,6 +20,8 @@ public class NotesBaseActivity extends AppCompatActivity {
         NotesSharedPreferences.getInstance().
                 initSharedPreferences(getApplicationContext());
         setTheme(NotesSharedPreferences.getInstance().getAppTheme());
+        NotesData.getInstance().sourceType = NotesSharedPreferences.getInstance().getDBSource();
+        NotesData.getInstance().loadData();
     }
 
     @Override

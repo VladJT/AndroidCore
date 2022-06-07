@@ -60,6 +60,21 @@ public class NotesSharedPreferences {
         return sharedPref.getInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, R.style.Theme_NotesTheme);
     }
 
+    public void saveDBSource(DATABASE database) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(NotesConstants.DB_SOURCE_SHARED_PREFERENCES, database.toString());
+        editor.apply();
+    }
+
+    public DATABASE getDBSource() {
+        sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
+                MODE_PRIVATE);
+        String source =  sharedPref.getString(NotesConstants.DB_SOURCE_SHARED_PREFERENCES, "");
+        if(source.equals("SHARED_PREF")) return DATABASE.SHARED_PREF;
+        if(source.equals("FIREBASE")) return DATABASE.FIREBASE;
+        return DATABASE.SHARED_PREF;
+    }
+
     public void saveUserAccountName(String name) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NotesConstants.ACCOUNT_USER_NAME_SHARED_PREFERENCES, name);

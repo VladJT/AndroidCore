@@ -35,13 +35,12 @@ public class NotesData {
     public static NotesData getInstance() {
         if (notesData == null) {
             notesData = new NotesData();
-            notesData.loadData();
         }
         return notesData;
     }
 
     // ТИП БАЗЫ ДАННЫХ
-    public DATABASE sourceType = DATABASE.FIREBASE;
+    public DATABASE sourceType = null;
 
     //FIREBASE
     private static final String CARDS_COLLECTION = "cards";
@@ -69,6 +68,7 @@ public class NotesData {
     }
 
     public void loadFromFireBase() {
+        data = new ArrayList<>();
         collection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -22,6 +22,8 @@ class NotesConstants {
     static final String ACCOUNT_USER_NAME_SHARED_PREFERENCES = "ACCOUNT_USER_NAME_SHARED_PREFERENCES";
     // user photo в SHARED_PREFERENCES
     static final String ACCOUNT_PHOTO_SHARED_PREFERENCES = "ACCOUNT_PHOTO_SHARED_PREFERENCES";
+    // source в SHARED_PREFERENCES
+    static final String DB_SOURCE_SHARED_PREFERENCES = "DB_SOURCE_SHARED_PREFERENCES";
 
     // Имя SHARED_PREFERENCES для хранения данных заметок (вместо БД)
     static final String NAME_SHARED_PREFERENCES_DATA = "GB_NOTES_DATA";
