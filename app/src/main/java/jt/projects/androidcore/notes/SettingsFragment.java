@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -44,15 +45,18 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnChangeAccountPhoto;
     private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
+    private ImageView ivDbSource;
     private String encodedBitmapPhoto;
+    private SwitchMaterial switchDbSource;
     Bitmap bitmapPhoto = null;
+    boolean switchDbSourceStartChecked;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-            requireActivity().getSupportFragmentManager().popBackStack();
+//        if (savedInstanceState != null)
+//            requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -108,7 +112,40 @@ public class SettingsFragment extends Fragment {
         initButtonSaveAccountName(view);
         initChangeAccountPhoto(view);
         initDeletePhoto(view);
+        initDbSourceControls(view);
     }
+
+    private void initDbSourceControls(View view) {
+        switchDbSource = view.findViewById(R.id.switch_db_source);
+        ivDbSource = view.findViewById(R.id.image_view_notes_db_source);
+
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.FIREBASE) {
+            switchDbSource.setChecked(false);
+        } else switchDbSource.setChecked(true);
+        switchDbSourceStartChecked = switchDbSource.isChecked();
+
+        showDbSourceInfo();
+
+        switchDbSource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDbSourceInfo();
+            }
+        });
+    }
+
+    private void showDbSourceInfo() {
+        if (!switchDbSource.isChecked()) {
+            switchDbSource.setText("Firebase");
+            switchDbSource.setChecked(false);
+            ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.firebase));
+        } else {
+            switchDbSource.setText("Shared preferences");
+            switchDbSource.setChecked(true);
+            ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.shared_pref));
+        }
+    }
+
 
     private void initDeletePhoto(View view) {
         btnDeleteAccountPhoto = view.findViewById(R.id.button_notes_delete_account_photo);
@@ -163,6 +200,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void saveAccountData() {
+        StringBuilder result = new StringBuilder();
         try {
             //progressBar.setVisibility(View.VISIBLE);
             Thread threadLoadPhoto = new Thread(() -> {
@@ -171,13 +209,28 @@ public class SettingsFragment extends Fragment {
                     NotesSharedPreferences.getInstance()
                             .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
                     progressBar.setVisibility(View.GONE);
+                    result.append("Изменено фото\n");
                 }
             });
             threadLoadPhoto.start();
             threadLoadPhoto.join();
+
             // сохраняем имя пользователя
-            NotesSharedPreferences.getInstance().saveUserAccountName(itAccountName.getText() + "");
-            Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), requireContext().getText(R.string.settings_saved), Snackbar.LENGTH_LONG).show();
+            if (!(itAccountName.getText() + "").equals(NotesSharedPreferences.getInstance().getUserAccountName())) {
+                NotesSharedPreferences.getInstance().saveUserAccountName(itAccountName.getText() + "");
+                result.append("Изменен nickname\n");
+            }
+
+            //при необходимости меняем источник данных
+            if (switchDbSource.isChecked() != switchDbSourceStartChecked) {
+                NotesData.getInstance().saveData();
+                NotesSharedPreferences.getInstance().saveDBSource(switchDbSource.isChecked() ? DATABASE.SHARED_PREF : DATABASE.FIREBASE);
+         //       NotesData.getInstance().clearData();
+                result.append("Изменен источник данных\n");
+                NotesData.getInstance().loadData();
+            }
+
+            Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), result.toString().equals("") ? "Нет изменений" : result.toString(), Snackbar.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -39,8 +39,14 @@ public class NotesData {
         return notesData;
     }
 
+    public void clearData(){
+        notesData = null;
+    }
+
     // ТИП БАЗЫ ДАННЫХ
-    public DATABASE sourceType = null;
+    public DATABASE getSourceType() {
+        return NotesSharedPreferences.getInstance().getDBSource();
+    }
 
     //FIREBASE
     private static final String CARDS_COLLECTION = "cards";
@@ -55,10 +61,10 @@ public class NotesData {
     }
 
     public void loadData() {
-        if (sourceType == DATABASE.SHARED_PREF) {
+        if (getSourceType() == DATABASE.SHARED_PREF) {
             loadFromSharedPreferences();
         }
-        if (sourceType == DATABASE.FIREBASE) {
+        if (getSourceType() == DATABASE.FIREBASE) {
             loadFromFireBase();
         }
     }
@@ -67,7 +73,7 @@ public class NotesData {
         this.response = response;
     }
 
-    public void loadFromFireBase() {
+    private void loadFromFireBase() {
         data = new ArrayList<>();
         collection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -127,10 +133,10 @@ public class NotesData {
     }
 
     public void saveData() {
-        if (sourceType == DATABASE.FIREBASE) {
+        if (getSourceType() == DATABASE.FIREBASE) {
             //   automatically
         }
-        if (sourceType == DATABASE.SHARED_PREF) {
+        if (getSourceType() == DATABASE.SHARED_PREF) {
             saveToSharedPreferences(); // on exit app
         }
     }
@@ -163,7 +169,7 @@ public class NotesData {
 
     public void addNote(Note note) {
         data.add(note);
-        if (sourceType == DATABASE.FIREBASE) {
+        if (getSourceType() == DATABASE.FIREBASE) {
             collection.add(note.toFBDoc()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
@@ -177,7 +183,7 @@ public class NotesData {
         editedNote.setId(data.get(index).getId());
         data.set(index, editedNote);
 
-        if (sourceType == DATABASE.FIREBASE) {
+        if (getSourceType() == DATABASE.FIREBASE) {
             Note n = data.get(index);
             // Изменить документ по идентификатору
             collection.document(n.getId()).set(n.toFBDoc());
@@ -185,7 +191,7 @@ public class NotesData {
     }
 
     public void deleteNote(int index) {
-        if (sourceType == DATABASE.FIREBASE) {
+        if (getSourceType() == DATABASE.FIREBASE) {
             // Удалить документ с определённым идентификатором
             collection.document(data.get(index).getId()).delete();
         }
