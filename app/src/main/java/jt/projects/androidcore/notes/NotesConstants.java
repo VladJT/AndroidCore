@@ -23,6 +23,10 @@ class NotesConstants {
     // user photo в SHARED_PREFERENCES
     static final String ACCOUNT_PHOTO_SHARED_PREFERENCES = "ACCOUNT_PHOTO_SHARED_PREFERENCES";
 
+    // Имя SHARED_PREFERENCES для хранения данных заметок (вместо БД)
+    static final String NAME_SHARED_PREFERENCES_DATA = "GB_NOTES_DATA";
+    static final String NOTES_JSON_DATA = "JSON_DATA";
+
 
     // ID для PUSH NOTIFICATION
     static final String CHANNEL_ID = "CHANNEL_ID";

@@ -1,6 +1,16 @@
 package jt.projects.androidcore.notes;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +36,27 @@ public class NotesData {
     }
 
     public void loadData() {
-        // TODO сделать загрузку из какого-либо хранилища
+        loadFromSharedPreferences();
+    }
+
+    private void loadFromSharedPreferences() {
+        try {
+            SharedPreferences sharedPref = NotesSharedPreferences.getInstance().getCustomSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES_DATA);
+            String jsonNotes = sharedPref.getString(NotesConstants.NOTES_JSON_DATA, null);
+            Type type = new TypeToken<ArrayList<Note>>() {
+            }.getType();
+
+            this.data = new GsonBuilder().create().fromJson(jsonNotes, type);
+            if (data==null) {
+                data = new ArrayList<>();
+            }
+        } catch (JsonSyntaxException e) {
+            //    Toast.makeText(this, "Ошибка трансформации", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void addTestData() {
         data.add(new Note("Заметка 1", "обработку надо создавать при создании элемента, то есть или на\n" +
                 "onCreateViewHolder, или в самом ViewHolder. Однако метод onCreateViewHolder отвечает за\n" +
                 "предоставление View элемента вновь созданному ViewHolder, не стоит перегружать его ещё и\n" +
@@ -41,8 +71,18 @@ public class NotesData {
     }
 
     public void saveData() {
-        // TODO сделать сохранение данных в хранилище
+        saveToSharedPreferences();
     }
+
+    private void saveToSharedPreferences() {
+        SharedPreferences sharedPref = NotesSharedPreferences.getInstance().getCustomSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES_DATA);
+        String jsonNotes = "";
+        if (data != null) {
+            jsonNotes = new GsonBuilder().create().toJson(data);
+        }
+        sharedPref.edit().putString(NotesConstants.NOTES_JSON_DATA, jsonNotes).apply();
+    }
+
 
     public Note getNote(int index) {
         if (index >= 0 && index < data.size()) {
@@ -52,9 +92,9 @@ public class NotesData {
         }
     }
 
-    public String[] getNotesList() {
-        return data.stream().map(n -> n.topic).toArray(String[]::new);
-    }
+//    public String[] getNotesList() {
+//        return data.stream().map(n -> n.topic).toArray(String[]::new);
+//    }
 
     public int getSize() {
         return data.size();

@@ -2,7 +2,9 @@ package jt.projects.androidcore.notes;
 
 
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,5 +18,13 @@ public class NotesBaseActivity extends AppCompatActivity {
         NotesSharedPreferences.getInstance().
                 initSharedPreferences(getApplicationContext());
         setTheme(NotesSharedPreferences.getInstance().getAppTheme());
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Toast toast = Toast.makeText(getApplicationContext(), "Данные сохранены в shared_preferences", Toast.LENGTH_SHORT);
+        toast.show();
+        NotesData.getInstance().saveData();
+        super.onSaveInstanceState(outState);
     }
 }

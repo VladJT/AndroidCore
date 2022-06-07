@@ -44,6 +44,10 @@ public class NotesSharedPreferences {
         }
     }
 
+    SharedPreferences getCustomSharedPreferences(String name){
+        return context.getSharedPreferences(name, MODE_PRIVATE);
+    }
+
     public void saveAppTheme(int theme) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(NotesConstants.APP_THEME_SHARED_PREFERENCES, theme);
