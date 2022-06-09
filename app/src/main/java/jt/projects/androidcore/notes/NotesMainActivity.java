@@ -41,8 +41,7 @@ public class NotesMainActivity extends NotesBaseActivity {
 
         try {
             setSupportActionBar(toolbar);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
             toast.show();
         }

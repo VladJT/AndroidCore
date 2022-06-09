@@ -1,4 +1,4 @@
-package jt.projects.androidcore.notes;
+package jt.projects.androidcore.notes.data;
 
 import android.content.SharedPreferences;
 
@@ -9,9 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.GsonBuilder;
@@ -19,15 +17,13 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
 
-import jt.projects.androidcore.notes.firebase.IFBResponse;
+import jt.projects.androidcore.notes.NotesSharedPreferences;
 
 public class NotesData {
     private static NotesData notesData = null;
@@ -81,16 +77,7 @@ public class NotesData {
                         Note note = getNoteFromFBDoc(id, doc);
                         data.add(note);
                     }
-                    data.sort(new Comparator<Note>() {
-                        @Override
-                        public int compare(Note o1, Note o2) {
-                            if (o1.dateOfCreation.getTimeInMillis() > o2.dateOfCreation.getTimeInMillis())
-                                return 1;
-                            if (o1.dateOfCreation.getTimeInMillis() < o2.dateOfCreation.getTimeInMillis())
-                                return -1;
-                            return 0;
-                        }
-                    });
+                    sortByDate(data);
                     if (response != null) response.initialized();
                 }
             }
@@ -108,10 +95,25 @@ public class NotesData {
             if (data == null) {
                 data = new ArrayList<>();
             }
+            sortByDate(data);
+
         } catch (JsonSyntaxException e) {
             //    Toast.makeText(this, "Ошибка трансформации", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void sortByDate(ArrayList<Note> arr) {
+        arr.sort(new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                if (o1.dateOfCreation.getTimeInMillis() > o2.dateOfCreation.getTimeInMillis())
+                    return 1;
+                if (o1.dateOfCreation.getTimeInMillis() < o2.dateOfCreation.getTimeInMillis())
+                    return -1;
+                return 0;
+            }
+        });
     }
 
     private void addTestData() {
@@ -208,63 +210,5 @@ public class NotesData {
         int day = Integer.parseInt(sDate[0]);
         note.dateOfCreation = new GregorianCalendar(year, month, day);
         return note;
-    }
-
-    // Внутренний класс для ЗАМЕТКИ
-    public static class Note {
-        private String id; // идентификатор (для firebase)
-        private String topic;
-        private String description;
-        private String author;
-        private Calendar dateOfCreation;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public Note() {
-        }
-
-        public Note(String topic, String description, String author, Calendar dateOfCreation) {
-            this.topic = topic;
-            this.description = description;
-            this.author = author;
-            this.dateOfCreation = dateOfCreation;
-        }
-
-        public String getTopic() {
-            return topic;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public Calendar getDateOfCreation() {
-            return dateOfCreation;
-        }
-
-        public String getDateOfCreationAsString() {
-            return new SimpleDateFormat("dd.MM.yyyy").format(dateOfCreation.getTime());
-        }
-
-        // FIREBASE only
-        public Map<String, Object> toFBDoc() {
-            Map<String, Object> answer = new HashMap<>();
-            answer.put("topic", getTopic());
-            answer.put("description", getDescription());
-            answer.put("author", getAuthor());
-            answer.put("dateofcreation", getDateOfCreationAsString());
-            return answer;
-
-        }
     }
 }

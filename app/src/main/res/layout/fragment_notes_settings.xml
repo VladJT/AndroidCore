@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_big"
         android:orientation="vertical"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/switch_db_source"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +144,8 @@
 
         <ImageView
             android:id="@+id/image_view_notes_db_source"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:contentDescription="@string/drawer_header"
             android:scaleType="fitCenter"
             android:src="@drawable/shared_pref" />

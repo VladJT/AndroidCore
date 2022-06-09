@@ -1,8 +1,7 @@
 package jt.projects.androidcore.notes;
 
-import static jt.projects.androidcore.notes.NotesConstants.*;
+import static jt.projects.androidcore.notes.data.NotesConstants.*;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,14 +24,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.notes.firebase.IFBResponse;
+import jt.projects.androidcore.notes.data.NotesData;
+import jt.projects.androidcore.notes.data.RESULT_EDIT_NOTE;
+import jt.projects.androidcore.notes.data.IFBResponse;
 
 
 public class NotesListFragment extends Fragment {

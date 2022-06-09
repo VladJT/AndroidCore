@@ -1,7 +1,7 @@
 package jt.projects.androidcore.notes;
 
 
-import static jt.projects.androidcore.notes.NotesConstants.*;
+import static jt.projects.androidcore.notes.data.NotesConstants.*;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 
 import com.google.android.material.button.MaterialButton;
@@ -34,7 +33,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.common.ConfigInfo;
+import jt.projects.androidcore.notes.data.Note;
+import jt.projects.androidcore.notes.data.NotesData;
+import jt.projects.androidcore.notes.data.RESULT_EDIT_NOTE;
 
 
 public class NoteInfoFragment extends Fragment {
@@ -44,7 +45,7 @@ public class NoteInfoFragment extends Fragment {
     private TextInputEditText etAuthor;
     private MaterialButton buttonSaveNote;
     private Button buttonEditDateOfCreation;
-    private NotesData.Note currentNote;
+    private Note currentNote;
     private Calendar newDateOfCreation = Calendar.getInstance();
 
     public static NoteInfoFragment newInstance(int index) {
@@ -152,7 +153,7 @@ public class NoteInfoFragment extends Fragment {
     }
 
     private void saveNote() {
-        NotesData.Note newNote = new NotesData.Note(etTopic.getText().toString(),
+        Note newNote = new Note(etTopic.getText().toString(),
                 etDescription.getText().toString(), etAuthor.getText().toString(), newDateOfCreation);
         if (currentNoteIndex == -1) {
             // добавить заметку

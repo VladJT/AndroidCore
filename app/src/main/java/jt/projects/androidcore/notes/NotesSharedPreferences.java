@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.notes.data.DATABASE;
+import jt.projects.androidcore.notes.data.NotesConstants;
 
 // pattern ОДИНОЧКА
 public class NotesSharedPreferences {
@@ -23,7 +25,7 @@ public class NotesSharedPreferences {
 
     private static volatile NotesSharedPreferences instance;
 
-    public static NotesSharedPreferences getInstance(){
+    public static NotesSharedPreferences getInstance() {
         NotesSharedPreferences localInstance = instance;
         if (localInstance == null) {
             // Synchronized - это ключевое слово, которое позволяет заблокировать доступ к методу или части кода, если его уже использует другой поток.
@@ -44,7 +46,7 @@ public class NotesSharedPreferences {
         }
     }
 
-    SharedPreferences getCustomSharedPreferences(String name){
+    public SharedPreferences getCustomSharedPreferences(String name) {
         return context.getSharedPreferences(name, MODE_PRIVATE);
     }
 
@@ -69,9 +71,9 @@ public class NotesSharedPreferences {
     public DATABASE getDBSource() {
         sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
                 MODE_PRIVATE);
-        String source =  sharedPref.getString(NotesConstants.DB_SOURCE_SHARED_PREFERENCES, "");
-        if(source.equals("SHARED_PREF")) return DATABASE.SHARED_PREF;
-        if(source.equals("FIREBASE")) return DATABASE.FIREBASE;
+        String source = sharedPref.getString(NotesConstants.DB_SOURCE_SHARED_PREFERENCES, "");
+        if (source.equals("SHARED_PREF")) return DATABASE.SHARED_PREF;
+        if (source.equals("FIREBASE")) return DATABASE.FIREBASE;
         return DATABASE.SHARED_PREF;
     }
 

@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
-
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.notes.data.NotesData;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.ViewHolder> {
     private NotesData dataSource;
@@ -107,7 +106,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 public void onClick(View v) {
                     menuPosition = getLayoutPosition();
                     int x = buttonContextMenu.getLeft();
-                    int y = buttonContextMenu.getBottom()-30;
+                    int y = buttonContextMenu.getBottom() - 30;
                     itemView.showContextMenu(x, y);
                 }
             });

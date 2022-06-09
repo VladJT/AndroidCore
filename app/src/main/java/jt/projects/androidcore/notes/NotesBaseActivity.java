@@ -2,13 +2,12 @@ package jt.projects.androidcore.notes;
 
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import jt.projects.androidcore.notes.firebase.IFBResponse;
+import jt.projects.androidcore.notes.data.NotesData;
 
 
 public class NotesBaseActivity extends AppCompatActivity {
