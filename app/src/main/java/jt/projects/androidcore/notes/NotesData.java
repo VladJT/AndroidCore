@@ -204,7 +204,7 @@ public class NotesData {
         String date = (String) doc.get("dateofcreation");
         String[] sDate = date.split("\\.");// ex.: 13.01.2022
         int year = Integer.parseInt(sDate[2]);
-        int month = Integer.parseInt(sDate[1]);
+        int month = Integer.parseInt(sDate[1]) - 1; // !!!
         int day = Integer.parseInt(sDate[0]);
         note.dateOfCreation = new GregorianCalendar(year, month, day);
         return note;
