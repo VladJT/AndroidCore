@@ -56,6 +56,7 @@
     <!-- ************************************************** -->
     <!-- Тема Dark для приложения заметок. -->
     <style name="Theme.NotesDarkTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:navigationBarColor">#393A3C</item><!-- цвет navBar -->
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
     </style>

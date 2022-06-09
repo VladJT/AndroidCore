@@ -119,7 +119,7 @@ public class SettingsFragment extends Fragment {
         switchDbSource = view.findViewById(R.id.switch_db_source);
         ivDbSource = view.findViewById(R.id.image_view_notes_db_source);
 
-        if ( NotesSharedPreferences.getInstance().getDBSource()== DATABASE.SHARED_PREF){
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.SHARED_PREF) {
             switchDbSource.setChecked(true);
         }
         switchDbSourceStartChecked = switchDbSource.isChecked();

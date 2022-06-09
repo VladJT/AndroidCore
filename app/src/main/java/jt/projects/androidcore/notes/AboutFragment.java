@@ -32,8 +32,8 @@ public class AboutFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-            requireActivity().getSupportFragmentManager().popBackStack();
+//        if (savedInstanceState != null)
+//            requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override

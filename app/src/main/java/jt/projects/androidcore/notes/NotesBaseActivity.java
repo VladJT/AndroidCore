@@ -24,8 +24,10 @@ public class NotesBaseActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Данные сохранены в " + NotesData.getInstance().getSourceType(), Toast.LENGTH_SHORT);
-        toast.show();
+//        Toast toast = Toast.makeText(getApplicationContext(), "Данные сохранены в " + NotesData.getInstance().getSourceType(), Toast.LENGTH_SHORT);
+//        toast.show();
+        // если выбран источник данных shared_pref, сохраняем данные при выходе из приложения
+        // для firebase - сохранение происходит непосредственно при операциях
         NotesData.getInstance().saveData();
         super.onSaveInstanceState(outState);
     }
