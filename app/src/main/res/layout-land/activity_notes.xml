@@ -28,11 +28,19 @@
                 app:subtitleTextColor="@color/white"
                 app:title="Мои заметки"
                 app:titleTextColor="@color/white">
+
                 <Switch
                     android:id="@+id/switch_theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"/>
+                    android:layout_gravity="end" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_light_mode_24" />
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
