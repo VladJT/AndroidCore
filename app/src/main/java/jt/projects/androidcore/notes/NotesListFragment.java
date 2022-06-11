@@ -38,7 +38,7 @@ import jt.projects.androidcore.notes.data.IFBResponse;
 
 public class NotesListFragment extends Fragment {
     private static final int MY_DEFAULT_DURATION = 300;
-    //    private static final String CURRENT_NOTE = "CurrentNote";
+
     private MaterialButton buttonAddNote;
     private RecyclerView notesRecyclerView;
     private NotesListAdapter notesListAdapter;

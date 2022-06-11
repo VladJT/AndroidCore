@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Note {
-    String id; // идентификатор (для firebase)
+    String id; // идентификатор записи (для firebase)
     String topic;
     String description;
     String author;

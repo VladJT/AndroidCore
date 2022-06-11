@@ -40,7 +40,6 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
     private ImageView ivDbSource;
-    private String encodedBitmapPhoto;
     private SwitchMaterial switchDbSource;
     Bitmap bitmapPhoto = null;
     boolean switchDbSourceStartChecked;

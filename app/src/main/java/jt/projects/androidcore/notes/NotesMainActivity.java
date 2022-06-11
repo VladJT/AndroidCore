@@ -32,7 +32,6 @@ import jt.projects.androidcore.common.ConfigInfo;
 public class NotesMainActivity extends NotesBaseActivity {
     Switch switchTheme;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
