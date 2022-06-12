@@ -82,14 +82,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/button_sign_in_google"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/google_buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notes_account_name_til" />
+        app:layout_constraintTop_toBottomOf="@+id/notes_account_name_til">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/button_sign_in_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_sign_out_google"
+            app:icon="@android:drawable/ic_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:text="Выйти" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/notes_info_settings"
@@ -99,7 +114,7 @@
         android:textSize="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_in_google" />
+        app:layout_constraintTop_toBottomOf="@+id/google_buttons" />
 
     <ProgressBar
         android:id="@+id/progress_bar_notes_settings"

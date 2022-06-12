@@ -3,11 +3,9 @@ package jt.projects.androidcore.notes;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,22 +26,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.notes.common.DownloadImageTask;
 import jt.projects.androidcore.notes.common.IDownloadListener;
 import jt.projects.androidcore.notes.data.DATABASE;
+import jt.projects.androidcore.notes.data.Note;
 import jt.projects.androidcore.notes.data.NotesData;
 
 public class SettingsFragment extends Fragment {
@@ -52,7 +47,7 @@ public class SettingsFragment extends Fragment {
 
     private TextInputEditText itAccountName;
     private ProgressBar progressBar;
-    private MaterialButton btnSaveAccountName;
+    private MaterialButton btnSaveSettings;
     private MaterialButton btnChangeAccountPhoto;
     private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
@@ -62,14 +57,11 @@ public class SettingsFragment extends Fragment {
     Bitmap bitmapPhoto = null;
     boolean switchDbSourceStartChecked;
 
-    // Используется, чтобы определить результат activity регистрации через Google
-    private static final int RC_SIGN_IN = 40404;
-    // Клиент для регистрации пользователя через Google
-    private GoogleSignInClient googleSignInClient;
-    // Кнопка регистрации через Google
-    private com.google.android.gms.common.SignInButton buttonSignIn;
-    GoogleSignInAccount accountGoogle;
-
+    private static final int RC_SIGN_IN = 40404;// Используется, чтобы определить результат activity регистрации через Google
+    private GoogleSignInClient googleSignInClient;// Клиент для регистрации пользователя через Google
+    private SignInButton btnSignIn;// Кнопка регистрации через Google
+    private MaterialButton btnSignOut;// Кнопка выхода из Google
+    private GoogleSignInAccount accountGoogle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,22 +104,18 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvInfo = view.findViewById(R.id.notes_info_settings);
-
         ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
-        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
-
         itAccountName = view.findViewById(R.id.notes_account_name);
-        itAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
-
         progressBar = view.findViewById(R.id.progress_bar_notes_settings);
 
-        initButtonSaveAccountName(view);
+        initButtonSaveSettings(view);
         initChangeAccountPhoto(view);
         initDeletePhoto(view);
         initDbSourceControls(view);
 
         initGoogleSign();
         initGoogleView(view);
+        updateUI();
     }
 
     // Инициализация запроса на аутентификацию
@@ -144,20 +132,16 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initGoogleView(View view) {
-        buttonSignIn = view.findViewById(R.id.button_sign_in_google);
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                signIn();
-                                            }
-                                        }
-        );
+        // кнопка входа
+        btnSignIn = view.findViewById(R.id.button_sign_in_google);
+        btnSignIn.setOnClickListener(v -> signIn());
+
+        // Кнопка выхода
+        btnSignOut = view.findViewById(R.id.button_sign_out_google);
+        btnSignOut.setOnClickListener(v -> signOut());
 
         // Проверим, входил ли пользователь в это приложение через Google
-        accountGoogle = GoogleSignIn.getLastSignedInAccount(getContext());
-        if (accountGoogle != null) {
-            updateUI();
-        }
+        accountGoogle = GoogleSignIn.getLastSignedInAccount(requireContext());
     }
 
     // Инициируем регистрацию пользователя
@@ -166,18 +150,20 @@ public class SettingsFragment extends Fragment {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
-    // Получаем данные пользователя
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            accountGoogle = completedTask.getResult(ApiException.class);
-            // Регистрация прошла успешно
-            updateUI();
-            saveAccountData();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        }
+    // Выход из учётной записи в приложении
+    private void signOut() {
+        googleSignInClient.signOut()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        accountGoogle = null;
+                        setEmptyPhoto();
+                        NotesSharedPreferences.getInstance().saveUserAccountName("user");
+                        updateUI();
+                    }
+                });
     }
+
 
     private void updateUI() {
         if (accountGoogle != null) {
@@ -187,16 +173,31 @@ public class SettingsFragment extends Fragment {
                 public void onDownloadComplete(Bitmap bitmap) {
                     ivAccountPhoto.setImageBitmap(bitmap);
                     bitmapPhoto = bitmap;
+                    // сравним картинки
+                    if (!NotesSharedPreferences.getInstance().getBitmapPhoto().sameAs(bitmap)){
+                        saveAccountData();
+                    }
                 }
             };
             DownloadImageTask googlePhoto = new DownloadImageTask(downloadListener);
             googlePhoto.execute(accountGoogle.getPhotoUrl().toString());
-
             tvInfo.setText(R.string.g_auth_success);
 
             itAccountName.setEnabled(false);
             btnChangeAccountPhoto.setEnabled(false);
             btnDeleteAccountPhoto.setEnabled(false);
+            btnSignIn.setEnabled(false);
+            btnSignOut.setEnabled(true);
+        } else {
+            itAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
+            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+            tvInfo.setText("...");
+
+            itAccountName.setEnabled(true);
+            btnChangeAccountPhoto.setEnabled(true);
+            btnDeleteAccountPhoto.setEnabled(true);
+            btnSignIn.setEnabled(true);
+            btnSignOut.setEnabled(false);
         }
     }
 
@@ -208,7 +209,6 @@ public class SettingsFragment extends Fragment {
             switchDbSource.setChecked(true);
         }
         switchDbSourceStartChecked = switchDbSource.isChecked();
-
         showDbSourceInfo();
 
         switchDbSource.setOnClickListener(new View.OnClickListener() {
@@ -222,15 +222,12 @@ public class SettingsFragment extends Fragment {
     private void showDbSourceInfo() {
         if (!switchDbSource.isChecked()) {
             switchDbSource.setText("Firebase");
-            switchDbSource.setChecked(false);
             ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.firebase));
         } else {
             switchDbSource.setText("Shared preferences");
-            switchDbSource.setChecked(true);
             ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.shared_pref));
         }
     }
-
 
     private void initDeletePhoto(View view) {
         btnDeleteAccountPhoto = view.findViewById(R.id.button_notes_delete_account_photo);
@@ -240,13 +237,17 @@ public class SettingsFragment extends Fragment {
                     .setAction(requireContext().getResources().getText(R.string.yes), new View.OnClickListener() {
                         @Override
                         public void onClick(View view1) {
-                            bitmapPhoto = null;
-                            NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
-                            ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+                            setEmptyPhoto();
                         }
                     });
             snackbar.show();
         });
+    }
+
+    private void setEmptyPhoto() {
+        bitmapPhoto = null;
+        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
     }
 
     private void initChangeAccountPhoto(View view) {
@@ -278,15 +279,19 @@ public class SettingsFragment extends Fragment {
 
         if (requestCode == RC_SIGN_IN) {
             // Когда сюда возвращается Task, результаты аутентификации уже готовы
-            Task<GoogleSignInAccount> task =
-                    GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                accountGoogle = task.getResult(ApiException.class);
+                updateUI();// Регистрация прошла успешно
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void initButtonSaveAccountName(View view) {
-        btnSaveAccountName = view.findViewById(R.id.button_notes_account_save);
-        btnSaveAccountName.setOnClickListener(v -> {
+    private void initButtonSaveSettings(View view) {
+        btnSaveSettings = view.findViewById(R.id.button_notes_account_save);
+        btnSaveSettings.setOnClickListener(v -> {
             saveAccountData();
             requireActivity().getSupportFragmentManager().popBackStack();
         });
@@ -322,7 +327,8 @@ public class SettingsFragment extends Fragment {
                 NotesData.getInstance().loadData();
             }
 
-            Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo), result.toString().equals("") ? "Нет изменений" : result.toString(), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo),
+                    result.toString().equals("") ? "Нет изменений" : result.toString().replaceFirst("(.)[\n]$","$1"), Snackbar.LENGTH_LONG).show();
             switchDbSourceStartChecked = switchDbSource.isChecked();
         } catch (Exception e) {
             e.printStackTrace();

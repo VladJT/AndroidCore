@@ -150,7 +150,7 @@ public class NotesListFragment extends Fragment {
         }
         initButtonAdd(view);
         TextView footer = view.findViewById(R.id.text_view_footer);
-        footer.setText(NotesData.getInstance().getSourceType() + "");
+        footer.setText("db_source: "+NotesData.getInstance().getSourceType());
     }
 
     private void initButtonAdd(@NonNull View view) {
