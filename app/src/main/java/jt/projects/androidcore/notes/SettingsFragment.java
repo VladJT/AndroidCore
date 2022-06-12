@@ -3,9 +3,11 @@ package jt.projects.androidcore.notes;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +25,25 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import jt.projects.androidcore.R;
+import jt.projects.androidcore.notes.common.DownloadImageTask;
+import jt.projects.androidcore.notes.common.IDownloadListener;
 import jt.projects.androidcore.notes.data.DATABASE;
 import jt.projects.androidcore.notes.data.NotesData;
 
@@ -40,9 +57,18 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
     private ImageView ivDbSource;
+    private TextView tvInfo;
     private SwitchMaterial switchDbSource;
     Bitmap bitmapPhoto = null;
     boolean switchDbSourceStartChecked;
+
+    // Используется, чтобы определить результат activity регистрации через Google
+    private static final int RC_SIGN_IN = 40404;
+    // Клиент для регистрации пользователя через Google
+    private GoogleSignInClient googleSignInClient;
+    // Кнопка регистрации через Google
+    private com.google.android.gms.common.SignInButton buttonSignIn;
+    GoogleSignInAccount accountGoogle;
 
 
     @Override
@@ -84,15 +110,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        final FragmentManager fragmentManager =
-//                requireActivity().getSupportFragmentManager();
-//        final List<Fragment> fragments = fragmentManager.getFragments();
-//        String stFragments = "Список активных фрагментов:\n";
-//        for (Fragment fragment : fragments) {
-//            stFragments += fragment.toString() + "\n";
-//        }
-//        TextView t = view.findViewById(R.id.notes_info_settings);
-//        t.setText(stFragments);
+
+        tvInfo = view.findViewById(R.id.notes_info_settings);
 
         ivAccountPhoto = view.findViewById(R.id.image_view_notes_user_account_photo);
         ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
@@ -106,6 +125,79 @@ public class SettingsFragment extends Fragment {
         initChangeAccountPhoto(view);
         initDeletePhoto(view);
         initDbSourceControls(view);
+
+        initGoogleSign();
+        initGoogleView(view);
+    }
+
+    // Инициализация запроса на аутентификацию
+    private void initGoogleSign() {
+        // Конфигурация запроса на регистрацию пользователя, чтобы получить
+        // идентификатор пользователя, его почту и основной профайл
+        // (регулируется параметром)
+        GoogleSignInOptions gso = new
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Получаем клиента для регистрации и данные по клиенту
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
+    }
+
+    private void initGoogleView(View view) {
+        buttonSignIn = view.findViewById(R.id.button_sign_in_google);
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                signIn();
+                                            }
+                                        }
+        );
+
+        // Проверим, входил ли пользователь в это приложение через Google
+        accountGoogle = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (accountGoogle != null) {
+            updateUI();
+        }
+    }
+
+    // Инициируем регистрацию пользователя
+    private void signIn() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    // Получаем данные пользователя
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            accountGoogle = completedTask.getResult(ApiException.class);
+            // Регистрация прошла успешно
+            updateUI();
+            saveAccountData();
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateUI() {
+        if (accountGoogle != null) {
+            itAccountName.setText(accountGoogle.getDisplayName());
+            IDownloadListener downloadListener = new IDownloadListener() {
+                @Override
+                public void onDownloadComplete(Bitmap bitmap) {
+                    ivAccountPhoto.setImageBitmap(bitmap);
+                    bitmapPhoto = bitmap;
+                }
+            };
+            DownloadImageTask googlePhoto = new DownloadImageTask(downloadListener);
+            googlePhoto.execute(accountGoogle.getPhotoUrl().toString());
+
+            tvInfo.setText(R.string.g_auth_success);
+
+            itAccountName.setEnabled(false);
+            btnChangeAccountPhoto.setEnabled(false);
+            btnDeleteAccountPhoto.setEnabled(false);
+        }
     }
 
     private void initDbSourceControls(View view) {
@@ -182,6 +274,13 @@ public class SettingsFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+        }
+
+        if (requestCode == RC_SIGN_IN) {
+            // Когда сюда возвращается Task, результаты аутентификации уже готовы
+            Task<GoogleSignInAccount> task =
+                    GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
     }
 
