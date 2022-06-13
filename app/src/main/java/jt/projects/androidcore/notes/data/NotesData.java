@@ -25,14 +25,30 @@ import java.util.Map;
 
 import jt.projects.androidcore.notes.NotesSharedPreferences;
 
-public class NotesData {
-    private static NotesData notesData = null;
+public abstract class NotesData {
+    static NotesData notesData = null;
 
     public static NotesData getInstance() {
         if (notesData == null) {
-            notesData = new NotesData();
+            createInstance();
+        } else {
+            if (notesData instanceof NotesDataFirebase && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.FIREBASE) {
+                createInstance();
+            }
+            if (notesData instanceof NotesDataSharedPref && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.SHARED_PREF) {
+                createInstance();
+            }
         }
         return notesData;
+    }
+
+    private static void createInstance() {
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.SHARED_PREF) {
+            notesData = new NotesDataSharedPref();
+        }
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.FIREBASE) {
+            notesData = new NotesDataFirebase();
+        }
     }
 
     // ТИП БАЗЫ ДАННЫХ
@@ -40,70 +56,22 @@ public class NotesData {
         return NotesSharedPreferences.getInstance().getDBSource();
     }
 
-    //FIREBASE
-    private static final String CARDS_COLLECTION = "cards";
-    private FirebaseFirestore store = FirebaseFirestore.getInstance();
-    private CollectionReference collection = store.collection(CARDS_COLLECTION);
-    private IFBResponse response = null;
+    protected ArrayList<Note> data;
+    protected static IFBResponse response;
 
-    private ArrayList<Note> data;
-
-    private NotesData() {
+    protected NotesData() {
         this.data = new ArrayList<>();
     }
 
-    public void loadData() {
-        if (getSourceType() == DATABASE.SHARED_PREF) {
-            loadFromSharedPreferences();
-        }
-        if (getSourceType() == DATABASE.FIREBASE) {
-            loadFromFireBase();
-        }
+    public void setResponse(IFBResponse newResponse) {
+        response = newResponse;
     }
 
-    public void setResponse(IFBResponse response) {
-        this.response = response;
-    }
+    public abstract void loadData();
 
-    private void loadFromFireBase() {
-        data = new ArrayList<>();
-        collection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Map<String, Object> doc = document.getData();
-                        String id = document.getId();
-                        Note note = getNoteFromFBDoc(id, doc);
-                        data.add(note);
-                    }
-                    sortByDate(data);
-                    if (response != null) response.initialized();
-                }
-            }
-        });
-    }
+    public abstract void saveData();
 
-    private void loadFromSharedPreferences() {
-        try {
-            SharedPreferences sharedPref = NotesSharedPreferences.getInstance().getCustomSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES_DATA);
-            String jsonNotes = sharedPref.getString(NotesConstants.NOTES_JSON_DATA, null);
-            Type type = new TypeToken<ArrayList<Note>>() {
-            }.getType();
-
-            this.data = new GsonBuilder().create().fromJson(jsonNotes, type);
-            if (data == null) {
-                data = new ArrayList<>();
-            }
-            sortByDate(data);
-
-        } catch (JsonSyntaxException e) {
-            //    Toast.makeText(this, "Ошибка трансформации", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void sortByDate(ArrayList<Note> arr) {
+    protected void sortByDate(ArrayList<Note> arr) {
         arr.sort(new Comparator<Note>() {
             @Override
             public int compare(Note o1, Note o2) {
@@ -116,7 +84,7 @@ public class NotesData {
         });
     }
 
-    private void addTestData() {
+    void addTestData() {
         data.add(new Note("Заметка 1", "обработку надо создавать при создании элемента, то есть или на\n" +
                 "onCreateViewHolder, или в самом ViewHolder. Однако метод onCreateViewHolder отвечает за\n" +
                 "предоставление View элемента вновь созданному ViewHolder, не стоит перегружать его ещё и\n" +
@@ -129,25 +97,6 @@ public class NotesData {
         data.add(new Note("Заметка 5", "Настройка цветов происходит по определённым правилам. На сайте http://www.google.com/design/spec/style/color.html# есть таблица цветов. Обратите внимание на числа слева. Основным цветом (colorPrimary) считается цвет под номером 500, он идёт первым в таблицах. Этот цвет должен использоваться в качестве заголовка (Toolbar).", "Стас", new GregorianCalendar(2022, 2, 1)));
         data.add(new Note("Заметка 6", "В далекой галактике...", "Петр", Calendar.getInstance()));
     }
-
-    public void saveData() {
-        if (getSourceType() == DATABASE.FIREBASE) {
-            //   automatically
-        }
-        if (getSourceType() == DATABASE.SHARED_PREF) {
-            saveToSharedPreferences(); // on exit app
-        }
-    }
-
-    private void saveToSharedPreferences() {
-        SharedPreferences sharedPref = NotesSharedPreferences.getInstance().getCustomSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES_DATA);
-        String jsonNotes = "";
-        if (data != null) {
-            jsonNotes = new GsonBuilder().create().toJson(data);
-        }
-        sharedPref.edit().putString(NotesConstants.NOTES_JSON_DATA, jsonNotes).apply();
-    }
-
 
     public Note getNote(int index) {
         if (index >= 0 && index < data.size()) {
@@ -167,48 +116,14 @@ public class NotesData {
 
     public void addNote(Note note) {
         data.add(note);
-        if (getSourceType() == DATABASE.FIREBASE) {
-            collection.add(note.toFBDoc()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    note.setId(documentReference.getId());
-                }
-            });
-        }
     }
 
     public void editNote(Note editedNote, int index) {
         editedNote.setId(data.get(index).getId());
         data.set(index, editedNote);
-
-        if (getSourceType() == DATABASE.FIREBASE) {
-            Note n = data.get(index);
-            // Изменить документ по идентификатору
-            collection.document(n.getId()).set(n.toFBDoc());
-        }
     }
 
     public void deleteNote(int index) {
-        if (getSourceType() == DATABASE.FIREBASE) {
-            // Удалить документ с определённым идентификатором
-            collection.document(data.get(index).getId()).delete();
-        }
         data.remove(index);
-    }
-
-    // FIREBASE only
-    public static Note getNoteFromFBDoc(String id, Map<String, Object> doc) {
-        Note note = new Note();
-        note.setId(id);
-        note.topic = (String) doc.get("topic");
-        note.description = (String) doc.get("description");
-        note.author = (String) doc.get("author");
-        String date = (String) doc.get("dateofcreation");
-        String[] sDate = date.split("\\.");// ex.: 13.01.2022
-        int year = Integer.parseInt(sDate[2]);
-        int month = Integer.parseInt(sDate[1]) - 1; // !!!
-        int day = Integer.parseInt(sDate[0]);
-        note.dateOfCreation = new GregorianCalendar(year, month, day);
-        return note;
     }
 }

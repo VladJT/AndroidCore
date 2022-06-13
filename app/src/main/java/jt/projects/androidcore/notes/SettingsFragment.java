@@ -55,6 +55,7 @@ public class SettingsFragment extends Fragment {
     private TextView tvInfo;
     private SwitchMaterial switchDbSource;
     Bitmap bitmapPhoto = null;
+    boolean isPhotoChanged = false;
     boolean switchDbSourceStartChecked;
 
     private static final int RC_SIGN_IN = 40404;// Используется, чтобы определить результат activity регистрации через Google
@@ -157,9 +158,12 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         accountGoogle = null;
-                        setEmptyPhoto();
+                        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
                         NotesSharedPreferences.getInstance().saveUserAccountName("user");
                         updateUI();
+                        Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo),
+                                "Выполнен выход из уч.записи Google", Snackbar.LENGTH_LONG).show();
+
                     }
                 });
     }
@@ -174,7 +178,7 @@ public class SettingsFragment extends Fragment {
                     ivAccountPhoto.setImageBitmap(bitmap);
                     bitmapPhoto = bitmap;
                     // сравним картинки
-                    if (!NotesSharedPreferences.getInstance().getBitmapPhoto().sameAs(bitmap)){
+                    if (!NotesSharedPreferences.getInstance().getBitmapPhoto().sameAs(bitmap)) {
                         saveAccountData();
                     }
                 }
@@ -245,9 +249,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setEmptyPhoto() {
-        bitmapPhoto = null;
-        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
         ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+        isPhotoChanged = true;
     }
 
     private void initChangeAccountPhoto(View view) {
@@ -271,6 +274,7 @@ public class SettingsFragment extends Fragment {
                     Uri selectedImageUri = data.getData();
                     bitmapPhoto = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
                     ivAccountPhoto.setImageBitmap(bitmapPhoto);
+                    isPhotoChanged = true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -283,6 +287,7 @@ public class SettingsFragment extends Fragment {
             try {
                 accountGoogle = task.getResult(ApiException.class);
                 updateUI();// Регистрация прошла успешно
+                isPhotoChanged = true;
             } catch (ApiException e) {
                 e.printStackTrace();
             }
@@ -303,10 +308,14 @@ public class SettingsFragment extends Fragment {
             //progressBar.setVisibility(View.VISIBLE);
             Thread threadLoadPhoto = new Thread(() -> {
                 // сохраняем аватарку
-                if (bitmapPhoto != null) {
-                    NotesSharedPreferences.getInstance()
-                            .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
-                    progressBar.setVisibility(View.GONE);
+                if (isPhotoChanged == true) {
+                    if (bitmapPhoto == null) {
+                        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+                    } else {
+                        NotesSharedPreferences.getInstance()
+                                .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
+                    }
+                    //progressBar.setVisibility(View.GONE);
                     result.append("Изменено фото\n");
                 }
             });
@@ -328,8 +337,10 @@ public class SettingsFragment extends Fragment {
             }
 
             Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo),
-                    result.toString().equals("") ? "Нет изменений" : result.toString().replaceFirst("(.)[\n]$","$1"), Snackbar.LENGTH_LONG).show();
+                    result.toString().equals("") ? "Нет изменений" : result.toString().replaceFirst("(.)[\n]$", "$1"), Snackbar.LENGTH_LONG).show();
+
             switchDbSourceStartChecked = switchDbSource.isChecked();
+            isPhotoChanged = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
