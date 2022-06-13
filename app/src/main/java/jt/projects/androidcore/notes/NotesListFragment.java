@@ -1,6 +1,6 @@
 package jt.projects.androidcore.notes;
 
-import static jt.projects.androidcore.notes.data.NotesConstants.*;
+import static jt.projects.androidcore.notes.constants.NotesConstants.*;
 
 import android.os.Bundle;
 
@@ -32,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.notes.data.NotesData;
-import jt.projects.androidcore.notes.data.RESULT_EDIT_NOTE;
+import jt.projects.androidcore.notes.constants.RESULT_EDIT_NOTE;
 import jt.projects.androidcore.notes.data.IFBResponse;
 
 

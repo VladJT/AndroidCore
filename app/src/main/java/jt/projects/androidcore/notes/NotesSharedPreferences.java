@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.notes.data.DATABASE;
-import jt.projects.androidcore.notes.data.NotesConstants;
+import jt.projects.androidcore.notes.constants.DATABASE;
+import jt.projects.androidcore.notes.constants.NotesConstants;
 
 // pattern ОДИНОЧКА
 public class NotesSharedPreferences {

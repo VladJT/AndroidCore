@@ -38,8 +38,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.notes.common.DownloadImageTask;
 import jt.projects.androidcore.notes.common.IDownloadListener;
-import jt.projects.androidcore.notes.data.DATABASE;
-import jt.projects.androidcore.notes.data.Note;
+import jt.projects.androidcore.notes.constants.DATABASE;
 import jt.projects.androidcore.notes.data.NotesData;
 
 public class SettingsFragment extends Fragment {

@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import jt.projects.androidcore.notes.NotesSharedPreferences;
+import jt.projects.androidcore.notes.constants.NotesConstants;
 
 public class NotesDataSharedPref extends NotesData {
 

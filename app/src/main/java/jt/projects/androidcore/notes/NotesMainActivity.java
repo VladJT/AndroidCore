@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,9 +29,11 @@ import java.io.NotSerializableException;
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.calculator.BaseActivity;
 import jt.projects.androidcore.common.ConfigInfo;
+import jt.projects.androidcore.notes.data.Note;
 
 public class NotesMainActivity extends NotesBaseActivity {
     Switch switchTheme;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class NotesMainActivity extends NotesBaseActivity {
 
     // инициализируем Navigation Drawer
     private void initNavigationDrawer(Toolbar toolbar) {
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
         // Создаем ActionBarDrawerToggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -140,6 +143,32 @@ public class NotesMainActivity extends NotesBaseActivity {
             drawer.close();
             return checkMenuItemSelected(item.getItemId());
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (!(getSupportFragmentManager().getFragments().get(0) instanceof NotesListFragment)) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            showExitDialog();
+        }
+    }
+
+    private void showExitDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Выход")
+                .setMessage("Вы уверены, что хотите выйти?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private boolean checkMenuItemSelected(int id) {

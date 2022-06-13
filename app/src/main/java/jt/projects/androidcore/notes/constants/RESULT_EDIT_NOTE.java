@@ -1,4 +1,4 @@
-package jt.projects.androidcore.notes.data;
+package jt.projects.androidcore.notes.constants;
 
 import java.io.Serializable;
 

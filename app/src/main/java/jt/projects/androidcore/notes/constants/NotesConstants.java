@@ -1,4 +1,4 @@
-package jt.projects.androidcore.notes.data;
+package jt.projects.androidcore.notes.constants;
 
 public class NotesConstants {
     // индекс заметки, с которой мы работаем в данный момент, для отображения в NoteInfoFragment

@@ -1,7 +1,7 @@
 package jt.projects.androidcore.notes;
 
 
-import static jt.projects.androidcore.notes.data.NotesConstants.*;
+import static jt.projects.androidcore.notes.constants.NotesConstants.*;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import java.util.GregorianCalendar;
 import jt.projects.androidcore.R;
 import jt.projects.androidcore.notes.data.Note;
 import jt.projects.androidcore.notes.data.NotesData;
-import jt.projects.androidcore.notes.data.RESULT_EDIT_NOTE;
+import jt.projects.androidcore.notes.constants.RESULT_EDIT_NOTE;
 
 
 public class NoteInfoFragment extends Fragment {

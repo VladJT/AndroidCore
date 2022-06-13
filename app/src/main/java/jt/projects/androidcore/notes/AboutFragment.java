@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 
 import jt.projects.androidcore.R;
-import jt.projects.androidcore.notes.data.NotesConstants;
+import jt.projects.androidcore.notes.constants.NotesConstants;
 
 public class AboutFragment extends Fragment {
     private MaterialButton btnShowPushNotification;
