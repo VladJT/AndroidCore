@@ -31,7 +31,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/no_img" />
+                app:srcCompat="@drawable/note" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView

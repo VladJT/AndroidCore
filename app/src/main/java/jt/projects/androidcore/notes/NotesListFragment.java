@@ -73,11 +73,11 @@ public class NotesListFragment extends Fragment {
 
                 if (resultEditNote == RESULT_EDIT_NOTE.ADD) {// если добавлена новая заметка
                     notesListAdapter.notifyItemInserted(index);
-                    notesRecyclerView.scrollToPosition(index);
+                    notesRecyclerView.postDelayed(() -> notesRecyclerView.smoothScrollToPosition(index), 1000);
                     Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Добавлена заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
                 } else if (resultEditNote == RESULT_EDIT_NOTE.EDIT) {// если заметка отредактирована
                     notesListAdapter.notifyItemChanged(index);
-                    notesRecyclerView.scrollToPosition(index);
+                    notesRecyclerView.postDelayed(() -> notesRecyclerView.smoothScrollToPosition(index), 1000);
                     Snackbar.make(requireActivity().findViewById(R.id.notes_list_recycler_view), "Отредактирована заметка: " + noteTopic, Snackbar.LENGTH_SHORT).show();
                 } else if (resultEditNote == RESULT_EDIT_NOTE.DELETE) {// если заметка удалена
                     notesListAdapter.notifyItemRemoved(index);
@@ -150,7 +150,7 @@ public class NotesListFragment extends Fragment {
         }
         initButtonAdd(view);
         TextView footer = view.findViewById(R.id.text_view_footer);
-        footer.setText("db_source: "+NotesData.getInstance().getSourceType());
+        footer.setText("db_source: " + NotesData.getInstance().getSourceType());
     }
 
     private void initButtonAdd(@NonNull View view) {

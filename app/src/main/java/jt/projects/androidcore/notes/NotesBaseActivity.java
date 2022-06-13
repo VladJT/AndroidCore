@@ -30,4 +30,10 @@ public class NotesBaseActivity extends AppCompatActivity {
         NotesData.getInstance().saveData();
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        NotesData.getInstance().saveData();
+    }
 }
