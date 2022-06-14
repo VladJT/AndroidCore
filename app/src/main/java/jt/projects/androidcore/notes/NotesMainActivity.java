@@ -3,6 +3,7 @@ package jt.projects.androidcore.notes;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,14 +116,14 @@ public class NotesMainActivity extends NotesBaseActivity {
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-                TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
-                twUserAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
+//                TextView twUserAccountName = drawerView.findViewById(R.id.text_view_notes_user_account);
+//                twUserAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
-                i.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+//                ImageView i = drawerView.findViewById(R.id.image_view_notes_user_account);
+//                i.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
             }
 
             @Override
@@ -132,7 +133,12 @@ public class NotesMainActivity extends NotesBaseActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-
+                if (newState == 2) {
+                    ImageView i = drawer.findViewById(R.id.image_view_notes_user_account);
+                    i.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+                    TextView twUserAccountName = drawer.findViewById(R.id.text_view_notes_user_account);
+                    twUserAccountName.setText(NotesSharedPreferences.getInstance().getUserAccountName());
+                }
             }
         });
 

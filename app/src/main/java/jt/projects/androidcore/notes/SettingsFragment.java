@@ -162,7 +162,7 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         accountGoogle = null;
-                        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+                        NotesSharedPreferences.getInstance().saveUserPhotoToAssets(NotesSharedPreferences.getInstance().getEmptyPhoto());
                         NotesSharedPreferences.getInstance().saveUserAccountName("user");
                         updateUI();
                         Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo),
@@ -256,7 +256,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setEmptyPhoto() {
-        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getBitmapPhoto());
+        NotesSharedPreferences.getInstance().saveUserPhotoToAssets(NotesSharedPreferences.getInstance().getEmptyPhoto());
+        ivAccountPhoto.setImageBitmap(NotesSharedPreferences.getInstance().getEmptyPhoto());
         isPhotoChanged = true;
     }
 
@@ -317,10 +318,9 @@ public class SettingsFragment extends Fragment {
                 // сохраняем аватарку
                 if (isPhotoChanged == true) {
                     if (bitmapPhoto == null) {
-                        NotesSharedPreferences.getInstance().saveUserPhotoUriString("");
+                        NotesSharedPreferences.getInstance().saveUserPhotoToAssets(NotesSharedPreferences.getInstance().getEmptyPhoto());
                     } else {
-                        NotesSharedPreferences.getInstance()
-                                .saveUserPhotoUriString(NotesSharedPreferences.getInstance().encodeTobase64(bitmapPhoto));
+                        NotesSharedPreferences.getInstance().saveUserPhotoToAssets(bitmapPhoto);
                     }
                     //progressBar.setVisibility(View.GONE);
                     result.append("Изменено фото\n");

@@ -8,8 +8,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,9 +24,11 @@ import jt.projects.androidcore.notes.constants.NotesConstants;
 
 // pattern ОДИНОЧКА
 public class NotesSharedPreferences {
+    final String USER_PHOTO = "photo.jpg";
+
     private Context context;
     private SharedPreferences sharedPref;
-    private Bitmap cachedPhoto = null;
+    private Bitmap cachedPhoto;
 
     private static volatile NotesSharedPreferences instance;
 
@@ -41,9 +48,6 @@ public class NotesSharedPreferences {
 
     public void initSharedPreferences(Context c) {
         context = c;
-        if (!getUserPhotoUriString().equals("")) {
-            cachedPhoto = decodeBase64(getUserPhotoUriString());
-        }
     }
 
     public SharedPreferences getCustomSharedPreferences(String name) {
@@ -90,14 +94,16 @@ public class NotesSharedPreferences {
         return sharedPref.getString(NotesConstants.ACCOUNT_USER_NAME_SHARED_PREFERENCES, "user");
     }
 
-    public void saveUserPhotoUriString(String uriString) {
+    @Deprecated
+    public void saveUserPhotoUriString_OLD(String uriString) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, uriString);
         editor.apply();
-        cachedPhoto = decodeBase64(getUserPhotoUriString());
+        //cachedPhoto = decodeBase64(getUserPhotoUriString());
     }
 
-    public String getUserPhotoUriString() {
+    @Deprecated
+    public String getUserPhotoUriString_OLD() {
         sharedPref = context.getSharedPreferences(NotesConstants.NAME_SHARED_PREFERENCES,
                 MODE_PRIVATE);
         return sharedPref.getString(NotesConstants.ACCOUNT_PHOTO_SHARED_PREFERENCES, "");
@@ -124,10 +130,32 @@ public class NotesSharedPreferences {
                 R.drawable.no_avatar);
     }
 
+    public void saveUserPhotoToAssets(Bitmap bitmap) {
+        try (FileOutputStream out = new FileOutputStream(context.getFilesDir().getAbsolutePath() + "/" + USER_PHOTO)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+            cachedPhoto = bitmap;
+        } catch (IOException e) {
+            Log.e("SHARED_PREF", e.getMessage());
+        }
+    }
+
     public Bitmap getBitmapPhoto() {
-        if (cachedPhoto == null) {
-            return getEmptyPhoto();
-        } else return cachedPhoto;
+        try {
+            if (cachedPhoto == null) {
+                // получаем входной поток
+                FileInputStream ims = new FileInputStream(context.getFilesDir().getAbsolutePath() + "/" + USER_PHOTO);
+                if (ims == null) {
+                    cachedPhoto = getEmptyPhoto();
+                } else {
+                    cachedPhoto = BitmapFactory.decodeStream(ims);
+                }
+            }
+            return cachedPhoto;
+        } catch (Exception e) {
+            Log.e("SHARED_PREF", e.getMessage());
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
