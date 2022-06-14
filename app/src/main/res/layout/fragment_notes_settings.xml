@@ -128,49 +128,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_view_db_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_big"
-            android:fontFamily="@font/nautiluspompilius"
-            android:text="Источник данных"
-            android:textSize="@dimen/font_size_small"
-            app:layout_constraintBottom_toTopOf="@+id/card_view_notes_db_source"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/text_view_db_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nautiluspompilius"
+        android:layout_marginTop="40dp"
+        android:text="Источник данных"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/google_buttons" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_db_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:fontFamily="@font/nautiluspompilius"
-            android:text="Switch"
-            android:textSize="@dimen/font_size_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_view_notes_db_source"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radio_group_dbsource"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_big"
-            android:orientation="vertical"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/switch_db_source"
+            android:layout_width="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/image_view_notes_db_source"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/drawer_header"
-                android:scaleType="fitCenter"
-                android:src="@drawable/shared_pref" />
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_db_source">
+            <RadioButton
+                android:id="@+id/radio_button_shared_pref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shared preferences"/>
+            <RadioButton
+                android:id="@+id/radio_button_firebase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firebase"/>
+            <RadioButton
+                android:id="@+id/radio_button_datastore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data store"/>
+        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

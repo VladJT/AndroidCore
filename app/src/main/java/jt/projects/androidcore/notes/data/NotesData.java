@@ -15,10 +15,10 @@ public abstract class NotesData {
         if (notesData == null) {
             createInstance();
         } else {
-            if (notesData instanceof NotesDataFirebase && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.FIREBASE) {
-                createInstance();
-            }
-            if (notesData instanceof NotesDataSharedPref && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.SHARED_PREF) {
+            if ((notesData instanceof NotesDataFirebase && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.FIREBASE) ||
+                    (notesData instanceof NotesDataSharedPref && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.SHARED_PREF) ||
+                    (notesData instanceof NotesDataStore && NotesSharedPreferences.getInstance().getDBSource() != DATABASE.DATASTORE))
+            {
                 createInstance();
             }
         }
@@ -31,6 +31,9 @@ public abstract class NotesData {
         }
         if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.FIREBASE) {
             notesData = new NotesDataFirebase();
+        }
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.DATASTORE) {
+            notesData = new NotesDataStore();
         }
     }
 

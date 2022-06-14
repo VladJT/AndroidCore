@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +34,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
 import jt.projects.androidcore.R;
@@ -50,13 +51,17 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnChangeAccountPhoto;
     private MaterialButton btnDeleteAccountPhoto;
     private ImageView ivAccountPhoto;
-    private ImageView ivDbSource;
     private TextView tvInfo;
-    private SwitchMaterial switchDbSource;
-    Bitmap bitmapPhoto = null;
-    boolean isPhotoChanged = false;
-    boolean switchDbSourceStartChecked;
+    private RadioGroup rgDbSource;
+    private RadioButton rbSharedPref;
+    private RadioButton rbFirebase;
+    private RadioButton rbDataStore;
 
+    private Bitmap bitmapPhoto = null;
+    private boolean isPhotoChanged = false;
+    private int startDbSourceChecked;
+
+    // for google auth
     private static final int RC_SIGN_IN = 40404;// Используется, чтобы определить результат activity регистрации через Google
     private GoogleSignInClient googleSignInClient;// Клиент для регистрации пользователя через Google
     private SignInButton btnSignIn;// Кнопка регистрации через Google
@@ -205,31 +210,35 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initDbSourceControls(View view) {
-        switchDbSource = view.findViewById(R.id.switch_db_source);
-        ivDbSource = view.findViewById(R.id.image_view_notes_db_source);
+        rgDbSource = view.findViewById(R.id.radio_group_dbsource);
+        rbSharedPref = view.findViewById(R.id.radio_button_shared_pref);
+        rbFirebase = view.findViewById(R.id.radio_button_firebase);
+        rbDataStore = view.findViewById(R.id.radio_button_datastore);
+
+        startDbSourceChecked = rgDbSource.getCheckedRadioButtonId();
 
         if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.SHARED_PREF) {
-            switchDbSource.setChecked(true);
+            rbSharedPref.setChecked(true);
         }
-        switchDbSourceStartChecked = switchDbSource.isChecked();
-        showDbSourceInfo();
-
-        switchDbSource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDbSourceInfo();
-            }
-        });
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.FIREBASE) {
+            rbFirebase.setChecked(true);
+        }
+        if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.DATASTORE) {
+            rbDataStore.setChecked(true);
+        }
     }
 
-    private void showDbSourceInfo() {
-        if (!switchDbSource.isChecked()) {
-            switchDbSource.setText("Firebase");
-            ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.firebase));
-        } else {
-            switchDbSource.setText("Shared preferences");
-            ivDbSource.setImageDrawable(requireActivity().getDrawable(R.drawable.shared_pref));
+    private DATABASE getSelectedDbSource() {
+        if (rbSharedPref.isChecked()) {
+            return DATABASE.SHARED_PREF;
         }
+        if (rbFirebase.isChecked()) {
+            return DATABASE.FIREBASE;
+        }
+        if (rbDataStore.isChecked()) {
+            return DATABASE.DATASTORE;
+        }
+        return null;
     }
 
     private void initDeletePhoto(View view) {
@@ -328,9 +337,9 @@ public class SettingsFragment extends Fragment {
             }
 
             //при необходимости меняем источник данных
-            if (switchDbSource.isChecked() != switchDbSourceStartChecked) {
+            if (startDbSourceChecked != rgDbSource.getCheckedRadioButtonId()) {
                 NotesData.getInstance().saveData();
-                NotesSharedPreferences.getInstance().saveDBSource(switchDbSource.isChecked() ? DATABASE.SHARED_PREF : DATABASE.FIREBASE);
+                NotesSharedPreferences.getInstance().saveDBSource(getSelectedDbSource());
                 result.append("Изменен источник данных: " + NotesSharedPreferences.getInstance().getDBSource().name() + "\n");
                 NotesData.getInstance().loadData();
             }
@@ -338,7 +347,7 @@ public class SettingsFragment extends Fragment {
             Snackbar.make(requireActivity().findViewById(R.id.image_view_notes_user_account_photo),
                     result.toString().equals("") ? "Нет изменений" : result.toString().replaceFirst("(.)[\n]$", "$1"), Snackbar.LENGTH_LONG).show();
 
-            switchDbSourceStartChecked = switchDbSource.isChecked();
+            startDbSourceChecked = rgDbSource.getCheckedRadioButtonId();
             isPhotoChanged = false;
         } catch (Exception e) {
             e.printStackTrace();

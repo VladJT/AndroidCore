@@ -74,6 +74,7 @@ public class NotesSharedPreferences {
         String source = sharedPref.getString(NotesConstants.DB_SOURCE_SHARED_PREFERENCES, "");
         if (source.equals("SHARED_PREF")) return DATABASE.SHARED_PREF;
         if (source.equals("FIREBASE")) return DATABASE.FIREBASE;
+        if (source.equals("DATASTORE")) return DATABASE.DATASTORE;
         return DATABASE.SHARED_PREF;
     }
 
