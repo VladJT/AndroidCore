@@ -1,5 +1,7 @@
 package jt.projects.androidcore.notes.data;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -10,6 +12,11 @@ import jt.projects.androidcore.notes.constants.DATABASE;
 
 public abstract class NotesData {
     static NotesData notesData = null;
+    static Context context;
+
+    public static void setContext(Context context) {
+        NotesData.context = context;
+    }
 
     public static NotesData getInstance() {
         if (notesData == null) {

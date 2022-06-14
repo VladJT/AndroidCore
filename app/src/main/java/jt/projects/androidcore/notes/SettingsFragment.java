@@ -215,8 +215,6 @@ public class SettingsFragment extends Fragment {
         rbFirebase = view.findViewById(R.id.radio_button_firebase);
         rbDataStore = view.findViewById(R.id.radio_button_datastore);
 
-        startDbSourceChecked = rgDbSource.getCheckedRadioButtonId();
-
         if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.SHARED_PREF) {
             rbSharedPref.setChecked(true);
         }
@@ -226,6 +224,7 @@ public class SettingsFragment extends Fragment {
         if (NotesSharedPreferences.getInstance().getDBSource() == DATABASE.DATASTORE) {
             rbDataStore.setChecked(true);
         }
+        startDbSourceChecked = rgDbSource.getCheckedRadioButtonId();
     }
 
     private DATABASE getSelectedDbSource() {
