@@ -12,6 +12,7 @@ public class Note {
     String author;
     Calendar dateOfCreation;
 
+
     public String getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package jt.projects.androidcore.notes.constants;
 
+
 public class NotesConstants {
     // индекс заметки, с которой мы работаем в данный момент, для отображения в NoteInfoFragment
     public static final String CURRENT_NOTE_INDEX = "CURRENT_NOTE_INDEX";

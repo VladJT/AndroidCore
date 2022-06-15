@@ -15,6 +15,7 @@ import jt.projects.androidcore.notes.constants.NotesConstants;
 public class NotesDataSharedPref extends NotesData {
 
 
+
     @Override
     public void loadData() {
         try {

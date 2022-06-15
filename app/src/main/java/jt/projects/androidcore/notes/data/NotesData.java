@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import jt.projects.androidcore.notes.NotesSharedPreferences;
 import jt.projects.androidcore.notes.constants.DATABASE;
 
+
 public abstract class NotesData {
     static NotesData notesData = null;
     static Context context;

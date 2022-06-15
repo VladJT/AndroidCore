@@ -240,6 +240,7 @@ public class SettingsFragment extends Fragment {
         return null;
     }
 
+
     private void initDeletePhoto(View view) {
         btnDeleteAccountPhoto = view.findViewById(R.id.button_notes_delete_account_photo);
         btnDeleteAccountPhoto.setOnClickListener(v -> {

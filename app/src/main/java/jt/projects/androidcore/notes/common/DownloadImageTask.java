@@ -7,7 +7,6 @@ import android.util.Log;
 
 import java.io.InputStream;
 
-
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private IDownloadListener downloadListener;
 

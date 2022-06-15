@@ -65,6 +65,7 @@ public class NotesDataFirebase extends NotesData {
         collection.document(n.getId()).set(n.toFBDoc());
     }
 
+
     @Override
     public void deleteNote(int index) {
         // Удалить документ с определённым идентификатором

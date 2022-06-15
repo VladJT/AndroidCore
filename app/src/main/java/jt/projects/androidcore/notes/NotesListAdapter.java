@@ -89,6 +89,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.View
                 });
             }
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

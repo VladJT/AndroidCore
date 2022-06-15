@@ -28,6 +28,7 @@ public class NotesDataStore extends NotesData {
     //Каждый ключ указывает на тип хранимых в нем данных и строковый ключ, по которому эти данные будут читаться
     Preferences.Key<String> DATA_KEY = PreferencesKeys.stringKey("json_data");
 
+
     @Override
     public void loadData() {
         try {

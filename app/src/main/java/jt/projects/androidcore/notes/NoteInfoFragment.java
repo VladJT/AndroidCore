@@ -168,6 +168,7 @@ public class NoteInfoFragment extends Fragment {
         }
     }
 
+
     private void deleteNote() {
         final View customDialogView = getLayoutInflater().inflate(R.layout.dialog_delete_note, null);
         Context c = requireContext();

@@ -113,6 +113,7 @@ public class NotesMainActivity extends NotesBaseActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {

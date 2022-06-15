@@ -140,6 +140,7 @@ public class NotesSharedPreferences {
         }
     }
 
+
     public Bitmap getBitmapPhoto() {
         try {
             if (cachedPhoto == null) {
