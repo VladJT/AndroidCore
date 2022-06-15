@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/robot"
+        android:icon="@drawable/note"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/robot"
+        android:roundIcon="@drawable/note"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore">
         <activity
